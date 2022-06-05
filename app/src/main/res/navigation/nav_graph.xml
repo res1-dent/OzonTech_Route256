@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/productListFragment">
+    <fragment
+        android:id="@+id/productListFragment"
+        android:name="com.ozontech.homework2.presentation.view.ProductListFragment"
+        android:label="ProductListFragment"
+        tools:layout="@layout/fragment_product_list" >
+        <action
+            android:id="@+id/action_productListFragment_to_PDPFragment"
+            app:destination="@id/PDPFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/PDPFragment"
+        tools:layout="@layout/pdp_fragment"
+        android:name="com.ozontech.homework2.presentation.view.PDPFragment"
+        android:label="PDPFragment" >
+        <argument android:name="guid" />
+    </fragment>
+</navigation>

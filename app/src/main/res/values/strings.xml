@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Homework2</string>
+    <string name="counter_message">Вы посмотрели этот товар %1$d раз \nНе пора ли его добавить в корзину?</string>
+</resources>
