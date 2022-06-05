@@ -1,5 +1,6 @@
 package com.ozontech.homework2.presentation.viewModel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -27,12 +28,14 @@ class PDPViewModel @Inject constructor(
 
 
     fun getProductByGuid(guid: String) {
-        _isError.postValue(false)
-        try {
-            val product = interactor.getProductByGuid(guid)
-            _productLD.postValue(product)
-        } catch (e: Exception) {
-            _isError.postValue(true)
+        viewModelScope.launch {
+            _isError.postValue(false)
+            try {
+                val product = interactor.getProductByGuid(guid)
+                _productLD.postValue(product)
+            } catch (e: Exception) {
+                _isError.postValue(true)
+            }
         }
     }
 
@@ -44,7 +47,8 @@ class PDPViewModel @Inject constructor(
 
     fun getCounter(guid: String) {
         viewModelScope.launch {
-            _counter.postValue(interactor.getCounter(guid))
+            val counter = interactor.getCounter(guid)
+            _counter.postValue(counter)
         }
     }
 

@@ -2,4 +2,8 @@
     <string name="app_name">Homework2</string>
     <string name="counter_message">Вы посмотрели этот товар %1$d раз \nНе пора ли его добавить в корзину?</string>
     <string name="price">%1$d ₽</string>
+    <string name="add">add</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_random">add random</string>
 </resources>

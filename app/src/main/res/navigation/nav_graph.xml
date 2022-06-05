@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_productListFragment_to_PDPFragment"
             app:destination="@id/PDPFragment" />
+        <action
+            android:id="@+id/action_productListFragment_to_addFragment"
+            app:destination="@id/addFragment" />
     </fragment>
     <fragment
         android:id="@+id/PDPFragment"
@@ -20,4 +23,9 @@
         android:label="PDPFragment" >
         <argument android:name="guid" />
     </fragment>
+    <fragment
+        android:id="@+id/addFragment"
+        android:name="com.ozontech.homework2.presentation.view.AddFragment"
+        android:label="fragment_add"
+        tools:layout="@layout/fragment_add" />
 </navigation>

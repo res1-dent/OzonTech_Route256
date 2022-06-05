@@ -27,6 +27,13 @@ class ProductListFragment : Fragment(R.layout.fragment_product_list) {
         super.onViewCreated(view, savedInstanceState)
         initList()
         observeViewModelState()
+        setListeners()
+    }
+
+    private fun setListeners() {
+        binding.addFab.setOnClickListener{
+            findNavController().navigate(R.id.action_productListFragment_to_addFragment)
+        }
     }
 
     private fun observeViewModelState() {

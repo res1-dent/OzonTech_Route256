@@ -1,9 +1,6 @@
 package com.ozontech.homework2.di
 
-import com.ozontech.homework2.domain.interactors.PDPInteractor
-import com.ozontech.homework2.domain.interactors.PDPInteractorImpl
-import com.ozontech.homework2.domain.interactors.ProductListInteractor
-import com.ozontech.homework2.domain.interactors.ProductListInteractorImpl
+import com.ozontech.homework2.domain.interactors.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -22,4 +19,8 @@ interface InteractorsModule {
     @Binds
     @ViewModelScoped
     fun providesProductInteractor(impl: PDPInteractorImpl): PDPInteractor
+
+    @Binds
+    @ViewModelScoped
+    fun providesAddInteractor(impl: AddInteractorImpl): AddInteractor
 }

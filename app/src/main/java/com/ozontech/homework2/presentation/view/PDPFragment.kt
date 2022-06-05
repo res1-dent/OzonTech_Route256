@@ -1,6 +1,7 @@
 package com.ozontech.homework2.presentation.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -26,7 +27,6 @@ class PDPFragment : Fragment(R.layout.pdp_fragment) {
         args.guid.let {
             viewModel.getProductByGuid(it)
             viewModel.incrementCounter(it)
-            viewModel.getCounter(it)
 
         }
         observeViewModelState()
@@ -35,12 +35,17 @@ class PDPFragment : Fragment(R.layout.pdp_fragment) {
     private fun observeViewModelState() {
         viewModel.productLD.observe(viewLifecycleOwner) {
             updateProduct(it)
+            if (!it.isInCart) {
+                viewModel.getCounter(it.guid)
+            }
         }
         viewModel.counter.observe(viewLifecycleOwner, ::showMessage)
     }
 
     private fun showMessage(counter: Int) {
-        if (viewModel.productLD.value?.isInCart?.not() == true && counter > 1) {
+        Log.e("counter", "counter = $counter")
+        if (counter > 1) {
+            Log.e("counter", "counter in if = $counter")
             val message = getString(R.string.counter_message, counter)
             Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
         }

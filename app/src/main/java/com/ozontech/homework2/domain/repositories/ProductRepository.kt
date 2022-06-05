@@ -4,7 +4,7 @@ import com.ozontech.homework2.domain.domainObjects.ProductDO
 import kotlinx.coroutines.flow.Flow
 
 interface ProductRepository {
-    fun fetchProductDetails(guid: String): ProductDO
+    suspend fun fetchProductDetails(guid: String): ProductDO
     suspend fun getCounter(guid: String): Int
     suspend fun incrementCounter(guid: String)
 }
