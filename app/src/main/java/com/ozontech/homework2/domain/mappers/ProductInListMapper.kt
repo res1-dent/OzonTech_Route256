@@ -8,6 +8,6 @@ fun ProductInListDO.toVO() = ProductInListVO(
     guid,
     image,
     name,
-    price,
+    price.toInt(),
     rating.toFloat()
 )

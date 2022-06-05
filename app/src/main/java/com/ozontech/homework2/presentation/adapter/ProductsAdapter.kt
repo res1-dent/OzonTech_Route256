@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.ozontech.homework2.R
 import com.ozontech.homework2.databinding.ProductListItemBinding
 import com.ozontech.homework2.presentation.viewObjects.ProductInListVO
 import com.ozontech.homework2.utils.inflate
@@ -40,7 +41,7 @@ private val onProductClick : (String) -> Unit
             Glide.with(itemView).load(item.image).into(binding.imageProductList)
             with(binding) {
                 name.text = item.name
-                price.text = item.price
+                price.text = binding.root.resources.getString(R.string.price, item.price)
                 rating.rating = item.rating
             }
         }
