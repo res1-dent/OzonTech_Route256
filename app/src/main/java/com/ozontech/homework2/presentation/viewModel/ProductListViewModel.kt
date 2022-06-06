@@ -27,7 +27,6 @@ class ProductListViewModel(
     fun getListOfProducts() {
         viewModelScope.launch {
             interactor.getProducts().collect {
-                Log.e("ProductListViewModel", "list = $it")
                 _productsList.postValue(it)
             }
         }
