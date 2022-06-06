@@ -18,13 +18,6 @@ fun getJsonDataFromAsset(context: Context, fileName: String): String? {
     return jsonString
 }
 
-fun parseJsonToProductList(context: Context) : List<ProductInList> {
-    getJsonDataFromAsset(context, "ProductInList.json")?.let { data ->
-        val gson = GsonBuilder().create()
-        return gson.fromJson(data, Array<ProductInList>::class.java).toList()
-    } ?: return emptyList()
-}
-
 fun parseJsonToProduct(context: Context) : List<Product> {
     getJsonDataFromAsset(context, "Product.json")?.let { data ->
         val gson = GsonBuilder().create()

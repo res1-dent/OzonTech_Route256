@@ -8,9 +8,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.ozontech.homework2.data.db.ProductDao
 import com.ozontech.homework2.data.db.ProductsDatabase
 import com.ozontech.homework2.data.mappers.toProduct
-import com.ozontech.homework2.data.mappers.toProductInListDB
 import com.ozontech.homework2.utils.parseJsonToProduct
-import com.ozontech.homework2.utils.parseJsonToProductList
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -37,7 +35,8 @@ class DataBaseModule {
                     super.onCreate(db)
                     Log.e("DataBase", "Create")
                     CoroutineScope(Dispatchers.IO).launch {
-                        val products = parseJsonToProduct(application).map { it.toProduct() }
+                        val products = parseJsonToProduct(application)
+                            .map { it.toProduct() }
                         database.onCreate(products)
                     }
                 }

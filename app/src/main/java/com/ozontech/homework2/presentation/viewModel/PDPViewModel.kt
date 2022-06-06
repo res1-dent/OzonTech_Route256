@@ -16,7 +16,6 @@ class PDPViewModel @Inject constructor(
     private val interactor: PDPInteractor
 ) : ViewModel() {
 
-
     private val _productLD = MutableLiveData<ProductVO>()
     val productLD: LiveData<ProductVO> = _productLD
 
@@ -38,7 +37,4 @@ class PDPViewModel @Inject constructor(
             }
         }
     }
-
-
-
 }

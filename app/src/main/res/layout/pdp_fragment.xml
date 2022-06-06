@@ -82,5 +82,4 @@
         app:layout_constraintTop_toBottomOf="@id/av_count"
         tools:text="@string/count_string" />
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>

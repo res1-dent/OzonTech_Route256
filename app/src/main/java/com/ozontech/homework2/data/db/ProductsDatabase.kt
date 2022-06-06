@@ -11,7 +11,6 @@ import kotlinx.coroutines.withContext
 @Database(entities = [ProductDB::class], version = DB_VERSION)
 abstract class ProductsDatabase : RoomDatabase() {
 
-
     abstract fun productDao(): ProductDao
 
     companion object {
@@ -23,6 +22,4 @@ abstract class ProductsDatabase : RoomDatabase() {
         withContext(Dispatchers.IO) {
             productDao().insertProductDB(products)
         }
-
-
 }

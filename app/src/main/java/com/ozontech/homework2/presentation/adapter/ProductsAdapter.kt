@@ -14,7 +14,6 @@ class ProductsAdapter(
     private val onProductClick: (String) -> Unit
 ) : ListAdapter<ProductInListVO, ProductsAdapter.Holder>(ProductsDiffUtilCallback()) {
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         return Holder(parent.inflate(ProductListItemBinding::inflate), onProductClick)
     }
@@ -38,8 +37,8 @@ class ProductsAdapter(
 
         fun bind(item: ProductInListVO) {
             currentProduct = item.guid
-            Glide.with(itemView).load(item.image).into(binding.imageProductList)
             with(binding) {
+                Glide.with(itemView).load(item.image).into(imageProductList)
                 name.text = item.name
                 price.text = binding.root.resources.getString(R.string.price, item.price)
                 rating.rating = item.rating
@@ -60,6 +59,4 @@ class ProductsAdapter(
             return oldItem == newItem
         }
     }
-
-
 }

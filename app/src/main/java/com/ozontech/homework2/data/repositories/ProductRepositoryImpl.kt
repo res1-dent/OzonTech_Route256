@@ -14,7 +14,6 @@ class ProductRepositoryImpl @Inject constructor(
     private val productDao: ProductDao
 ) : ProductRepository {
 
-
     override suspend fun fetchProductDetails(guid: String): ProductDO {
         return productDao.getProductByGuid(guid).toProducts().toDO()
     }

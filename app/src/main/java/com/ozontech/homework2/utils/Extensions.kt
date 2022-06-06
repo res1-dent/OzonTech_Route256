@@ -1,12 +1,7 @@
 package com.ozontech.homework2.utils
 
-import android.os.Build
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
-import android.widget.EditText
-import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 
 

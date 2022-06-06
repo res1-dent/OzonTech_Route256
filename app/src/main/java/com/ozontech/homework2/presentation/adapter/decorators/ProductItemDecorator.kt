@@ -8,7 +8,6 @@ class ProductItemDecorator(
     private val offsetInPx: Int
 ): RecyclerView.ItemDecoration() {
 
-
     override fun getItemOffsets(
         outRect: Rect,
         view: View,

@@ -24,12 +24,9 @@ class AddFragment : Fragment(R.layout.fragment_add) {
         setListeners()
     }
 
-
-
     private fun setListeners() {
         binding.addRandom.setOnClickListener {
             viewModel.addRandom()
         }
     }
-
 }

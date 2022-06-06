@@ -17,6 +17,4 @@ class AddViewModel @Inject constructor(
             interactor.addRandomProduct()
         }
     }
-
-
 }

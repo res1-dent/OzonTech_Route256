@@ -22,10 +22,14 @@ class PDPFragment : Fragment(R.layout.pdp_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        init()
+        observeViewModelState()
+    }
+
+    private fun init() {
         args.guid.let {
             viewModel.getProductByGuid(it)
         }
-        observeViewModelState()
     }
 
     private fun observeViewModelState() {
@@ -47,8 +51,8 @@ class PDPFragment : Fragment(R.layout.pdp_fragment) {
       }*/
 
     private fun updateProduct(product: ProductVO) {
-        Glide.with(requireView()).load(product.images.first()).into(binding.productIV)
         with(binding) {
+            Glide.with(requireView()).load(product.images.first()).into(productIV)
             nameTV.text = product.name
             priceTV.text = getString(R.string.price, product.price)
             rating.rating = product.rating

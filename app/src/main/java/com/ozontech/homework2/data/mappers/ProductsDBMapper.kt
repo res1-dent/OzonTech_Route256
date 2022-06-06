@@ -6,27 +6,17 @@ import com.ozontech.homework2.data.dto.Product
 import com.ozontech.homework2.data.dto.ProductInList
 
 fun ProductDB.toProducts(): Product = Product(
-    guid,
-    name,
-    price,
-    description,
-    rating.toDouble(),
-    isFavorite,
-    isInCart,
-    listOf(images),
-    weight.toDoubleOrNull(),
-    count.toIntOrNull(),
-    availableCount.toIntOrNull(),
-    additionalParams,
-    counter
-)
-
-fun ProductDB.toProductInListDB():ProductsInListDB = ProductsInListDB(
     guid = guid,
-    image = images,
-    name = price,
-    price = name,
+    name = name,
+    price = price,
+    description = description,
+    rating = rating.toDouble(),
     isFavorite = isFavorite,
     isInCart = isInCart,
-    rating = rating,
+    images = listOf(images),
+    weight = weight.toDoubleOrNull(),
+    count = count.toIntOrNull(),
+    availableCount = availableCount.toIntOrNull(),
+    additionalParams = additionalParams,
+    counter = counter
 )

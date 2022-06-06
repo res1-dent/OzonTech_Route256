@@ -2,51 +2,54 @@ package com.ozontech.homework2.data.db.models.products
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.ForeignKey.CASCADE
 import androidx.room.TypeConverters
 import com.ozontech.homework2.data.db.MapConverter
-import com.ozontech.homework2.data.db.models.productsInList.ProductsInListContract
+import com.ozontech.homework2.data.db.models.products.ProductsContract.Columns.ADDITIONAL_PARAMS
+import com.ozontech.homework2.data.db.models.products.ProductsContract.Columns.AVAILABLE_COUNT
+import com.ozontech.homework2.data.db.models.products.ProductsContract.Columns.COUNT
+import com.ozontech.homework2.data.db.models.products.ProductsContract.Columns.COUNTER
+import com.ozontech.homework2.data.db.models.products.ProductsContract.Columns.DESCRIPTION
+import com.ozontech.homework2.data.db.models.products.ProductsContract.Columns.GUID
+import com.ozontech.homework2.data.db.models.products.ProductsContract.Columns.IMAGES
+import com.ozontech.homework2.data.db.models.products.ProductsContract.Columns.IS_FAVORITE
+import com.ozontech.homework2.data.db.models.products.ProductsContract.Columns.IS_IN_CART
+import com.ozontech.homework2.data.db.models.products.ProductsContract.Columns.NAME
+import com.ozontech.homework2.data.db.models.products.ProductsContract.Columns.PRICE
+import com.ozontech.homework2.data.db.models.products.ProductsContract.Columns.RATING
+import com.ozontech.homework2.data.db.models.products.ProductsContract.Columns.WEIGHT
+import com.ozontech.homework2.data.db.models.products.ProductsContract.TABLE_NAME
 
 
 @Entity(
-    tableName = ProductsContract.TABLE_NAME,
-    foreignKeys = [
-        ForeignKey(
-            entity = ProductDB::class,
-            parentColumns = [ProductsContract.Columns.GUID],
-            childColumns = [ProductsInListContract.Columns.GUID],
-            onDelete = CASCADE
-        )
-    ],
-    primaryKeys = [ProductsContract.Columns.GUID]
+    tableName = TABLE_NAME,
+    primaryKeys = [GUID]
 )
 @TypeConverters(MapConverter::class)
 data class ProductDB(
-    @ColumnInfo(name = ProductsContract.Columns.GUID)
+    @ColumnInfo(name = GUID)
     val guid: String,
-    @ColumnInfo(name = ProductsContract.Columns.IMAGES)
+    @ColumnInfo(name = IMAGES)
     val images: String,
-    @ColumnInfo(name = ProductsContract.Columns.NAME)
+    @ColumnInfo(name = NAME)
     val name: String,
-    @ColumnInfo(name = ProductsContract.Columns.PRICE)
+    @ColumnInfo(name = PRICE)
     val price: String,
-    @ColumnInfo(name = ProductsContract.Columns.RATING)
+    @ColumnInfo(name = RATING)
     val rating: Float,
-    @ColumnInfo(name = ProductsContract.Columns.IS_FAVORITE)
+    @ColumnInfo(name = IS_FAVORITE)
     val isFavorite: Boolean,
-    @ColumnInfo(name = ProductsContract.Columns.IS_IN_CART)
+    @ColumnInfo(name = IS_IN_CART)
     val isInCart: Boolean,
-    @ColumnInfo(name = ProductsContract.Columns.DESCRIPTION)
+    @ColumnInfo(name = DESCRIPTION)
     val description: String,
-    @ColumnInfo(name = ProductsContract.Columns.WEIGHT)
+    @ColumnInfo(name = WEIGHT)
     val weight: String,
-    @ColumnInfo(name = ProductsContract.Columns.AVAILABLE_COUNT)
+    @ColumnInfo(name = AVAILABLE_COUNT)
     val availableCount: String,
-    @ColumnInfo(name = ProductsContract.Columns.COUNT)
+    @ColumnInfo(name = COUNT)
     val count: String,
-    @ColumnInfo(name = ProductsContract.Columns.ADDITIONAL_PARAMS)
+    @ColumnInfo(name = ADDITIONAL_PARAMS)
     val additionalParams: Map<String, String>,
-    @ColumnInfo(name = ProductsContract.Columns.COUNTER)
+    @ColumnInfo(name = COUNTER)
     val counter: Int = 0
 )

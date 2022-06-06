@@ -15,7 +15,6 @@ class CounterPreference(context: Application) {
 
     private val dataStore = context.DATASTORE
 
-
     suspend fun getCounter(guid: String): Int {
         return dataStore.data.map {
             it[intPreferencesKey(guid)] ?: 1
@@ -27,7 +26,6 @@ class CounterPreference(context: Application) {
             it[intPreferencesKey(guid)] = getCounter(guid) + 1
         }
     }
-
 
     companion object {
         private const val WORDS_DATASTORE = "counter_datastore"

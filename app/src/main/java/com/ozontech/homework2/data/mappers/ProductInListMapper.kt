@@ -14,13 +14,3 @@ fun ProductInList.toDO() = ProductInListDO(
     isInCart = isInCart,
     counter = counter
 )
-
-fun ProductInList.toProductInListDB() = ProductsInListDB(
-    guid = guid,
-    image = image,
-    name = price,
-    price = name,
-    isFavorite = isFavorite,
-    isInCart = isInCart,
-    rating = rating.toFloat(),
-)

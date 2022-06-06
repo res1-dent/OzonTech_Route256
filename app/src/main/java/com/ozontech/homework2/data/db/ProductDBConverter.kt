@@ -13,8 +13,5 @@ class MapConverter {
     }
 
     @TypeConverter
-    fun fromStringMap(map: Map<String, String>): String {
-        val gson = Gson()
-        return gson.toJson(map)
-    }
+    fun fromStringMap(map: Map<String, String>): String = Gson().toJson(map)
 }

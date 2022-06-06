@@ -22,7 +22,6 @@ class ProductListFragment : Fragment(R.layout.fragment_product_list) {
     private val viewModel: ProductListViewModel by viewModels()
     private val adapter: ProductsAdapter by autoCleared { ProductsAdapter(::navigateToDetails) }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initList()
@@ -43,8 +42,10 @@ class ProductListFragment : Fragment(R.layout.fragment_product_list) {
     }
 
     private fun initList() {
-        binding.productList.adapter = this@ProductListFragment.adapter
-        binding.productList.addItemDecoration(ProductItemDecorator(20))
+        with(binding) {
+            productList.adapter = this@ProductListFragment.adapter
+            productList.addItemDecoration(ProductItemDecorator(20))
+        }
     }
 
     private fun navigateToDetails(guid: String) {
@@ -52,6 +53,4 @@ class ProductListFragment : Fragment(R.layout.fragment_product_list) {
         val action = ProductListFragmentDirections.actionProductListFragmentToPDPFragment(guid)
         findNavController().navigate(action)
     }
-
-
 }
