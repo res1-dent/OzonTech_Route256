@@ -9,10 +9,10 @@
         android:id="@+id/productIV"
         android:layout_width="match_parent"
         android:layout_height="280dp"
-        tools:src = "@tools:sample/avatars"
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/nameTV"
@@ -42,15 +42,45 @@
         tools:text="15P" />
 
     <androidx.appcompat.widget.AppCompatRatingBar
-        android:id="@+id/ratingView"
-        style="@style/Widget.AppCompat.RatingBar.Indicator"
+        android:id="@+id/rating"
+        style="@style/Widget.AppCompat.RatingBar.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
         android:isIndicator="true"
         android:rating="3"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/priceTV"
         app:layout_constraintTop_toBottomOf="@id/priceTV" />
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?attr/textAppearanceBody1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/priceTV"
+        app:layout_constraintTop_toBottomOf="@id/rating"
+        tools:text="Курица мираторг очень вкусная" />
+
+
+    <TextView
+        android:id="@+id/av_count"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?attr/textAppearanceBody1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/priceTV"
+        app:layout_constraintTop_toBottomOf="@id/description"
+        tools:text="@string/available_count" />
+
+    <TextView
+        android:id="@+id/count"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?attr/textAppearanceBody1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/priceTV"
+        app:layout_constraintTop_toBottomOf="@id/av_count"
+        tools:text="@string/count_string" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

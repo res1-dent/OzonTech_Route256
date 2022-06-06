@@ -1,9 +1,7 @@
 package com.ozontech.homework2.presentation.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -33,27 +31,31 @@ class PDPFragment : Fragment(R.layout.pdp_fragment) {
     private fun observeViewModelState() {
         viewModel.productLD.observe(viewLifecycleOwner) {
             updateProduct(it)
-           /* if (!it.isInCart) {
-                showMessage(it.counter)
-            }*/
+            /* if (!it.isInCart) {
+                 showMessage(it.counter)
+             }*/
         }
     }
 
-  /*  private fun showMessage(counter: Int) {
-        Log.e("counter", "counter = $counter")
-        if (counter > 1) {
-            Log.e("counter", "counter in if = $counter")
-            val message = getString(R.string.counter_message, counter)
-            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-        }
-    }*/
+    /*  private fun showMessage(counter: Int) {
+          Log.e("counter", "counter = $counter")
+          if (counter > 1) {
+              Log.e("counter", "counter in if = $counter")
+              val message = getString(R.string.counter_message, counter)
+              Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+          }
+      }*/
 
     private fun updateProduct(product: ProductVO) {
         Glide.with(requireView()).load(product.images.first()).into(binding.productIV)
         with(binding) {
             nameTV.text = product.name
-            priceTV.text = product.price
-            ratingView.rating = product.rating
+            priceTV.text = getString(R.string.price, product.price)
+            rating.rating = product.rating
+            description.text = product.description
+            avCount.text = getString(R.string.available_count, product.availableCount ?: 0)
+            count.text =
+                getString(R.string.count_string, product.count ?: 0)
         }
 
     }

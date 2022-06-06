@@ -7,7 +7,7 @@ import com.ozontech.homework2.presentation.viewObjects.ProductVO
 fun ProductDO.toVO(): ProductVO = ProductVO(
     guid,
     name,
-    price,
+    price.toInt(),
     description,
     rating.toFloat(),
     isFavorite,

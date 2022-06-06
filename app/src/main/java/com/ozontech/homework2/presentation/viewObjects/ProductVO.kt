@@ -3,7 +3,7 @@ package com.ozontech.homework2.presentation.viewObjects
 data class ProductVO(
     val guid: String,
     val name: String,
-    val price: String,
+    val price: Int,
     val description: String,
     val rating: Float,
     val isFavorite: Boolean,
