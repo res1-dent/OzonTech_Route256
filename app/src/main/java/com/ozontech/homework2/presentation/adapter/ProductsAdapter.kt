@@ -11,7 +11,7 @@ import com.ozontech.homework2.presentation.viewObjects.ProductInListVO
 import com.ozontech.homework2.utils.inflate
 
 class ProductsAdapter(
-private val onProductClick : (String) -> Unit
+    private val onProductClick: (String) -> Unit
 ) : ListAdapter<ProductInListVO, ProductsAdapter.Holder>(ProductsDiffUtilCallback()) {
 
 
@@ -25,7 +25,7 @@ private val onProductClick : (String) -> Unit
 
     class Holder(
         private val binding: ProductListItemBinding,
-        private val onProductClick : (String) -> Unit
+        private val onProductClick: (String) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
         private var currentProduct: String? = null
@@ -43,6 +43,7 @@ private val onProductClick : (String) -> Unit
                 name.text = item.name
                 price.text = binding.root.resources.getString(R.string.price, item.price)
                 rating.rating = item.rating
+                counter.text = item.counter
             }
         }
     }

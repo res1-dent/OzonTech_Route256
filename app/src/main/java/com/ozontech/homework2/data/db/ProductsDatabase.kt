@@ -12,7 +12,6 @@ import kotlinx.coroutines.withContext
 abstract class ProductsDatabase : RoomDatabase() {
 
 
-    abstract fun productsInListDao(): ProductInListDao
     abstract fun productDao(): ProductDao
 
     companion object {
@@ -20,9 +19,8 @@ abstract class ProductsDatabase : RoomDatabase() {
         const val DB_NAME = "ProductsDatabase"
     }
 
-    suspend fun onCreate(productsInList: List<ProductsInListDB>, products: List<ProductDB>) =
+    suspend fun onCreate(products: List<ProductDB>) =
         withContext(Dispatchers.IO) {
-            productsInListDao().insertProductInList(productsInList)
             productDao().insertProductDB(products)
         }
 

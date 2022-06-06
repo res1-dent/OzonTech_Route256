@@ -7,4 +7,5 @@ data class ProductInListVO(
     val name: String,
     val price: Int,
     val rating: Float,
+    val counter: String
 )

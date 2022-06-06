@@ -1,7 +1,6 @@
 package com.ozontech.homework2.data.repositories
 
 import com.ozontech.homework2.data.db.ProductDao
-import com.ozontech.homework2.data.db.ProductInListDao
 import com.ozontech.homework2.data.db.models.products.ProductDB
 import com.ozontech.homework2.data.mappers.toProductInListDB
 import com.ozontech.homework2.domain.repositories.AddRepository
@@ -13,13 +12,11 @@ import javax.inject.Inject
 
 class AddRepositoryImpl @Inject constructor(
     private val productDao: ProductDao,
-    private val productInListDao: ProductInListDao
 ) : AddRepository {
 
     override suspend fun addRandomProduct() = withContext(Dispatchers.IO) {
         val product = generateRandomProduct()
         productDao.insertProductDB(listOf(product))
-        productInListDao.insertProductInList(listOf(product.toProductInListDB()))
     }
 
     private suspend fun generateRandomProduct(): ProductDB = withContext(Dispatchers.IO) {

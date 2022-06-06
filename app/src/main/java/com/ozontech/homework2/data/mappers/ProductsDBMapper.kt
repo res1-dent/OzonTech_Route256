@@ -17,7 +17,8 @@ fun ProductDB.toProducts(): Product = Product(
     weight.toDoubleOrNull(),
     count.toIntOrNull(),
     availableCount.toIntOrNull(),
-    additionalParams
+    additionalParams,
+    counter
 )
 
 fun ProductDB.toProductInListDB():ProductsInListDB = ProductsInListDB(

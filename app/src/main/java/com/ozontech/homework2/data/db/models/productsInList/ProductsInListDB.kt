@@ -3,11 +3,10 @@ package com.ozontech.homework2.data.db.models.productsInList
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.ozontech.homework2.data.db.models.products.ProductsContract
 
 
-@Entity(
-    tableName = ProductsInListContract.TABLE_NAME,
-)
+@Entity
 data class ProductsInListDB(
     @PrimaryKey
     @ColumnInfo(name = ProductsInListContract.Columns.GUID)
@@ -24,4 +23,6 @@ data class ProductsInListDB(
     val isFavorite: Boolean,
     @ColumnInfo(name = ProductsInListContract.Columns.IS_IN_CART)
     val isInCart: Boolean,
+    @ColumnInfo(name = ProductsInListContract.Columns.COUNTER)
+    val counter: Int = 0
 )

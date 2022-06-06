@@ -3,14 +3,18 @@ package com.ozontech.homework2.data.db
 import androidx.room.*
 import com.ozontech.homework2.data.db.models.products.ProductDB
 import com.ozontech.homework2.data.db.models.products.ProductsContract
+import com.ozontech.homework2.data.db.models.productsInList.ProductsInListDB
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ProductDao {
 
-    @Transaction
+
     @Query("SELECT * FROM ${ProductsContract.TABLE_NAME}")
     fun getAllProducts(): Flow<List<ProductDB>>
+
+    @Query("select * from ${ProductsContract.TABLE_NAME}")
+    fun getProductInList(): Flow<List<ProductsInListDB>>
 
     @Transaction
     @Insert(onConflict = OnConflictStrategy.REPLACE)

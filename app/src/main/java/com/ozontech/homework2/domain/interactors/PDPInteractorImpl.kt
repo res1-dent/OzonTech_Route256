@@ -15,11 +15,5 @@ class PDPInteractorImpl @Inject constructor(
         repository.fetchProductDetails(guid).toVO()
     }
 
-    override suspend fun getCounter(guid: String): Int {
-        return repository.getCounter(guid)
-    }
 
-    override suspend fun incrementCounter(guid: String) {
-        repository.incrementCounter(guid)
-    }
 }

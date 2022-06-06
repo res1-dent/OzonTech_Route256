@@ -12,5 +12,6 @@ data class ProductVO(
     val weight: Double?,
     val count: Int?,
     val availableCount: Int?,
-    val additionalParams: Map<String, String>
+    val additionalParams: Map<String, String>,
+    val counter: Int
 )

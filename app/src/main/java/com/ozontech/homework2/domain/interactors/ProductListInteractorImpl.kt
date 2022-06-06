@@ -16,4 +16,8 @@ class ProductListInteractorImpl @Inject constructor(
             emit(it.map { productInListDO -> productInListDO.toVO() })
         }
     }
+
+    override suspend fun incrementCounter(guid: String) {
+        repository.incrementCounter(guid)
+    }
 }

@@ -18,16 +18,4 @@ class ProductRepositoryImpl @Inject constructor(
     override suspend fun fetchProductDetails(guid: String): ProductDO {
         return productDao.getProductByGuid(guid).toProducts().toDO()
     }
-
-    override suspend fun getCounter(guid: String): Int = withContext(Dispatchers.IO) {
-        productDao.getCounterByGuid(guid)
-    }
-
-    override suspend fun incrementCounter(guid: String) = withContext(Dispatchers.IO) {
-        val product = productDao.getProductByGuid(guid)
-        val counter = product.counter + 1
-        productDao.updateCounter(product.copy(counter = counter))
-    }
-
-
 }

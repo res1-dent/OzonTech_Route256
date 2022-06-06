@@ -6,7 +6,6 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.ozontech.homework2.data.db.ProductDao
-import com.ozontech.homework2.data.db.ProductInListDao
 import com.ozontech.homework2.data.db.ProductsDatabase
 import com.ozontech.homework2.data.mappers.toProduct
 import com.ozontech.homework2.data.mappers.toProductInListDB
@@ -38,21 +37,13 @@ class DataBaseModule {
                     super.onCreate(db)
                     Log.e("DataBase", "Create")
                     CoroutineScope(Dispatchers.IO).launch {
-                        val productsInList =
-                            parseJsonToProductList(application).map { it.toProductInListDB() }
                         val products = parseJsonToProduct(application).map { it.toProduct() }
-                        database.onCreate(productsInList, products)
+                        database.onCreate(products)
                     }
                 }
             })
             .build()
         return database
-    }
-
-    @Provides
-    @Singleton
-    fun providesProductsInListDao(database: ProductsDatabase): ProductInListDao {
-        return database.productsInListDao()
     }
 
     @Provides

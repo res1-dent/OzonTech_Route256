@@ -5,6 +5,4 @@ import kotlinx.coroutines.flow.Flow
 
 interface ProductRepository {
     suspend fun fetchProductDetails(guid: String): ProductDO
-    suspend fun getCounter(guid: String): Int
-    suspend fun incrementCounter(guid: String)
 }

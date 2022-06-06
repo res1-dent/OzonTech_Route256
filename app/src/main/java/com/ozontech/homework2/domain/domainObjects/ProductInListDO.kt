@@ -8,5 +8,6 @@ data class ProductInListDO(
     val price: String,
     val rating: Double,
     val isFavorite: Boolean,
-    val isInCart: Boolean
+    val isInCart: Boolean,
+    val counter: Int
 )

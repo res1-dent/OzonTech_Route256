@@ -31,7 +31,7 @@ class ProductListFragment : Fragment(R.layout.fragment_product_list) {
     }
 
     private fun setListeners() {
-        binding.addFab.setOnClickListener{
+        binding.addFab.setOnClickListener {
             findNavController().navigate(R.id.action_productListFragment_to_addFragment)
         }
     }
@@ -48,6 +48,7 @@ class ProductListFragment : Fragment(R.layout.fragment_product_list) {
     }
 
     private fun navigateToDetails(guid: String) {
+        viewModel.incrementCounter(guid)
         val action = ProductListFragmentDirections.actionProductListFragmentToPDPFragment(guid)
         findNavController().navigate(action)
     }

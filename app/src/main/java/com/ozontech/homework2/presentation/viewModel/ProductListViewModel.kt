@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProductListViewModel @Inject constructor(
-    interactor: ProductListInteractor,
+   private val interactor: ProductListInteractor,
 ) : ViewModel() {
 
     private val _productsList = MutableLiveData<List<ProductInListVO>>()
@@ -32,6 +32,12 @@ class ProductListViewModel @Inject constructor(
                 Log.e("ProductListViewModel", "list = $it")
                 _productsList.postValue(it)
             }
+        }
+    }
+
+    fun incrementCounter(guid: String) {
+        viewModelScope.launch {
+            interactor.incrementCounter(guid)
         }
     }
 }

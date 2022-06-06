@@ -16,7 +16,8 @@ fun Product.toDO(): ProductDO = ProductDO(
     weight,
     count,
     availableCount,
-    additionalParams
+    additionalParams,
+    counter
 )
 
 fun Product.toProduct(): ProductDB = ProductDB(

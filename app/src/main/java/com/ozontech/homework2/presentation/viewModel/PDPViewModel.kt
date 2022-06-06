@@ -39,17 +39,6 @@ class PDPViewModel @Inject constructor(
         }
     }
 
-    fun incrementCounter(guid: String) {
-        viewModelScope.launch {
-            interactor.incrementCounter(guid)
-        }
-    }
 
-    fun getCounter(guid: String) {
-        viewModelScope.launch {
-            val counter = interactor.getCounter(guid)
-            _counter.postValue(counter)
-        }
-    }
 
 }

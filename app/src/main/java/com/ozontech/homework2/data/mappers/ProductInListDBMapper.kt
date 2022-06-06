@@ -6,9 +6,10 @@ import com.ozontech.homework2.data.dto.ProductInList
 fun ProductsInListDB.toProductInList(): ProductInList = ProductInList(
     guid = guid,
     image = image,
-    name = price,
-    price = name,
+    name = name,
+    price = price,
     isFavorite = isFavorite,
     isInCart = isInCart,
-    rating = rating.toDouble()
+    rating = rating.toDouble(),
+    counter = counter
 )

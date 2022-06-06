@@ -26,8 +26,6 @@ class PDPFragment : Fragment(R.layout.pdp_fragment) {
         super.onViewCreated(view, savedInstanceState)
         args.guid.let {
             viewModel.getProductByGuid(it)
-            viewModel.incrementCounter(it)
-
         }
         observeViewModelState()
     }
@@ -35,21 +33,20 @@ class PDPFragment : Fragment(R.layout.pdp_fragment) {
     private fun observeViewModelState() {
         viewModel.productLD.observe(viewLifecycleOwner) {
             updateProduct(it)
-            if (!it.isInCart) {
-                viewModel.getCounter(it.guid)
-            }
+           /* if (!it.isInCart) {
+                showMessage(it.counter)
+            }*/
         }
-        viewModel.counter.observe(viewLifecycleOwner, ::showMessage)
     }
 
-    private fun showMessage(counter: Int) {
+  /*  private fun showMessage(counter: Int) {
         Log.e("counter", "counter = $counter")
         if (counter > 1) {
             Log.e("counter", "counter in if = $counter")
             val message = getString(R.string.counter_message, counter)
             Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
         }
-    }
+    }*/
 
     private fun updateProduct(product: ProductVO) {
         Glide.with(requireView()).load(product.images.first()).into(binding.productIV)
