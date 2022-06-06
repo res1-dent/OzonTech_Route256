@@ -10,8 +10,8 @@ class PDPInteractorImpl (
     private val repository: ProductRepository
 ) : PDPInteractor {
 
-    override  fun getProductByGuid(guid: String): ProductVO =
-        repository.fetchProductDetails(guid).toVO()
+    override  fun getProductByGuid(guid: String): ProductVO? =
+        repository.fetchProductDetails(guid)?.toVO()
 
 
 

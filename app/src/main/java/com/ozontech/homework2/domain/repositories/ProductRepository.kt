@@ -4,5 +4,5 @@ import com.ozontech.homework2.domain.domainObjects.ProductDO
 import kotlinx.coroutines.flow.Flow
 
 interface ProductRepository {
-     fun fetchProductDetails(guid: String): ProductDO
+     fun fetchProductDetails(guid: String): ProductDO?
 }

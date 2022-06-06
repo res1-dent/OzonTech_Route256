@@ -1,7 +1,7 @@
 package com.ozontech.homework2.data.dto
 
 
-data class Product(
+data class ProductDto(
     val guid: String,
     val name: String,
     val price: String,

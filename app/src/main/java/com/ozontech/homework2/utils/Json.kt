@@ -2,9 +2,7 @@ package com.ozontech.homework2.utils
 
 import android.content.Context
 import com.google.gson.GsonBuilder
-import com.ozontech.homework2.data.dto.Product
-import com.ozontech.homework2.data.dto.ProductInList
-import com.ozontech.homework2.data.repositories.ProductListRepositoryImpl
+import com.ozontech.homework2.data.dto.ProductDto
 import java.io.IOException
 
 fun getJsonDataFromAsset(context: Context, fileName: String): String? {
@@ -18,9 +16,9 @@ fun getJsonDataFromAsset(context: Context, fileName: String): String? {
     return jsonString
 }
 
-fun parseJsonToProduct(context: Context) : List<Product> {
+fun parseJsonToProduct(context: Context) : List<ProductDto> {
     getJsonDataFromAsset(context, "Product.json")?.let { data ->
         val gson = GsonBuilder().create()
-        return gson.fromJson(data, Array<Product>::class.java).toList()
+        return gson.fromJson(data, Array<ProductDto>::class.java).toList()
     } ?: return emptyList()
 }

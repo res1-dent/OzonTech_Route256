@@ -4,6 +4,6 @@ import com.ozontech.homework2.presentation.viewObjects.ProductInListVO
 import kotlinx.coroutines.flow.Flow
 
 interface ProductListInteractor {
-     fun getProducts(): Flow<List<ProductInListVO>>
+     fun getProducts(): List<ProductInListVO>
      fun incrementCounter(guid: String)
 }

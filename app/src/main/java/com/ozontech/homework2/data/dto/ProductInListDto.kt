@@ -1,7 +1,7 @@
 package com.ozontech.homework2.data.dto
 
 
-data class ProductInList(
+data class ProductInListDto(
     val guid: String,
     val image: String,
     val name: String,

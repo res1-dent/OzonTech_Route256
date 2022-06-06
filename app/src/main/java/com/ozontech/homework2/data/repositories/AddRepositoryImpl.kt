@@ -11,7 +11,6 @@ class AddRepositoryImpl(
     override fun addRandomProduct() {
         val newGuid = UUID.randomUUID().toString()
         val product = mockRepository.productDTO.random().copy(guid = newGuid)
-
         mockRepository.apply {
             productDTO.add(product)
             productInListDTOs.add(product.toProductInList())

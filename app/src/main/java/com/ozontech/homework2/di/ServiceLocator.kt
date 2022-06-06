@@ -1,8 +1,6 @@
 package com.ozontech.homework2.di
 
 
-import android.app.Application
-import com.ozontech.homework2.App
 import com.ozontech.homework2.data.repositories.AddRepositoryImpl
 import com.ozontech.homework2.data.repositories.MockRepository
 import com.ozontech.homework2.data.repositories.ProductListRepositoryImpl

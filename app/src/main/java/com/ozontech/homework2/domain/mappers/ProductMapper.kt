@@ -1,6 +1,5 @@
 package com.ozontech.homework2.domain.mappers
 
-import com.ozontech.homework2.data.dto.Product
 import com.ozontech.homework2.domain.domainObjects.ProductDO
 import com.ozontech.homework2.presentation.viewObjects.ProductVO
 

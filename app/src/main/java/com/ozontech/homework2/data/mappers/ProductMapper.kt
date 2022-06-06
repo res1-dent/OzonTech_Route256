@@ -1,10 +1,10 @@
 package com.ozontech.homework2.data.mappers
 
-import com.ozontech.homework2.data.dto.Product
-import com.ozontech.homework2.data.dto.ProductInList
+import com.ozontech.homework2.data.dto.ProductDto
+import com.ozontech.homework2.data.dto.ProductInListDto
 import com.ozontech.homework2.domain.domainObjects.ProductDO
 
-fun Product.toDO(): ProductDO = ProductDO(
+fun ProductDto.toDO(): ProductDO = ProductDO(
     guid = guid,
     name = name,
     price = price,
@@ -19,7 +19,7 @@ fun Product.toDO(): ProductDO = ProductDO(
     additionalParams = additionalParams,
 )
 
-fun Product.toProductInList(): ProductInList = ProductInList(
+fun ProductDto.toProductInList(): ProductInListDto = ProductInListDto(
     guid = guid,
     image = images.first(),
     name = name,

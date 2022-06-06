@@ -1,12 +1,12 @@
 package com.ozontech.homework2.data.repositories
 
-import com.ozontech.homework2.data.dto.Product
-import com.ozontech.homework2.data.dto.ProductInList
+import com.ozontech.homework2.data.dto.ProductDto
+import com.ozontech.homework2.data.dto.ProductInListDto
 
 class MockRepository {
 
     val productInListDTOs = mutableListOf(
-        ProductInList(
+        ProductInListDto(
             guid = "b5f5852b-3b8c-4857-9f53-ac5c2b6a3b2f",
             image = "https://cdn1.ozone.ru/s3/multimedia-j/6131838211.jpg",
             name = "Борщ по-домашнему",
@@ -15,7 +15,7 @@ class MockRepository {
             isFavorite = false,
             isInCart = false
         ),
-        ProductInList(
+        ProductInListDto(
             guid = "5cbbb7d0-e9c6-4932-8d85-79313c58e465",
             image = "https://cdn1.ozone.ru/s3/multimedia-u/6255350190.jpg",
             name = "Ваш любимый Сальчичон",
@@ -24,7 +24,7 @@ class MockRepository {
             isFavorite = true,
             isInCart = false
         ),
-        ProductInList(
+        ProductInListDto(
             guid = "cc87f70d-7570-42ee-a221-db8887534896",
             image = "https://cdn1.ozone.ru/s3/multimedia-9/6012020949.jpg",
             name = "Бельгийская смесь \"Мираторг\"",
@@ -33,7 +33,7 @@ class MockRepository {
             isFavorite = false,
             isInCart = false
         ),
-        ProductInList(
+        ProductInListDto(
             guid = "627de4ca-b4fd-46ea-9201-562448af6fc1",
             image = "https://cdn1.ozone.ru/s3/multimedia-f/6199943655.jpg",
             name = "Джем Ozon Express",
@@ -42,7 +42,7 @@ class MockRepository {
             isFavorite = false,
             isInCart = false
         ),
-        ProductInList(
+        ProductInListDto(
             guid = "493ef2ba-cd2f-4ca5-b3af-f9091115700e",
             image = "https://cdn1.ozone.ru/s3/multimedia-z/6267606395.jpg",
             name = "Мармелад клюква с ягелем",
@@ -51,7 +51,7 @@ class MockRepository {
             isFavorite = true,
             isInCart = false
         ),
-        ProductInList(
+        ProductInListDto(
             guid = "ceadee7a-9d10-4987-8ed3-0624d6fbe5c0",
             image = "https://cdn1.ozone.ru/s3/multimedia-8/6288053576.jpg",
             name = "Авокадо Хасс",
@@ -60,7 +60,7 @@ class MockRepository {
             isFavorite = false,
             isInCart = false
         ),
-        ProductInList(
+        ProductInListDto(
             guid = "c3cfe1a8-6eec-4e9f-a260-490e128763f4",
             image = "https://cdn1.ozone.ru/s3/multimedia-4/6099200308.jpg",
             name = "Молоко",
@@ -69,7 +69,7 @@ class MockRepository {
             isFavorite = true,
             isInCart = false
         ),
-        ProductInList(
+        ProductInListDto(
             guid = "a9cd4415-48b0-4557-8f29-6d28824fe91b",
             image = "https://cdn1.ozone.ru/s3/multimedia-z/6096233435.jpg",
             name = "Мороженое сорбет",
@@ -78,7 +78,7 @@ class MockRepository {
             isFavorite = false,
             isInCart = false
         ),
-        ProductInList(
+        ProductInListDto(
             guid = "856c1c90-1b8e-46ba-a5de-bc818dc1bdbd",
             image = "https://cdn1.ozone.ru/s3/multimedia-d/6206219785.jpg",
             name = "Сырок творожный",
@@ -87,7 +87,7 @@ class MockRepository {
             isFavorite = true,
             isInCart = false
         ),
-        ProductInList(
+        ProductInListDto(
             guid = "ebe799f5-6e01-45dc-8139-e714753896c1",
             image = "https://cdn1.ozone.ru/s3/multimedia-j/6167822191.jpg",
             name = "Блинчики домашние",
@@ -98,7 +98,7 @@ class MockRepository {
         ),
     )
     val productDTO = mutableListOf(
-        Product(
+        ProductDto(
             guid = "b5f5852b-3b8c-4857-9f53-ac5c2b6a3b2f",
             availableCount = 10,
             count = 2,
@@ -109,7 +109,7 @@ class MockRepository {
             rating = 4.6,
             weight = 0.4
         ),
-        Product(
+        ProductDto(
             guid = "5cbbb7d0-e9c6-4932-8d85-79313c58e465",
             additionalParams = mapOf("Качество" to "10/10"),
             availableCount = 0,
@@ -122,7 +122,7 @@ class MockRepository {
             rating = 5.0,
             weight = 0.2
         ),
-        Product(
+        ProductDto(
             guid = "cc87f70d-7570-42ee-a221-db8887534896",
             availableCount = 1000,
             count = 1,
@@ -132,7 +132,7 @@ class MockRepository {
             price = "149",
             rating = 3.2
         ),
-        Product(
+        ProductDto(
             guid = "627de4ca-b4fd-46ea-9201-562448af6fc1",
             availableCount = 10000000,
             count = 654,
@@ -143,7 +143,7 @@ class MockRepository {
             rating = 4.6,
             weight = 0.15
         ),
-        Product(
+        ProductDto(
             guid = "493ef2ba-cd2f-4ca5-b3af-f9091115700e",
             availableCount = 45,
             count = 12,
@@ -155,7 +155,7 @@ class MockRepository {
             rating = 2.8,
             weight = 1.2
         ),
-        Product(
+        ProductDto(
             guid = "ceadee7a-9d10-4987-8ed3-0624d6fbe5c0",
             name = "Авокадо Хасс",
             "600",
@@ -165,7 +165,7 @@ class MockRepository {
             availableCount = 689,
             count = 23
         ),
-        Product(
+        ProductDto(
             "c3cfe1a8-6eec-4e9f-a260-490e128763f4",
             "Молоко",
             "65",
@@ -180,7 +180,7 @@ class MockRepository {
                 "Высота" to "90", "Ширина" to "10", "Глубина" to "10"
             )
         ),
-        Product(
+        ProductDto(
             "a9cd4415-48b0-4557-8f29-6d28824fe91b",
             "Мороженое сорбет",
             "110",
@@ -191,7 +191,7 @@ class MockRepository {
             count = 3,
             availableCount = 874,
         ),
-        Product(
+        ProductDto(
             "856c1c90-1b8e-46ba-a5de-bc818dc1bdbd",
             "Сырок творожный",
             "23",
@@ -208,7 +208,7 @@ class MockRepository {
                 "Минусы" to "нет"
             )
         ),
-        Product(
+        ProductDto(
             "ebe799f5-6e01-45dc-8139-e714753896c1",
             "Блинчики домашние",
             "189",

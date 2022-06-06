@@ -38,16 +38,17 @@ class ProductsAdapter(
         fun bind(item: ProductInListVO) {
             currentProduct = item.guid
             with(binding) {
-                Glide.with(itemView).load(item.image).into(imageProductList)
-                name.text = item.name
-                price.text = binding.root.resources.getString(R.string.price, item.price)
-                rating.rating = item.rating
-                counter.text = item.counter
+                Glide.with(itemView).load(item.image).into(productImage)
+                nameTextView.text = item.name
+                priceTextView.text = binding.root.resources.getString(R.string.price, item.price)
+                ratingRatingBar.rating = item.rating
+                counterTextView.text = item.counter
             }
         }
     }
 
     class ProductsDiffUtilCallback : DiffUtil.ItemCallback<ProductInListVO>() {
+
         override fun areItemsTheSame(oldItem: ProductInListVO, newItem: ProductInListVO): Boolean {
             return oldItem.guid == newItem.guid
         }

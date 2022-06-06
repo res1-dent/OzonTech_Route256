@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/productIV"
+        android:id="@+id/productImageView"
         android:layout_width="match_parent"
         android:layout_height="280dp"
         android:scaleType="centerCrop"
@@ -15,7 +15,7 @@
         tools:src="@tools:sample/avatars" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/nameTV"
+        android:id="@+id/nameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -25,11 +25,11 @@
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/productIV"
+        app:layout_constraintTop_toBottomOf="@id/productImageView"
         tools:text="Яблоки" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/priceTV"
+        android:id="@+id/priceTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -38,48 +38,48 @@
         android:textColor="@color/black"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/nameTV"
+        app:layout_constraintTop_toBottomOf="@id/nameTextView"
         tools:text="15P" />
 
     <androidx.appcompat.widget.AppCompatRatingBar
-        android:id="@+id/rating"
+        android:id="@+id/ratingRatingBar"
         style="@style/Widget.AppCompat.RatingBar.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:isIndicator="true"
         android:rating="3"
-        app:layout_constraintStart_toStartOf="@id/priceTV"
-        app:layout_constraintTop_toBottomOf="@id/priceTV" />
+        app:layout_constraintStart_toStartOf="@id/priceTextView"
+        app:layout_constraintTop_toBottomOf="@id/priceTextView" />
 
     <TextView
-        android:id="@+id/description"
+        android:id="@+id/descriptionTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textAppearance="?attr/textAppearanceBody1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/priceTV"
-        app:layout_constraintTop_toBottomOf="@id/rating"
+        app:layout_constraintStart_toStartOf="@id/priceTextView"
+        app:layout_constraintTop_toBottomOf="@id/ratingRatingBar"
         tools:text="Курица мираторг очень вкусная" />
 
 
     <TextView
-        android:id="@+id/av_count"
+        android:id="@+id/availableCountTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textAppearance="?attr/textAppearanceBody1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/priceTV"
-        app:layout_constraintTop_toBottomOf="@id/description"
+        app:layout_constraintStart_toStartOf="@id/priceTextView"
+        app:layout_constraintTop_toBottomOf="@id/descriptionTextView"
         tools:text="@string/available_count" />
 
     <TextView
-        android:id="@+id/count"
+        android:id="@+id/countTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textAppearance="?attr/textAppearanceBody1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/priceTV"
-        app:layout_constraintTop_toBottomOf="@id/av_count"
+        app:layout_constraintStart_toStartOf="@id/priceTextView"
+        app:layout_constraintTop_toBottomOf="@id/availableCountTextView"
         tools:text="@string/count_string" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,7 +8,7 @@ class ProductRepositoryImpl(
     private val mockRepository: MockRepository
 ) : ProductRepository {
 
-    override  fun fetchProductDetails(guid: String): ProductDO {
-        return mockRepository.productDTO.find { it.guid == guid }?.toDO() ?: error("No such element")
+    override  fun fetchProductDetails(guid: String): ProductDO? {
+        return mockRepository.productDTO.find { it.guid == guid }?.toDO()
     }
 }

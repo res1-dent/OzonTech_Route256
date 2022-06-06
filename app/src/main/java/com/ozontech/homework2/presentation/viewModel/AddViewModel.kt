@@ -5,11 +5,11 @@ import androidx.lifecycle.viewModelScope
 import com.ozontech.homework2.domain.interactors.AddInteractor
 import kotlinx.coroutines.launch
 
-class AddViewModel (
+class AddViewModel(
     private val interactor: AddInteractor
 ) : ViewModel() {
 
-    fun addRandom() {
+    fun addRandomProduct() {
         viewModelScope.launch {
             interactor.addRandomProduct()
         }

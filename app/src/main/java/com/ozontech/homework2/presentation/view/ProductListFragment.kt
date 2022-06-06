@@ -21,7 +21,7 @@ class ProductListFragment : Fragment(R.layout.fragment_product_list) {
     private val viewModel: ProductListViewModel by viewModelCreator {
         ProductListViewModel(ServiceLocator.productInListInteractor)
     }
-    private val adapter: ProductsAdapter by autoCleared { ProductsAdapter(::navigateToDetails) }
+    private val adapter: ProductsAdapter by autoCleared { ProductsAdapter(::navigateToPDPFragment) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -31,26 +31,28 @@ class ProductListFragment : Fragment(R.layout.fragment_product_list) {
     }
 
     private fun setListeners() {
-        binding.addFab.setOnClickListener {
-            findNavController().navigate(R.id.action_productListFragment_to_addFragment)
-        }
+        binding.addFab.setOnClickListener(::navigateToAddFragment)
+    }
+
+    private fun navigateToAddFragment(v: View) {
+        findNavController().navigate(R.id.action_productListFragment_to_addFragment)
     }
 
     private fun observeViewModelState() {
         viewModel.getListOfProducts()
-        viewModel.productsList.observe(viewLifecycleOwner) {
+        viewModel.productsListLiveData.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
     }
 
     private fun initList() {
         with(binding) {
-            productList.adapter = this@ProductListFragment.adapter
-            productList.addItemDecoration(ProductItemDecorator(20))
+            productListRecycler.adapter = this@ProductListFragment.adapter
+            productListRecycler.addItemDecoration(ProductItemDecorator(20))
         }
     }
 
-    private fun navigateToDetails(guid: String) {
+    private fun navigateToPDPFragment(guid: String) {
         viewModel.incrementCounter(guid)
         val action = ProductListFragmentDirections.actionProductListFragmentToPDPFragment(guid)
         findNavController().navigate(action)

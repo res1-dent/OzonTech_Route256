@@ -3,7 +3,6 @@ package com.ozontech.homework2.presentation.view
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
@@ -35,32 +34,20 @@ class PDPFragment : Fragment(R.layout.pdp_fragment) {
     }
 
     private fun observeViewModelState() {
-        viewModel.productLD.observe(viewLifecycleOwner) {
-            updateProduct(it)
-            /* if (!it.isInCart) {
-                 showMessage(it.counter)
-             }*/
-        }
+        viewModel.productLiveData.observe(viewLifecycleOwner, ::updateProduct)
     }
 
-    /*  private fun showMessage(counter: Int) {
-          Log.e("counter", "counter = $counter")
-          if (counter > 1) {
-              Log.e("counter", "counter in if = $counter")
-              val message = getString(R.string.counter_message, counter)
-              Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-          }
-      }*/
 
     private fun updateProduct(product: ProductVO) {
         with(binding) {
-            Glide.with(requireView()).load(product.images.first()).into(productIV)
-            nameTV.text = product.name
-            priceTV.text = getString(R.string.price, product.price)
-            rating.rating = product.rating
-            description.text = product.description
-            avCount.text = getString(R.string.available_count, product.availableCount ?: 0)
-            count.text =
+            Glide.with(requireView()).load(product.images.first()).into(productImageView)
+            nameTextView.text = product.name
+            priceTextView.text = getString(R.string.price, product.price)
+            ratingRatingBar.rating = product.rating
+            descriptionTextView.text = product.description
+            availableCountTextView.text =
+                getString(R.string.available_count, product.availableCount ?: 0)
+            countTextView.text =
                 getString(R.string.count_string, product.count ?: 0)
         }
 
