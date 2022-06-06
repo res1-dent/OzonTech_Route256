@@ -16,11 +16,6 @@ import com.ozontech.homework2.domain.repositories.ProductRepository
 // [тут](https://habr.com/ru/post/465395/) и [тут](https://javatutor.net/articles/j2ee-pattern-service-locator).
 
 object ServiceLocator {
-    private lateinit var context: Application
-
-    fun init(context: Application){
-        this@ServiceLocator.context = context
-    }
 
     private val mockRepository: MockRepository by lazy {
         MockRepository()
