@@ -8,7 +8,7 @@ import com.ozontech.homework2.data.db.models.productsInList.ProductsInListDB
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-@Database(entities = [ProductsInListDB::class, ProductDB::class], version = DB_VERSION)
+@Database(entities = [ProductDB::class], version = DB_VERSION)
 abstract class ProductsDatabase : RoomDatabase() {
 
 
