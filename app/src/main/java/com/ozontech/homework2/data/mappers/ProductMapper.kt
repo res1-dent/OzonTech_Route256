@@ -1,7 +1,7 @@
 package com.ozontech.homework2.data.mappers
 
-import com.ozontech.homework2.data.db.models.products.ProductDB
 import com.ozontech.homework2.data.dto.Product
+import com.ozontech.homework2.data.dto.ProductInList
 import com.ozontech.homework2.domain.domainObjects.ProductDO
 
 fun Product.toDO(): ProductDO = ProductDO(
@@ -17,21 +17,14 @@ fun Product.toDO(): ProductDO = ProductDO(
     count = count,
     availableCount = availableCount,
     additionalParams = additionalParams,
-    counter = counter
 )
 
-fun Product.toProduct(): ProductDB = ProductDB(
+fun Product.toProductInList(): ProductInList = ProductInList(
     guid = guid,
-    images = images.first(),
+    image = images.first(),
     name = name,
     price = price,
-    rating = rating.toFloat(),
+    rating = rating,
     isFavorite = isFavorite,
     isInCart = isInCart,
-    description = description,
-    weight = weight.toString(),
-    availableCount = availableCount.toString(),
-    count = count.toString(),
-    additionalParams = additionalParams
-
 )

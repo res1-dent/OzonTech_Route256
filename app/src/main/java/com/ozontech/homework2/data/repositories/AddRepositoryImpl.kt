@@ -1,26 +1,22 @@
 package com.ozontech.homework2.data.repositories
 
-import com.ozontech.homework2.data.db.ProductDao
-import com.ozontech.homework2.data.db.models.products.ProductDB
+import com.ozontech.homework2.data.mappers.toProductInList
 import com.ozontech.homework2.domain.repositories.AddRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.withContext
 import java.util.*
-import javax.inject.Inject
 
-class AddRepositoryImpl @Inject constructor(
-    private val productDao: ProductDao,
+class AddRepositoryImpl(
+    private val mockRepository: MockRepository
 ) : AddRepository {
 
-    override suspend fun addRandomProduct() = withContext(Dispatchers.IO) {
-        val product = generateRandomProduct()
-        productDao.insertProductDB(listOf(product))
+    override fun addRandomProduct() {
+        val newGuid = UUID.randomUUID().toString()
+        val product = mockRepository.productDTO.random().copy(guid = newGuid)
+
+        mockRepository.apply {
+            productDTO.add(product)
+            productInListDTOs.add(product.toProductInList())
+        }
     }
 
-    private suspend fun generateRandomProduct(): ProductDB = withContext(Dispatchers.IO) {
-        productDao.getAllProducts().first().random()
-            .copy(guid = UUID.randomUUID().toString(), counter = 0)
-    }
 
 }

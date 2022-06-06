@@ -5,15 +5,14 @@ import com.ozontech.homework2.domain.repositories.ProductRepository
 import com.ozontech.homework2.presentation.viewObjects.ProductVO
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
-class PDPInteractorImpl @Inject constructor(
+class PDPInteractorImpl (
     private val repository: ProductRepository
 ) : PDPInteractor {
 
-    override suspend fun getProductByGuid(guid: String): ProductVO = withContext(Dispatchers.IO) {
+    override  fun getProductByGuid(guid: String): ProductVO =
         repository.fetchProductDetails(guid).toVO()
-    }
+
 
 
 }

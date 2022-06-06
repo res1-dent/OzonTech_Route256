@@ -9,5 +9,6 @@ data class ProductInList(
     val rating: Double,
     val isFavorite: Boolean,
     val isInCart: Boolean,
-    val counter: Int
+    val counter: Int = 0
 )
+

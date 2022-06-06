@@ -9,16 +9,18 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
 import com.ozontech.homework2.R
 import com.ozontech.homework2.databinding.PdpFragmentBinding
+import com.ozontech.homework2.di.ServiceLocator
 import com.ozontech.homework2.presentation.viewModel.PDPViewModel
+import com.ozontech.homework2.presentation.viewModel.viewModelCreator
 import com.ozontech.homework2.presentation.viewObjects.ProductVO
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class PDPFragment : Fragment(R.layout.pdp_fragment) {
 
     private val binding by viewBinding(PdpFragmentBinding::bind)
     private val args: PDPFragmentArgs by navArgs()
-    private val viewModel: PDPViewModel by viewModels()
+    private val viewModel: PDPViewModel by viewModelCreator {
+        PDPViewModel(ServiceLocator.pdpInteractor)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

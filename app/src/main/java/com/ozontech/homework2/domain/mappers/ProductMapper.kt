@@ -17,5 +17,4 @@ fun ProductDO.toVO(): ProductVO = ProductVO(
     count = count,
     availableCount = availableCount,
     additionalParams = additionalParams,
-    counter = counter
 )

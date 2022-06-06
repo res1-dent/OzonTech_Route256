@@ -1,7 +1,11 @@
 package com.ozontech.homework2
 
 import android.app.Application
-import dagger.hilt.android.HiltAndroidApp
+import com.ozontech.homework2.di.ServiceLocator
 
-@HiltAndroidApp
-class App : Application()
+class App : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        ServiceLocator.init(this)
+    }
+}

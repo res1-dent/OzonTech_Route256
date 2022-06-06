@@ -7,12 +7,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ozontech.homework2.domain.interactors.PDPInteractor
 import com.ozontech.homework2.presentation.viewObjects.ProductVO
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class PDPViewModel @Inject constructor(
+class PDPViewModel (
     private val interactor: PDPInteractor
 ) : ViewModel() {
 

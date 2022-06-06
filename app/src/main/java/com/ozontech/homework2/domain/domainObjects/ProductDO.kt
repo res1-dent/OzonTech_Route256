@@ -13,5 +13,4 @@ data class ProductDO(
     val count: Int?,
     val availableCount: Int?,
     val additionalParams: Map<String, String>,
-    val counter: Int
 )

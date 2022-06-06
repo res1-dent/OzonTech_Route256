@@ -6,18 +6,17 @@ import com.ozontech.homework2.presentation.viewObjects.ProductInListVO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
-import javax.inject.Inject
 
-class ProductListInteractorImpl @Inject constructor(
+class ProductListInteractorImpl(
     private val repository: ProductListRepository
 ) : ProductListInteractor {
-    override suspend fun getProducts(): Flow<List<ProductInListVO>> = flow {
+    override  fun getProducts(): Flow<List<ProductInListVO>> = flow {
         repository.fetchListOfProducts().collect {
             emit(it.map { productInListDO -> productInListDO.toVO() })
         }
     }
 
-    override suspend fun incrementCounter(guid: String) {
+    override  fun incrementCounter(guid: String) {
         repository.incrementCounter(guid)
     }
 }
