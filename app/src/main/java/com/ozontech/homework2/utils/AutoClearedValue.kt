@@ -11,6 +11,7 @@ class AutoClearedValue<T : Any>(
     event: Lifecycle.Event,
     value: T
 ) : ReadWriteProperty<Fragment, T> {
+
     private var _value: T? = null
 
     init {

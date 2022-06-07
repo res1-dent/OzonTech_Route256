@@ -22,21 +22,18 @@ class ProductsAdapter(
         holder.bind(currentList[position])
     }
 
-    class Holder(
-        private val binding: ProductListItemBinding,
-        private val onProductClick: (String) -> Unit
+    inner class Holder(
+	    private val binding: ProductListItemBinding,
+	    private val onProductClick: (String) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        private var currentProduct: String? = null
+	    init {
+		    binding.root.setOnClickListener {
+			    currentList[absoluteAdapterPosition].guid.let(onProductClick)
+		    }
+	    }
 
-        init {
-            binding.root.setOnClickListener {
-                currentProduct?.let(onProductClick)
-            }
-        }
-
-        fun bind(item: ProductInListVO) {
-            currentProduct = item.guid
+	    fun bind(item: ProductInListVO) {
             with(binding) {
                 Glide.with(itemView).load(item.image).into(productImage)
                 nameTextView.text = item.name
@@ -57,7 +54,12 @@ class ProductsAdapter(
             oldItem: ProductInListVO,
             newItem: ProductInListVO
         ): Boolean {
-            return oldItem == newItem
+	        if (oldItem.image != newItem.image) return false
+	        if (oldItem.name != newItem.name) return false
+	        if (oldItem.price != newItem.price) return false
+	        if (oldItem.rating != newItem.rating) return false
+	        if (oldItem.counter != newItem.counter) return false
+	        return true
         }
     }
 }

@@ -107,7 +107,10 @@ class MockRepository {
             name = "Борщ по-домашнему",
             price = "199",
             rating = 4.6,
-            weight = 0.4
+            weight = 0.4,
+            additionalParams = emptyMap(),
+            isInCart = false,
+            isFavorite = false
         ),
         ProductDto(
             guid = "5cbbb7d0-e9c6-4932-8d85-79313c58e465",
@@ -120,8 +123,10 @@ class MockRepository {
             name = "Ваш любимый Сальчичон",
             price = "79",
             rating = 5.0,
-            weight = 0.2
-        ),
+            weight = 0.2,
+            isInCart = false,
+
+            ),
         ProductDto(
             guid = "cc87f70d-7570-42ee-a221-db8887534896",
             availableCount = 1000,
@@ -130,7 +135,11 @@ class MockRepository {
             images = listOf("https://cdn1.ozone.ru/s3/multimedia-9/6012020949.jpg"),
             name = "Бельгийская смесь \"Мираторг\"",
             price = "149",
-            rating = 3.2
+            rating = 3.2,
+            additionalParams = emptyMap(),
+            isInCart = false,
+            isFavorite = false,
+            weight = 0.0
         ),
         ProductDto(
             guid = "627de4ca-b4fd-46ea-9201-562448af6fc1",
@@ -141,7 +150,10 @@ class MockRepository {
             name = "Джем Ozon Express",
             price = "1390",
             rating = 4.6,
-            weight = 0.15
+            weight = 0.15,
+            additionalParams = emptyMap(),
+            isInCart = false,
+            isFavorite = false
         ),
         ProductDto(
             guid = "493ef2ba-cd2f-4ca5-b3af-f9091115700e",
@@ -153,7 +165,9 @@ class MockRepository {
             name = "Мармелад клюква с ягелем",
             price = "319",
             rating = 2.8,
-            weight = 1.2
+            weight = 1.2,
+            additionalParams = emptyMap(),
+            isInCart = false,
         ),
         ProductDto(
             guid = "ceadee7a-9d10-4987-8ed3-0624d6fbe5c0",
@@ -163,7 +177,11 @@ class MockRepository {
             4.5,
             images = listOf("https://cdn1.ozone.ru/s3/multimedia-8/6288053576.jpg"),
             availableCount = 689,
-            count = 23
+            count = 23,
+            additionalParams = emptyMap(),
+            isInCart = false,
+            weight = 0.0,
+            isFavorite = false
         ),
         ProductDto(
             "c3cfe1a8-6eec-4e9f-a260-490e128763f4",
@@ -178,7 +196,8 @@ class MockRepository {
             availableCount = 90,
             additionalParams = mapOf(
                 "Высота" to "90", "Ширина" to "10", "Глубина" to "10"
-            )
+            ),
+            isInCart = false,
         ),
         ProductDto(
             "a9cd4415-48b0-4557-8f29-6d28824fe91b",
@@ -190,6 +209,9 @@ class MockRepository {
             weight = 0.23,
             count = 3,
             availableCount = 874,
+            additionalParams = emptyMap(),
+            isInCart = false,
+            isFavorite = false
         ),
         ProductDto(
             "856c1c90-1b8e-46ba-a5de-bc818dc1bdbd",
@@ -206,7 +228,8 @@ class MockRepository {
                 "Вкус" to "100",
                 "Размер" to "Слишком маленький",
                 "Минусы" to "нет"
-            )
+            ),
+            isInCart = false
         ),
         ProductDto(
             "ebe799f5-6e01-45dc-8139-e714753896c1",
@@ -222,7 +245,9 @@ class MockRepository {
                 "Температура" to "50'c",
                 "Количество в упаковке" to "хотелось бы и побольше",
                 "Начинка" to "нет"
-            )
+            ),
+            isInCart = false,
+            isFavorite = false
         )
     )
 }

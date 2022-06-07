@@ -11,7 +11,6 @@ class ProductRepositoryImpl(
     private val mockRepository: MockRepository
 ) : ProductRepository {
 
-
     override fun fetchListOfProducts(): List<ProductInListDO> =
         mockRepository.productInListDTOs.map { it.toDO() }
 

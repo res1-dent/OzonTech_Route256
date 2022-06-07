@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.ozontech.homework2.R
 import com.ozontech.homework2.databinding.FragmentProductListBinding
@@ -37,12 +38,7 @@ class ProductListFragment : Fragment() {
     }
 
     private fun navigateToAddFragment(v: View) {
-        //Nav Component
-        //findNavController().navigate(R.id.action_productListFragment_to_addFragment)
-
-        //Default
-        parentFragmentManager.beginTransaction().replace(R.id.fragmentContainerView, AddFragment())
-            .addToBackStack(null).commit()
+        findNavController().navigate(R.id.action_productListFragment_to_addFragment)
     }
 
     private fun observeViewModelState() {
@@ -61,15 +57,8 @@ class ProductListFragment : Fragment() {
 
     private fun navigateToPDPFragment(guid: String) {
         viewModel.incrementCounter(guid)
-
-        //With Nav Component
-        /* val action = ProductListFragmentDirections.actionProductListFragmentToPDPFragment(guid)
-         findNavController().navigate(action)*/
-
-        //Default
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainerView, PDPFragment.newInstance(guid)).addToBackStack(null)
-            .commit()
+        val action = ProductListFragmentDirections.actionProductListFragmentToPDPFragment(guid)
+        findNavController().navigate(action)
     }
 
     override fun onCreateView(

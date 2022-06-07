@@ -6,9 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.ozontech.homework2.R
 import com.ozontech.homework2.databinding.FragmentAddBinding
-import com.ozontech.homework2.databinding.PdpFragmentBinding
 import com.ozontech.homework2.di.ServiceLocator
 import com.ozontech.homework2.presentation.viewModel.AddViewModel
 import com.ozontech.homework2.presentation.viewModel.viewModelCreator
@@ -27,9 +25,7 @@ class AddFragment : Fragment() {
     }
 
     private fun setListeners() {
-        binding.addRandomButton.setOnClickListener {
-            viewModel.addRandomProduct()
-        }
+        binding.addRandomButton.setOnClickListener(viewModel::addRandomProduct)
     }
 
     override fun onCreateView(

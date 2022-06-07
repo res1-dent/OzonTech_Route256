@@ -12,8 +12,8 @@ fun ProductDO.toVO(): ProductVO = ProductVO(
     isFavorite = isFavorite,
     isInCart = isInCart,
     images = images,
-    weight = weight,
-    count = count,
-    availableCount = availableCount,
+    weight = weight ?: 0.0,
+    count = count ?: 0,
+    availableCount = availableCount ?: 0,
     additionalParams = additionalParams,
 )

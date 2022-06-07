@@ -9,8 +9,8 @@ data class ProductVO(
     val isFavorite: Boolean,
     val isInCart: Boolean,
     val images: List<String>,
-    val weight: Double?,
-    val count: Int?,
-    val availableCount: Int?,
+    val weight: Double,
+    val count: Int,
+    val availableCount: Int,
     val additionalParams: Map<String, String>,
 )
