@@ -1,4 +1,4 @@
-package com.ozontech.homework2.domain.mappers
+package com.ozontech.homework2.presentation.mappers
 
 import com.ozontech.homework2.domain.domainObjects.ProductInListDO
 import com.ozontech.homework2.presentation.viewObjects.ProductInListVO

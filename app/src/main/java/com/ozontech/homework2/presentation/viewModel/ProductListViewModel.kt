@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ozontech.homework2.domain.interactors.ProductListInteractor
+import com.ozontech.homework2.presentation.mappers.toVO
 import com.ozontech.homework2.presentation.viewObjects.ProductInListVO
 
 
@@ -15,7 +16,7 @@ class ProductListViewModel(
     val productsListLiveData: LiveData<List<ProductInListVO>> = _productsListMutableLiveData
 
     fun getListOfProducts() {
-        val productList = interactor.getProducts()
+        val productList = interactor.getProducts().map { it.toVO()}
         _productsListMutableLiveData.postValue(productList)
     }
 

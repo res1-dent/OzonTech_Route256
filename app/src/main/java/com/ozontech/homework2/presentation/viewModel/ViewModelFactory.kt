@@ -11,8 +11,9 @@ class ViewModelFactory(
     private val viewModelCreator: ViewModelCreator = { null }
 ) : ViewModelProvider.Factory {
 
-    @Suppress("UNCHECKED_CAST")
+     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>) = viewModelCreator() as T
+
 }
 
 inline fun <reified VM : ViewModel> Fragment.viewModelCreator(noinline creator: ViewModelCreator): Lazy<VM> =

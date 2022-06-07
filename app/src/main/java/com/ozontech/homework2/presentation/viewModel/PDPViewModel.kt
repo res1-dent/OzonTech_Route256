@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ozontech.homework2.domain.interactors.PDPInteractor
+import com.ozontech.homework2.presentation.mappers.toVO
 import com.ozontech.homework2.presentation.viewObjects.ProductVO
 
 class PDPViewModel(
@@ -15,8 +16,8 @@ class PDPViewModel(
 
     fun getProductByGuid(guid: String) {
         val product = interactor.getProductByGuid(guid)
-        product?.let { productVO->
-            _productMutableLiveData.postValue(productVO)
+        product?.let { productDO->
+            _productMutableLiveData.postValue(productDO.toVO())
         }
 
     }
