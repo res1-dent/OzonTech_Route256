@@ -1,7 +1,9 @@
 package com.ozontech.homework2.presentation.view
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -12,11 +14,14 @@ import com.ozontech.homework2.di.ServiceLocator
 import com.ozontech.homework2.presentation.viewModel.PDPViewModel
 import com.ozontech.homework2.presentation.viewModel.viewModelCreator
 import com.ozontech.homework2.presentation.viewObjects.ProductVO
+import com.ozontech.homework2.utils.inflate
 
-class PDPFragment : Fragment(R.layout.pdp_fragment) {
+class PDPFragment : Fragment() {
 
     private val binding by viewBinding(PdpFragmentBinding::bind)
     private val args: PDPFragmentArgs by navArgs()
+
+
     private val viewModel: PDPViewModel by viewModelCreator {
         PDPViewModel(ServiceLocator.pdpInteractor)
     }
@@ -50,6 +55,13 @@ class PDPFragment : Fragment(R.layout.pdp_fragment) {
             countTextView.text =
                 getString(R.string.count_string, product.count ?: 0)
         }
+    }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return container?.inflate(PdpFragmentBinding::inflate)?.root
     }
 }

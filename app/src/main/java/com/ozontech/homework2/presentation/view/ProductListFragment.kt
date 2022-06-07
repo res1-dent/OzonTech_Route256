@@ -1,21 +1,25 @@
 package com.ozontech.homework2.presentation.view
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.ozontech.homework2.R
 import com.ozontech.homework2.databinding.FragmentProductListBinding
+import com.ozontech.homework2.databinding.ProductListItemBinding
 import com.ozontech.homework2.di.ServiceLocator
 import com.ozontech.homework2.presentation.adapter.ProductsAdapter
 import com.ozontech.homework2.presentation.adapter.decorators.ProductItemDecorator
 import com.ozontech.homework2.presentation.viewModel.ProductListViewModel
 import com.ozontech.homework2.presentation.viewModel.viewModelCreator
 import com.ozontech.homework2.utils.autoCleared
+import com.ozontech.homework2.utils.inflate
 
 
-class ProductListFragment : Fragment(R.layout.fragment_product_list) {
+class ProductListFragment : Fragment() {
 
     private val binding by viewBinding(FragmentProductListBinding::bind)
     private val viewModel: ProductListViewModel by viewModelCreator {
@@ -56,5 +60,13 @@ class ProductListFragment : Fragment(R.layout.fragment_product_list) {
         viewModel.incrementCounter(guid)
         val action = ProductListFragmentDirections.actionProductListFragmentToPDPFragment(guid)
         findNavController().navigate(action)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return container?.inflate(FragmentProductListBinding::inflate)?.root
     }
 }
