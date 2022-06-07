@@ -33,7 +33,11 @@ class PDPFragment : Fragment() {
     }
 
     private fun init() {
-        args.guid.let {
+        //With Nav Component
+       // viewModel.getProductByGuid(args.guid)
+
+        //Default
+        requireArguments().getString(KEY_GUID)?.let {
             viewModel.getProductByGuid(it)
         }
     }
@@ -63,5 +67,16 @@ class PDPFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return container?.inflate(PdpFragmentBinding::inflate)?.root
+    }
+
+    companion object {
+        private const val KEY_GUID = "guid"
+
+        fun newInstance(guid: String): PDPFragment {
+            val bundle = Bundle().apply { putString(KEY_GUID, guid) }
+            return PDPFragment().apply {
+                arguments = bundle
+            }
+        }
     }
 }
