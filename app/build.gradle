@@ -49,6 +49,8 @@ dependencies {
     implementation project(path: ':feature-products-impl')
     implementation project(path: ':feature-products-api')
     implementation project(path: ':feature-add-product-impl')
+    implementation project(path: ':core-navigation-impl')
+    implementation project(path: ':core-navigation-api')
 
     implementation coreKtx
     implementation navigation.values()

@@ -1,4 +1,4 @@
-package com.ozontech.homework2
+package com.ozontech.core_navigation_impl
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -10,17 +10,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
 	companion object : ProductNavigationApi {
 		override fun navigateToPDP(fragment: Fragment, guid: String) {
-			fragment.parentFragmentManager.beginTransaction().replace(
-				R.id.fragmentContainerView,
-				PdpFragment.newInstance(guid)
-			).addToBackStack(null).commit()
+
 		}
 
 		override fun navigateToAdd(fragment: Fragment) {
-			fragment.parentFragmentManager.beginTransaction().replace(
-				R.id.fragmentContainerView,
-				ProductAddFragment()
-			).addToBackStack(null).commit()
+
 		}
 	}
 }

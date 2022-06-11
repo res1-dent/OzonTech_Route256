@@ -1,4 +1,4 @@
-package com.ozontech.homework2
+package com.ozontech.core_navigation_impl.di
 
 import com.ozontech.core_network_impl.di.CoreNetworkComponent
 import com.ozontech.core_network_impl.di.DaggerCoreNetworkComponent
@@ -43,7 +43,7 @@ class DIComponentStorage {
 					.productFeatureDependencies(
 						DaggerFeatureProductComponent_ProductFeatureDependenciesComponent.builder()
 							.networkApi(initAndGet(CoreNetworkComponent::class))
-							.productNavigationApi(MainActivity.Companion)
+							.productNavigationApi(initAndGet(DaggerCoreNavigationComponent::class).getProductNavigation())
 							.build()
 					)
 					.build()
@@ -63,6 +63,9 @@ class DIComponentStorage {
 							.networkApi(initAndGet(CoreNetworkComponent::class))
 							.build()
 					).build()
+			}
+			DaggerCoreNavigationComponent::class -> {
+				DaggerCoreNavigationComponent.create()
 			}
 			else -> throw Exception("cannot find component")
 		} as T
