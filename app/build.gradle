@@ -6,7 +6,7 @@ plugins {
     id "androidx.navigation.safeargs.kotlin"
 }
 
-apply from: "dependencies.gradle"
+apply from: "../dependencies.gradle"
 
 android {
     compileSdk 32
@@ -42,6 +42,14 @@ android {
 
 dependencies {
 
+    implementation project(path: ':core-network-api')
+    implementation project(path: ':core-network-impl')
+    implementation project(path: ':core-utils')
+    implementation project(path: ':feature-pdp-impl')
+    implementation project(path: ':feature-products-impl')
+    implementation project(path: ':feature-products-api')
+    implementation project(path: ':feature-add-product-impl')
+
     implementation coreKtx
     implementation navigation.values()
     implementation appCompat
@@ -52,13 +60,15 @@ dependencies {
     implementation liveData
     implementation glide
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
     testImplementation junit
     androidTestImplementation androidTestJunit
     androidTestImplementation espresso
-    //ViewBinding
-    implementation 'com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.5.6'
-    //GSON
-    implementation 'com.google.code.gson:gson:2.8.9'
+
+    implementation viewBinding
+
+    implementation dagger
+    kapt daggerCompiler
 
 
 
