@@ -64,6 +64,6 @@
             app:layout_constraintTop_toBottomOf="@id/ratingRatingBar"
             tools:text="169 P" />
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </com.google.android.material.card.MaterialCardView>

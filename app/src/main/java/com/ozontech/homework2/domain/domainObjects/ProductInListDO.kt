@@ -1,6 +1,5 @@
 package com.ozontech.homework2.domain.domainObjects
 
-
 data class ProductInListDO(
     val guid: String,
     val image: String,

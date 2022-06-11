@@ -19,6 +19,5 @@ class PDPViewModel(
         product?.let { productDO->
             _productMutableLiveData.postValue(productDO.toVO())
         }
-
     }
 }
