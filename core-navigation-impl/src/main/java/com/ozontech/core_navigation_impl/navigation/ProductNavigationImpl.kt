@@ -11,6 +11,7 @@ import com.ozontech.feature_products_api.ProductNavigationApi
 import javax.inject.Inject
 
 class ProductNavigationImpl @Inject constructor() : ProductNavigationApi {
+
     override fun navigateToPDP(fragment: Fragment, guid: String) {
         fragment.getComp(FeaturePdpComponent::class)
         fragment.parentFragmentManager.beginTransaction().replace(

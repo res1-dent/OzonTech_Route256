@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.ozontech.core_utils.di.DiComponent
 import com.ozontech.core_utils.di.DiStorage
+import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KClass
 
 fun <T : ViewBinding> ViewGroup.inflate(
@@ -28,6 +29,14 @@ fun <T: DiComponent> Fragment.getComp(component: KClass<T>): T {
 @Suppress("UNCHECKED_CAST")
 fun <T: DiComponent> Fragment.releaseComp(component: KClass<T>){
     (requireContext().applicationContext as DiStorage<T>).release(component)
+}
+
+fun stringArgs(key: String): ReadOnlyProperty<Fragment, String> {
+    return ReadOnlyProperty { thisRef, _ ->
+        val args = thisRef.requireArguments()
+        require(args.containsKey(key)) { "Arguments don't contain key '$key'" }
+        requireNotNull(args.getString(key))
+    }
 }
 
 

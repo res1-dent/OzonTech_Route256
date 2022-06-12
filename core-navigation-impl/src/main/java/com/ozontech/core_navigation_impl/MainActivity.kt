@@ -2,8 +2,6 @@ package com.ozontech.core_navigation_impl
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.ozontech.feature_add_product_impl.presentation.view.ProductAddFragment
-import com.ozontech.feature_pdp_impl.presentation.view.PdpFragment
 import com.ozontech.feature_products_api.ProductNavigationApi
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
