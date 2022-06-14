@@ -1,5 +1,6 @@
 package com.ozontech.feature_add_product_impl.presentation.viewModel
 
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModel
 import com.ozontech.feature_add_product_impl.domain.interactor.AddInteractor

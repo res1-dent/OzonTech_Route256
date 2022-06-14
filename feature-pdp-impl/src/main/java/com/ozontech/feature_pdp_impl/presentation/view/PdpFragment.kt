@@ -17,7 +17,7 @@ import com.ozontech.feature_pdp_impl.presentation.view_model.PdpViewModelFactory
 import com.ozontech.feature_pdp_impl.presentation.view_objects.ProductVO
 import javax.inject.Inject
 
-class PdpFragment : Fragment() {
+class PdpFragment : BaseFragment<FeaturePdpComponent>(component = FeaturePdpComponent::class) {
 
 
 	private val viewModel: PdpViewModel by viewModels {
@@ -30,7 +30,7 @@ class PdpFragment : Fragment() {
 	private val guid: String by stringArgs(KEY_GUID)
 
 	override fun onAttach(context: Context) {
-		getComp(FeaturePdpComponent::class).inject(this)
+		currentComponent.inject(this)
 		super.onAttach(context)
 	}
 
@@ -63,13 +63,6 @@ class PdpFragment : Fragment() {
 		savedInstanceState: Bundle?
 	): View? {
 		return container?.inflate(FragmentPdpBinding::inflate)?.root
-	}
-
-	override fun onPause() {
-		super.onPause()
-		if (isRemoving){
-			releaseComp(FeaturePdpComponent::class)
-		}
 	}
 
 	companion object {

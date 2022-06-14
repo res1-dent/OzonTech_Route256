@@ -42,6 +42,9 @@ dependencies {
     implementation project(":feature-products-api")
     implementation project(":feature-products-impl")
     implementation project(path: ':core-navigation-api')
+    implementation project(path: ':feature-pdp-impl')
+    implementation project(path: ':feature-add-product-impl')
+    implementation project(path: ':core-utils')
 
 
     implementation coreKtx
@@ -49,9 +52,7 @@ dependencies {
 
     implementation dagger
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation project(path: ':feature-pdp-impl')
-    implementation project(path: ':feature-add-product-impl')
-    implementation project(path: ':core-utils')
+
     kapt daggerCompiler
 
 }
