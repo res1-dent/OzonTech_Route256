@@ -1,5 +1,6 @@
 package com.ozontech.core_navigation_impl.di
 
+import androidx.fragment.app.FragmentManager
 import com.ozontech.core_network_impl.di.CoreNetworkComponent
 import com.ozontech.core_network_impl.di.DaggerCoreNetworkComponent
 import com.ozontech.core_utils.di.DiComponent
@@ -14,7 +15,7 @@ import com.ozontech.feature_products_impl.di.DaggerFeatureProductComponent_Produ
 import com.ozontech.feature_products_impl.di.FeatureProductComponent
 import kotlin.reflect.KClass
 
-class DIComponentStorage {
+class DIComponentStorage(private val fragmentManager: FragmentManager) {
 
 	private val map: MutableMap<KClass<*>, Any> = mutableMapOf()
 
@@ -65,7 +66,7 @@ class DIComponentStorage {
 					).build()
 			}
 			DaggerCoreNavigationComponent::class -> {
-				DaggerCoreNavigationComponent.create()
+				DaggerCoreNavigationComponent.builder().fragmentManager(fragmentManager).build()
 			}
 			else -> throw Exception("cannot find component")
 		} as T

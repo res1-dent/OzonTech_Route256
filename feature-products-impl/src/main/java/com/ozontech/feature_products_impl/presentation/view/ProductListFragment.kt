@@ -1,20 +1,19 @@
 package com.ozontech.feature_products_impl.presentation.view
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.ozontech.core_utils.*
-import com.ozontech.feature_products_api.ProductNavigationApi
+import com.ozontech.core_utils.BaseFragment
+import com.ozontech.core_utils.autoCleared
+import com.ozontech.core_utils.inflate
 import com.ozontech.feature_products_impl.databinding.FragmentProductListBinding
 import com.ozontech.feature_products_impl.di.FeatureProductComponent
 import com.ozontech.feature_products_impl.presentation.adapter.ProductsAdapter
 import com.ozontech.feature_products_impl.presentation.adapter.decorators.ProductItemDecorator
 import com.ozontech.feature_products_impl.presentation.view_model.ProductListViewModel
-import javax.inject.Inject
 
 
 class ProductListFragment :
@@ -26,17 +25,7 @@ class ProductListFragment :
         currentComponent.fabric()
     }
     private val adapter: ProductsAdapter by autoCleared {
-        ProductsAdapter(
-            ::navigateToPDPFragment
-        )
-    }
-
-    @Inject
-    lateinit var productNavigationApi: ProductNavigationApi
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        currentComponent.inject(this)
+        ProductsAdapter(::onProductClick)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -47,7 +36,9 @@ class ProductListFragment :
     }
 
     private fun setListeners() {
-        binding.addFab.setOnClickListener(::navigateToAddFragment)
+        binding.addFab.setOnClickListener() {
+            viewModel.navigateToAddFragment()
+        }
     }
 
     private fun observeViewModelState() {
@@ -68,14 +59,8 @@ class ProductListFragment :
         }
     }
 
-    private fun navigateToAddFragment(v: View) {
-        productNavigationApi.navigateToAdd(this)
-    }
-
-    private fun navigateToPDPFragment(guid: String) {
-        viewModel.incrementCounter(guid)
-        productNavigationApi.navigateToPDP(this, guid)
-
+    private fun onProductClick(guid: String) {
+        viewModel.navigateToPDPFragment(guid)
     }
 
     override fun onCreateView(

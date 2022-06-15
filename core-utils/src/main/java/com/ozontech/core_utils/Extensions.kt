@@ -23,12 +23,12 @@ fun <T : ViewBinding> ViewGroup.inflate(
 
 @Suppress("UNCHECKED_CAST")
 fun <T: DiComponent> Fragment.getComp(component: KClass<T>): T {
-    return (requireContext().applicationContext as DiStorage<T>).initAndGet(component)
+    return (requireActivity() as DiStorage<T>).initAndGet(component)
 }
 
 @Suppress("UNCHECKED_CAST")
 fun <T: DiComponent> Fragment.releaseComp(component: KClass<T>){
-    (requireContext().applicationContext as DiStorage<T>).release(component)
+    (requireActivity() as DiStorage<T>).release(component)
 }
 
 fun stringArgs(key: String): ReadOnlyProperty<Fragment, String> {
