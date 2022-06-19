@@ -31,7 +31,6 @@ class ProductListFragment :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.e("Worker", "OncreateFragment")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,6 +38,11 @@ class ProductListFragment :
         initList()
         observeViewModelState()
         setListeners()
+    }
+
+    override fun onPause() {
+        viewModel.getProducts().removeObservers(viewLifecycleOwner)
+        super.onPause()
     }
 
 
@@ -49,7 +53,8 @@ class ProductListFragment :
     }
 
     private fun observeViewModelState() {
-        viewModel.productsListLiveData.observe(viewLifecycleOwner){
+        viewModel.getProducts().observe(viewLifecycleOwner){
+            Log.e("Fragment", "newList = ${it?.size}")
             adapter.submitList(it)
         }
     }

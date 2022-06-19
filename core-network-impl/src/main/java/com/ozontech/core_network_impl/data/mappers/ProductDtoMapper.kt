@@ -5,17 +5,6 @@ import com.ozontech.core_database_api.models.ProductInListDtoSharedPrefs
 import com.ozontech.core_network_api.models.ProductDto
 import com.ozontech.core_network_api.models.ProductInListDto
 
-fun ProductDto.toProductInList(): ProductInListDto {
-	return ProductInListDto(
-		guid = guid,
-		image = images.first(),
-		name = name,
-		price = price,
-		rating = rating,
-		isFavorite = isFavorite,
-		isInCart = isInCart,
-	)
-}
 
 
 fun ProductDto.toProductDtoSharedPrefs(): ProductDtoSharedPrefs {

@@ -9,6 +9,9 @@ import com.ozontech.core_network_impl.di.CoreNetworkComponent
 import com.ozontech.core_network_impl.di.DaggerCoreNetworkComponent
 import com.ozontech.core_network_impl.di.DaggerCoreNetworkComponent_CoreNetworkDependenciesComponent
 import com.ozontech.core_utils.di.DiComponent
+import com.ozontech.feature_add_product_impl.di.DaggerFeatureProductAddComponent
+import com.ozontech.feature_add_product_impl.di.DaggerFeatureProductAddComponent_ProductFeatureAddDependenciesComponent
+import com.ozontech.feature_add_product_impl.di.FeatureProductAddComponent
 import com.ozontech.feature_pdp_impl.di.DaggerFeaturePdpComponent
 import com.ozontech.feature_pdp_impl.di.DaggerFeaturePdpComponent_PdpDependenciesComponent
 import com.ozontech.feature_pdp_impl.di.FeaturePdpComponent
@@ -69,14 +72,15 @@ class DIComponentStorageImpl(private val context: Context) {
 							.build()
 					).build()
 			}
-			/*FeatureProductAddComponent::class -> {
+			FeatureProductAddComponent::class -> {
 				DaggerFeatureProductAddComponent.builder()
 					.productAddFeatureDependencies(
 						DaggerFeatureProductAddComponent_ProductFeatureAddDependenciesComponent.builder()
 							.networkApi(initAndGet(CoreNetworkComponent::class))
+							.databaseApi(initAndGet(CoreDatabaseComponent::class))
 							.build()
 					).build()
-			}*/
+			}
 			else -> throw Exception("cannot find component")
 		} as T
 	}

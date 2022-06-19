@@ -50,6 +50,7 @@ dependencies {
     implementation liveData
     implementation glide
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation project(path: ':core-database-api')
 
     testImplementation junit
     androidTestImplementation androidTestJunit

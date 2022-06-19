@@ -9,7 +9,6 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.ozontech.core_network_api.NetworkApi
 import com.ozontech.core_network_api.WorkerApi
 import com.ozontech.core_network_api.models.ProductInListDto
 import com.ozontech.core_network_impl.data.workers.ProductInListWorker
@@ -18,7 +17,7 @@ import com.ozontech.core_network_impl.domain.key.Key
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class NetworkApiImpl @Inject constructor(
+class WorkerApiImpl @Inject constructor(
 	private val workManager: WorkManager,
 ) : WorkerApi {
 
@@ -31,7 +30,7 @@ class NetworkApiImpl @Inject constructor(
 			.then(request2).enqueue()
 		return Transformations.map(workManager.getWorkInfoByIdLiveData(request.id)) {
 			Log.e("Worker", "it = $it")
-			if (it.state.isFinished) {
+			if (it != null && it.state.isFinished) {
 				it.outputData.getString(Key.KEY_OUTPUT_PRODUCTS_IN_LIST_WORKER)?.let { json ->
 					val listType = object : TypeToken<List<ProductInListDto>>() {}.type
 					Gson().fromJson<List<ProductInListDto>>(json, listType)

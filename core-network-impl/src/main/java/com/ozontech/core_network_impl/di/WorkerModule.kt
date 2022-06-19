@@ -1,8 +1,7 @@
 package com.ozontech.core_network_impl.di
 
-import com.ozontech.core_network_api.NetworkApi
 import com.ozontech.core_network_api.WorkerApi
-import com.ozontech.core_network_impl.data.repositories.NetworkApiImpl
+import com.ozontech.core_network_impl.data.repositories.WorkerApiImpl
 import com.ozontech.core_network_impl.data.repositories.WorkerRepository
 import com.ozontech.core_network_impl.data.repositories.WorkerRepositoryImpl
 import dagger.Binds
@@ -13,7 +12,7 @@ import javax.inject.Singleton
 interface WorkerModule {
 	@Binds
 	@Singleton
-	fun bindNetworkRepository(repository: NetworkApiImpl): WorkerApi
+	fun bindNetworkRepository(repository: WorkerApiImpl): WorkerApi
 
 	@Binds
 	@Singleton

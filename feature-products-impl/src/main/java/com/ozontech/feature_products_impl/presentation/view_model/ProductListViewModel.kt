@@ -15,10 +15,14 @@ class ProductListViewModel @Inject constructor(
     private val navController: ProductNavigationApi
 ) : ViewModel() {
 
-     val productsListLiveData = Transformations.map(interactor.getProducts()) {
-        it?.let {
-            it.map { productInListDO -> productInListDO.toVO() }
-        }
+
+
+    fun getProducts(): LiveData<List<ProductInListVO>> {
+       return Transformations.map(interactor.getProducts()) {
+           it?.let {
+               it.map { productInListDO -> productInListDO.toVO() }
+           }
+       }
     }
 
      fun navigateToAddFragment() {

@@ -52,6 +52,7 @@ dependencies {
 
     implementation dagger
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation project(path: ':feature-add-product-impl')
 
     kapt daggerCompiler
 

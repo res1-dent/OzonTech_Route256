@@ -1,5 +1,6 @@
 package com.ozontech.feature_products_impl.data.repositories
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.ozontech.core_database_api.ProductsDatabase
@@ -19,6 +20,7 @@ constructor(
 
     override fun fetchListOfProducts(): LiveData<List<ProductInListDO>> {
         return Transformations.map(productsApi.getProducts()) { remoteList ->
+            Log.e("Database", "remoteList = $remoteList")
             remoteList?.let {
                 database.addProductsInList(it.map { Dto-> Dto.toProductInListSharedPrefs() })
                 it.map { Dto-> Dto.toDO() }

@@ -10,4 +10,5 @@ interface ProductsDatabase {
 	fun getProducts(): List<ProductDtoSharedPrefs>
 	fun getProductByGuid(guid:String): ProductDtoSharedPrefs?
 	fun incrementCounter(guid: String)
+	fun addRandomProduct()
 }

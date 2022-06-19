@@ -18,9 +18,6 @@ class ProductInListWorker(context: Context, params: WorkerParameters) : Worker(c
 		applicationContext.getComponent(CoreNetworkComponent::class).getRepository()
 
 	override fun doWork(): Result {
-		Log.e("Worker", "ProductsWorker")
-		val list = repository.getProductsInList()
-		Log.e("Worker", "in list = $list")
 		val data =
 			Data.Builder().putString(
 				Key.KEY_OUTPUT_PRODUCTS_IN_LIST_WORKER,

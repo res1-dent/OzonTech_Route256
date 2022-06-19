@@ -1,5 +1,6 @@
 package com.ozontech.feature_add_product_impl.di
 
+import com.ozontech.core_database_api.DatabaseApi
 import com.ozontech.core_network_api.NetworkApi
 import com.ozontech.core_utils.di.DiComponent
 import com.ozontech.core_utils.di.MultiViewModelFactory
@@ -16,6 +17,6 @@ abstract class FeatureProductAddComponent : DiComponent {
 	abstract fun fabric(): MultiViewModelFactory
 
 	@PerFeature
-	@Component(dependencies = [NetworkApi::class])
+	@Component(dependencies = [NetworkApi::class, DatabaseApi::class])
 	interface ProductFeatureAddDependenciesComponent : ProductAddFeatureDependencies
 }
