@@ -39,6 +39,8 @@ dependencies {
 
     implementation project(path: ':core-utils')
     implementation project(path: ':core-network-api')
+    implementation project(path: ':core-database-api')
+
 
     implementation coreKtx
     implementation navigation.values()
@@ -57,4 +59,6 @@ dependencies {
     implementation viewBinding
     implementation dagger
     kapt daggerCompiler
+    implementation gson
+
 }

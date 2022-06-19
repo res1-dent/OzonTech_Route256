@@ -1,12 +1,14 @@
-package com.ozontech.core_navigation_impl.di
+package com.ozontech.homework2.di
 
-import androidx.fragment.app.FragmentManager
+import android.content.Context
+import androidx.work.WorkManager
+import com.ozontech.core_database_module.di.CoreDatabaseComponent
+import com.ozontech.core_database_module.di.DaggerCoreDatabaseComponent
+import com.ozontech.core_navigation_impl.di.DaggerCoreNavigationComponent
 import com.ozontech.core_network_impl.di.CoreNetworkComponent
 import com.ozontech.core_network_impl.di.DaggerCoreNetworkComponent
+import com.ozontech.core_network_impl.di.DaggerCoreNetworkComponent_CoreNetworkDependenciesComponent
 import com.ozontech.core_utils.di.DiComponent
-import com.ozontech.feature_add_product_impl.di.DaggerFeatureProductAddComponent
-import com.ozontech.feature_add_product_impl.di.DaggerFeatureProductAddComponent_ProductFeatureAddDependenciesComponent
-import com.ozontech.feature_add_product_impl.di.FeatureProductAddComponent
 import com.ozontech.feature_pdp_impl.di.DaggerFeaturePdpComponent
 import com.ozontech.feature_pdp_impl.di.DaggerFeaturePdpComponent_PdpDependenciesComponent
 import com.ozontech.feature_pdp_impl.di.FeaturePdpComponent
@@ -15,7 +17,7 @@ import com.ozontech.feature_products_impl.di.DaggerFeatureProductComponent_Produ
 import com.ozontech.feature_products_impl.di.FeatureProductComponent
 import kotlin.reflect.KClass
 
-class DIComponentStorage(private val fragmentManager: FragmentManager) {
+class DIComponentStorageImpl(private val context: Context) {
 
 	private val map: MutableMap<KClass<*>, Any> = mutableMapOf()
 
@@ -36,8 +38,16 @@ class DIComponentStorage(private val fragmentManager: FragmentManager) {
 	@Suppress("UNCHECKED_CAST")
 	private fun <T : DiComponent> createComponent(component: KClass<T>): T {
 		return when (component) {
+			CoreDatabaseComponent::class -> {
+				DaggerCoreDatabaseComponent.builder().context(context).build()
+			}
 			CoreNetworkComponent::class -> {
-				DaggerCoreNetworkComponent.create()
+				DaggerCoreNetworkComponent.builder().workManager(WorkManager.getInstance(context))
+					.dependencies(DaggerCoreNetworkComponent_CoreNetworkDependenciesComponent.builder()
+						.databaseApi(initAndGet(CoreDatabaseComponent::class))
+						.build()
+					)
+					.build()
 			}
 			FeatureProductComponent::class -> {
 				DaggerFeatureProductComponent.builder()
@@ -45,6 +55,7 @@ class DIComponentStorage(private val fragmentManager: FragmentManager) {
 						DaggerFeatureProductComponent_ProductFeatureDependenciesComponent.builder()
 							.networkApi(initAndGet(CoreNetworkComponent::class))
 							.productNavigationApi(initAndGet(DaggerCoreNavigationComponent::class).getProductNavigation())
+							.databaseApi(initAndGet(CoreDatabaseComponent::class))
 							.build()
 					)
 					.build()
@@ -54,23 +65,27 @@ class DIComponentStorage(private val fragmentManager: FragmentManager) {
 					.pdpFeatureDependencies(
 						DaggerFeaturePdpComponent_PdpDependenciesComponent.builder()
 							.networkApi(initAndGet(CoreNetworkComponent::class))
+							.databaseApi(initAndGet(CoreDatabaseComponent::class))
 							.build()
 					).build()
 			}
-			FeatureProductAddComponent::class -> {
+			/*FeatureProductAddComponent::class -> {
 				DaggerFeatureProductAddComponent.builder()
 					.productAddFeatureDependencies(
 						DaggerFeatureProductAddComponent_ProductFeatureAddDependenciesComponent.builder()
 							.networkApi(initAndGet(CoreNetworkComponent::class))
 							.build()
 					).build()
-			}
-			DaggerCoreNavigationComponent::class -> {
-				DaggerCoreNavigationComponent.builder().fragmentManager(fragmentManager).build()
-			}
+			}*/
 			else -> throw Exception("cannot find component")
 		} as T
 	}
+
+	fun <T : DiComponent> putComponent(component: T) {
+		map[component::class] = component
+	}
 }
+
+
 
 

@@ -48,9 +48,12 @@ dependencies {
     implementation project(path: ':feature-pdp-impl')
     implementation project(path: ':feature-products-impl')
     implementation project(path: ':feature-products-api')
-    implementation project(path: ':feature-add-product-impl')
+//    implementation project(path: ':feature-add-product-impl')
     implementation project(path: ':core-navigation-impl')
     implementation project(path: ':core-navigation-api')
+    implementation project(path: ':core-database-impl')
+    implementation project(path: ':core-database-api')
+
 
     implementation coreKtx
     implementation navigation.values()
@@ -71,6 +74,8 @@ dependencies {
 
     implementation dagger
     kapt daggerCompiler
+
+    implementation worker
 
 
 

@@ -1,6 +1,7 @@
 package com.ozontech.feature_products_impl.presentation.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,12 +29,18 @@ class ProductListFragment :
         ProductsAdapter(::onProductClick)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Log.e("Worker", "OncreateFragment")
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initList()
         observeViewModelState()
         setListeners()
     }
+
 
     private fun setListeners() {
         binding.addFab.setOnClickListener() {
@@ -42,8 +49,7 @@ class ProductListFragment :
     }
 
     private fun observeViewModelState() {
-        viewModel.getListOfProducts()
-        viewModel.productsListLiveData.observe(viewLifecycleOwner) {
+        viewModel.productsListLiveData.observe(viewLifecycleOwner){
             adapter.submitList(it)
         }
     }

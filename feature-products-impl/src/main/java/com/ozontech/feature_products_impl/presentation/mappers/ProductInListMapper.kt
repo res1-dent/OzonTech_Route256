@@ -10,5 +10,5 @@ fun ProductInListDO.toVO() =
 		name = name,
 		price = price.toInt(),
 		rating = rating.toFloat(),
-		counter = counter.toString()
+		counter = "0"
 	)

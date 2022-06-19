@@ -1,5 +1,7 @@
 package com.ozontech.feature_products_impl.domain.domain_objects
 
+import com.squareup.moshi.JsonClass
+
 data class ProductInListDO(
     val guid: String,
     val image: String,
@@ -8,5 +10,4 @@ data class ProductInListDO(
     val rating: Double,
     val isFavorite: Boolean,
     val isInCart: Boolean,
-    val counter: Int
 )

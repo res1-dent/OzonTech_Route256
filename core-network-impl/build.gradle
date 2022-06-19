@@ -33,8 +33,16 @@ android {
 }
 
 dependencies {
-    implementation project(":core-network-api")
+    implementation project(path: ':core-network-api')
     implementation project(path: ':core-utils')
+    implementation project(path: ':core-database-api')
+
     implementation dagger
     kapt daggerCompiler
+    implementation retrofit.values()
+    implementation moshi
+    implementation worker
+    implementation gson
+    implementation liveData
+    implementation lifecycle
 }

@@ -1,6 +1,9 @@
 package com.ozontech.core_network_api
 
-interface NetworkApi {
+import androidx.lifecycle.LiveData
+import com.ozontech.core_network_api.models.ProductInListDto
 
-	fun getProductApi(): ProductsApi
+interface NetworkApi {
+	fun getApi(): ProductsApi
+	fun getWorkerApi(): WorkerApi
 }

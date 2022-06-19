@@ -1,5 +1,6 @@
 package com.ozontech.core_utils
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -22,13 +23,19 @@ fun <T : ViewBinding> ViewGroup.inflate(
 
 
 @Suppress("UNCHECKED_CAST")
+fun <T:DiComponent> Context.getComponent(component: KClass<T>): T{
+    return (applicationContext as DiStorage<T>).initAndGet(component)
+}
+
+
+@Suppress("UNCHECKED_CAST")
 fun <T: DiComponent> Fragment.getComp(component: KClass<T>): T {
-    return (requireActivity() as DiStorage<T>).initAndGet(component)
+    return (requireActivity().applicationContext as DiStorage<T>).initAndGet(component)
 }
 
 @Suppress("UNCHECKED_CAST")
 fun <T: DiComponent> Fragment.releaseComp(component: KClass<T>){
-    (requireActivity() as DiStorage<T>).release(component)
+    (requireActivity().applicationContext as DiStorage<T>).release(component)
 }
 
 fun stringArgs(key: String): ReadOnlyProperty<Fragment, String> {
