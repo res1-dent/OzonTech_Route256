@@ -12,8 +12,8 @@ import javax.inject.Inject
 
 class ProductListViewModel @Inject constructor(
     private val interactor: ProductListInteractor,
-    private val navController: ProductNavigationApi
 ) : ViewModel() {
+
 
 
     private val isLoadingMutableLiveData = MutableLiveData<Boolean>()
@@ -24,22 +24,12 @@ class ProductListViewModel @Inject constructor(
     }
 
     fun getProducts(): LiveData<List<ProductInListVO>> {
-
-       return Transformations.map(interactor.getProducts()) {
+     return Transformations.map(interactor.getProducts()) {
            if (it.isNotEmpty())
            isLoadingMutableLiveData.postValue(false)
            it.let {
                it.map { productInListDO -> productInListDO.toVO() }
            }
        }
-    }
-
-     fun navigateToAddFragment() {
-        navController.navigateToAdd()
-    }
-
-    fun navigateToPDPFragment(guid: String) {
-        interactor.incrementCounter(guid)
-        navController.navigateToPDP(guid)
     }
 }

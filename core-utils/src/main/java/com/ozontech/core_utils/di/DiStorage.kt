@@ -7,8 +7,6 @@ interface  DiStorage <T: DiComponent> {
 	fun initAndGet(className: KClass<T>): T
 
 	fun release(className: KClass<T>)
-
-	fun putComponent(component: T)
 }
 
 interface DiComponent

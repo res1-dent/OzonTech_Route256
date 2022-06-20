@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.work.WorkManager
 import com.ozontech.core_database_module.di.CoreDatabaseComponent
 import com.ozontech.core_database_module.di.DaggerCoreDatabaseComponent
+import com.ozontech.core_navigation_impl.di.CoreNavigationComponent
 import com.ozontech.core_navigation_impl.di.DaggerCoreNavigationComponent
 import com.ozontech.core_network_impl.di.CoreNetworkComponent
 import com.ozontech.core_network_impl.di.DaggerCoreNetworkComponent
@@ -57,7 +58,7 @@ class DIComponentStorageImpl(private val context: Context) {
 					.productFeatureDependencies(
 						DaggerFeatureProductComponent_ProductFeatureDependenciesComponent.builder()
 							.networkApi(initAndGet(CoreNetworkComponent::class))
-							.productNavigationApi(initAndGet(DaggerCoreNavigationComponent::class).getProductNavigation())
+							.productNavigationApi(initAndGet(CoreNavigationComponent::class).getProductNavigation())
 							.databaseApi(initAndGet(CoreDatabaseComponent::class))
 							.build()
 					)
@@ -81,13 +82,13 @@ class DIComponentStorageImpl(private val context: Context) {
 							.build()
 					).build()
 			}
-			else -> throw Exception("cannot find component")
+			CoreNavigationComponent::class -> {
+				DaggerCoreNavigationComponent.create()
+			}
+			else -> throw Exception("cannot find component ${component::class}")
 		} as T
 	}
 
-	fun <T : DiComponent> putComponent(component: T) {
-		map[component::class] = component
-	}
 }
 
 

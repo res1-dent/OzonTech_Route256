@@ -13,7 +13,6 @@ class App : Application(),  DiStorage<DiComponent>{
 
 
 	override fun onCreate() {
-		Log.e("Worker", "OncreateApp")
 		super.onCreate()
 
 	}
@@ -30,7 +29,4 @@ class App : Application(),  DiStorage<DiComponent>{
 		diStorage.release(className)
 	}
 
-	override fun putComponent(component: DiComponent) {
-		diStorage.putComponent(component)
-	}
 }

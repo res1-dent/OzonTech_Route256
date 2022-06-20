@@ -1,20 +1,18 @@
 package com.ozontech.core_navigation_impl.di
 
+import android.app.Activity
+import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import com.ozontech.core_navigation_api.NavigationApi
+import com.ozontech.core_navigation_impl.MainActivity
 import com.ozontech.core_utils.di.DiComponent
+import com.ozontech.feature_products_api.ProductNavigationApi
 import dagger.BindsInstance
 import dagger.Component
+import dagger.Reusable
 import javax.inject.Singleton
 
 @Component(modules = [NavigationModule::class])
-@Singleton
-interface CoreNavigationComponent : NavigationApi, DiComponent {
-
-	@Component.Builder
-	interface Builder {
-		@BindsInstance
-		fun fragmentManager(fragmentManager: FragmentManager): Builder
-		fun build(): CoreNavigationComponent
-	}
+interface CoreNavigationComponent : NavigationApi, DiComponent{
 }

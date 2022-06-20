@@ -28,6 +28,8 @@ fun <T:DiComponent> Context.getComponent(component: KClass<T>): T{
 }
 
 
+
+
 @Suppress("UNCHECKED_CAST")
 fun <T: DiComponent> Fragment.getComp(component: KClass<T>): T {
     return (requireActivity().applicationContext as DiStorage<T>).initAndGet(component)
@@ -36,6 +38,10 @@ fun <T: DiComponent> Fragment.getComp(component: KClass<T>): T {
 @Suppress("UNCHECKED_CAST")
 fun <T: DiComponent> Fragment.releaseComp(component: KClass<T>){
     (requireActivity().applicationContext as DiStorage<T>).release(component)
+}
+@Suppress("UNCHECKED_CAST")
+fun <T:DiComponent> Context.releaseComp(component: KClass<T>){
+    (applicationContext as DiStorage<T>).release(component)
 }
 
 fun stringArgs(key: String): ReadOnlyProperty<Fragment, String> {
