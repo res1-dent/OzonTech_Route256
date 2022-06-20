@@ -16,10 +16,19 @@ class ProductListViewModel @Inject constructor(
 ) : ViewModel() {
 
 
+    private val isLoadingMutableLiveData = MutableLiveData<Boolean>()
+    val isLoadingLiveData: LiveData<Boolean> = isLoadingMutableLiveData
+
+    init {
+        isLoadingMutableLiveData.postValue(true)
+    }
 
     fun getProducts(): LiveData<List<ProductInListVO>> {
+
        return Transformations.map(interactor.getProducts()) {
-           it?.let {
+           if (it.isNotEmpty())
+           isLoadingMutableLiveData.postValue(false)
+           it.let {
                it.map { productInListDO -> productInListDO.toVO() }
            }
        }

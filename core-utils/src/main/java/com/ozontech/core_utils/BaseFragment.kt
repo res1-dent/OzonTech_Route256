@@ -10,10 +10,9 @@ abstract class BaseFragment<T : DiComponent>(private val component: KClass<T>) :
 		getComp(component)
 	}
 
-	override fun onPause() {
-		super.onPause()
-		if (isRemoving) {
-			releaseComp(component)
-		}
+
+	override fun onDestroy() {
+		super.onDestroy()
+		releaseComp(component)
 	}
 }

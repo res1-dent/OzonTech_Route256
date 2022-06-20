@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.ozontech.core_utils.BaseFragment
@@ -23,7 +24,7 @@ class ProductListFragment :
     private val binding by viewBinding(FragmentProductListBinding::bind)
 
     private val viewModel: ProductListViewModel by viewModels {
-        currentComponent.fabric()
+        currentComponent.getFabric()
     }
     private val adapter: ProductsAdapter by autoCleared {
         ProductsAdapter(::onProductClick)
@@ -54,9 +55,10 @@ class ProductListFragment :
 
     private fun observeViewModelState() {
         viewModel.getProducts().observe(viewLifecycleOwner){
-            Log.e("Fragment", "newList = ${it?.size}")
+            Log.e("Worker", "new list in adapter = ${it.size}")
             adapter.submitList(it)
         }
+        viewModel.isLoadingLiveData.observe(viewLifecycleOwner, ::toggleLoadingState)
     }
 
     private fun initList() {
@@ -72,6 +74,13 @@ class ProductListFragment :
 
     private fun onProductClick(guid: String) {
         viewModel.navigateToPDPFragment(guid)
+    }
+
+    private fun toggleLoadingState(isLoading: Boolean) {
+        with(binding) {
+            productListRecycler.isVisible = isLoading.not()
+            progress.isVisible = isLoading
+        }
     }
 
     override fun onCreateView(

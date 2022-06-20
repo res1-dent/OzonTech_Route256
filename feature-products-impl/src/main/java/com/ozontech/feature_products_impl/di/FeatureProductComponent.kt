@@ -19,7 +19,7 @@ import dagger.Component
 )
 abstract class FeatureProductComponent: DiComponent {
 
-	abstract fun fabric(): MultiViewModelFactory
+	abstract fun getFabric(): MultiViewModelFactory
 	abstract fun inject(fragment: ProductListFragment)
 
 	@PerFeature

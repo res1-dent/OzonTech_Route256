@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
@@ -13,7 +12,6 @@ import com.ozontech.core_utils.*
 import com.ozontech.feature_pdp_impl.databinding.FragmentPdpBinding
 import com.ozontech.feature_pdp_impl.di.FeaturePdpComponent
 import com.ozontech.feature_pdp_impl.presentation.view_model.PdpViewModel
-import com.ozontech.feature_pdp_impl.presentation.view_model.PdpViewModelFactory
 import com.ozontech.feature_pdp_impl.presentation.view_objects.ProductVO
 import javax.inject.Inject
 
@@ -21,22 +19,17 @@ class PdpFragment : BaseFragment<FeaturePdpComponent>(component = FeaturePdpComp
 
 
 	private val viewModel: PdpViewModel by viewModels {
-		factory.create(guid)
+		currentComponent.getFabric()
 	}
 
-	@Inject
-	lateinit var factory: PdpViewModelFactory.Factory
 	private val binding by viewBinding(FragmentPdpBinding::bind)
 	private val guid: String by stringArgs(KEY_GUID)
 
-	override fun onAttach(context: Context) {
-		currentComponent.inject(this)
-		super.onAttach(context)
-	}
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		observeViewModelState()
+		viewModel.getProductByGuid(guid)
 	}
 
 	private fun observeViewModelState() {

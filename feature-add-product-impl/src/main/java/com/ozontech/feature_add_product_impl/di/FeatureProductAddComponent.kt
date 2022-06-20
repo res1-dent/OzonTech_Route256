@@ -14,7 +14,7 @@ import dagger.Component
 )
 abstract class FeatureProductAddComponent : DiComponent {
 
-	abstract fun fabric(): MultiViewModelFactory
+	abstract fun getFabric(): MultiViewModelFactory
 
 	@PerFeature
 	@Component(dependencies = [NetworkApi::class, DatabaseApi::class])
