@@ -1,6 +1,5 @@
 package com.ozontech.core_network_impl.data.repositories
 
-import android.util.Log
 import com.ozontech.core_database_api.ProductsDatabase
 import com.ozontech.core_network_api.ProductsApi
 import com.ozontech.core_network_api.models.ProductDto

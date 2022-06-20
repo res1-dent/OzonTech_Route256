@@ -14,7 +14,6 @@ class ProductsWorker(context: Context, params: WorkerParameters) : Worker(contex
 		applicationContext.getComponent(CoreNetworkComponent::class).getRepository()
 
 	override fun doWork(): Result {
-		Log.e("Worker", "ProductsWorker")
 		return if (repository.getProducts() != null) Result.success() else Result.failure()
 	}
 }

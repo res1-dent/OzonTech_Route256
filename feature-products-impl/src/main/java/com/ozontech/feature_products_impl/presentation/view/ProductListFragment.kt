@@ -61,7 +61,6 @@ class ProductListFragment :
 
     private fun observeViewModelState() {
         viewModel.getProducts().observe(viewLifecycleOwner){
-            Log.e("Worker", "new list in adapter = ${it.size}")
             adapter.submitList(it)
         }
         viewModel.isLoadingLiveData.observe(viewLifecycleOwner, ::toggleLoadingState)

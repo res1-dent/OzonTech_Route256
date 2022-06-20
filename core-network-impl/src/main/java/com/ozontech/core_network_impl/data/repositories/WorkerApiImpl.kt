@@ -29,7 +29,6 @@ class WorkerApiImpl @Inject constructor(
 		workManager.beginUniqueWork(PRODUCT_IN_LIST_WORK, ExistingWorkPolicy.KEEP, request)
 			.then(request2).enqueue()
 		return Transformations.map(workManager.getWorkInfoByIdLiveData(request.id)) {
-			Log.e("Worker", "it = $it")
 			if (it != null && it.state.isFinished) {
 				it.outputData.getString(Key.KEY_OUTPUT_PRODUCTS_IN_LIST_WORKER)?.let { json ->
 					val listType = object : TypeToken<List<ProductInListDto>>() {}.type
