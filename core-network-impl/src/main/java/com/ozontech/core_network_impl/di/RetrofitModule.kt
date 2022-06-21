@@ -9,6 +9,7 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
 import javax.inject.Singleton
@@ -16,7 +17,6 @@ import javax.inject.Singleton
 
 @Module
 class RetrofitModule{
-
 	@Provides
 	@Singleton
 	fun providesInterceptor(): Interceptor = HttpLoggingInterceptor()
@@ -38,10 +38,9 @@ class RetrofitModule{
 	@Provides
 	@Singleton
 	fun providesRetrofit(okhttpClient: OkHttpClient): Retrofit {
-		val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
 		return Retrofit.Builder()
 			.baseUrl("https://run.mocky.io/v3/")
-			.addConverterFactory(MoshiConverterFactory.create(moshi))
+			.addConverterFactory(GsonConverterFactory.create())
 			.client(okhttpClient)
 			.build()
 	}

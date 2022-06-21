@@ -88,7 +88,6 @@ class DIComponentStorageImpl(private val context: Context) {
 			else -> throw Exception("cannot find component ${component::class}")
 		} as T
 	}
-
 }
 
 

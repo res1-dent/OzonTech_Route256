@@ -36,7 +36,6 @@ class ProductListFragment :
     @Inject
     lateinit var productNavigationApi: ProductNavigationApi
 
-
     override fun onAttach(context: Context) {
         currentComponent.inject(this)
         super.onAttach(context)
