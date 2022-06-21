@@ -14,7 +14,6 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
 import javax.inject.Singleton
 
-
 @Module
 class RetrofitModule{
 	@Provides

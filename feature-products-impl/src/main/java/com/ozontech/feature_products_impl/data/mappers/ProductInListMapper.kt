@@ -12,7 +12,8 @@ fun ProductInListDto.toDO() =
 		price = price,
 		rating = rating,
 		isFavorite = isFavorite,
-		isInCart = isInCart
+		isInCart = isInCart,
+		counter = counter
 	)
 
 fun ProductInListDto.toProductInListSharedPrefs() = ProductInListDtoSharedPrefs(
@@ -22,7 +23,8 @@ fun ProductInListDto.toProductInListSharedPrefs() = ProductInListDtoSharedPrefs(
 	price = price,
 	rating = rating,
 	isFavorite = isFavorite,
-	isInCart = isInCart
+	isInCart = isInCart,
+	counter = counter
 )
 
 fun ProductInListDtoSharedPrefs.toProductInListDO() = ProductInListDO(
@@ -32,5 +34,6 @@ fun ProductInListDtoSharedPrefs.toProductInListDO() = ProductInListDO(
 	price = price,
 	rating = rating,
 	isFavorite = isFavorite,
-	isInCart = isInCart
+	isInCart = isInCart,
+	counter = counter
 )

@@ -27,9 +27,6 @@ fun <T:DiComponent> Context.getComponent(component: KClass<T>): T{
     return (applicationContext as DiStorage<T>).initAndGet(component)
 }
 
-
-
-
 @Suppress("UNCHECKED_CAST")
 fun <T: DiComponent> Fragment.getComp(component: KClass<T>): T {
     return (requireActivity().applicationContext as DiStorage<T>).initAndGet(component)

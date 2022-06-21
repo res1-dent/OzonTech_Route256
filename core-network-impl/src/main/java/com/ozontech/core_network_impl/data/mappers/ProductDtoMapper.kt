@@ -33,6 +33,7 @@ fun ProductInListDto.toProductInListDtoSharedPrefs(): ProductInListDtoSharedPref
 		rating = rating,
 		isFavorite = isFavorite,
 		isInCart = isInCart,
+		counter = counter
 	)
 }
 

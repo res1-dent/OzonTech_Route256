@@ -8,5 +8,6 @@ data class ProductInListDto(
     val rating: Double,
     val isFavorite: Boolean,
     val isInCart: Boolean,
+    val counter: Int
 )
 

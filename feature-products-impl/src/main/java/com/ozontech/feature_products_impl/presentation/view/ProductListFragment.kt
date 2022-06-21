@@ -75,6 +75,7 @@ class ProductListFragment :
     }
 
     private fun onProductClick(guid: String) {
+        viewModel.incrementCounter(guid)
         productNavigationApi.navigateToPDP(this, guid)
     }
 

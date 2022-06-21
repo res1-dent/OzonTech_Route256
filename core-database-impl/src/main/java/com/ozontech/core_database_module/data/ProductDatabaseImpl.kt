@@ -2,7 +2,6 @@ package com.ozontech.core_database_module.data
 
 import android.content.Context
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -17,8 +16,14 @@ class ProductDatabaseImpl @Inject constructor(context: Context) : ProductsDataba
 
 	private val prefs = context.getSharedPreferences(PREFERENCES_PRODUCT_NAME, Context.MODE_PRIVATE)
 
+	@RequiresApi(Build.VERSION_CODES.N)
 	override fun addProductsInList(list: List<ProductInListDtoSharedPrefs>) {
-		prefs.edit().putString(PRODUCT_IN_LIST, Gson().toJson((getProductsInList() + list).toSet()))
+		val currentList = getProductsInList().toMutableList()
+		currentList.addAll(
+			list.filter { x -> currentList.find { it.guid == x.guid } == null }
+		)
+		prefs.edit()
+			.putString(PRODUCT_IN_LIST, Gson().toJson(currentList))
 			.apply()
 	}
 
@@ -46,9 +51,18 @@ class ProductDatabaseImpl @Inject constructor(context: Context) : ProductsDataba
 
 	@RequiresApi(Build.VERSION_CODES.N)
 	override fun incrementCounter(guid: String) {
-		//
+		val newList = getProductsInList().map {
+			if (it.guid == guid)
+				it.copy(counter = it.counter + 1)
+			else it
+		}
+		prefs.edit()
+			.putString(PRODUCT_IN_LIST, Gson().toJson(newList))
+			.apply()
+
 	}
 
+	@RequiresApi(Build.VERSION_CODES.N)
 	override fun addRandomProduct() {
 		val currentList = getProducts().toMutableList()
 		val new = currentList.random().copy(guid = UUID.randomUUID().toString())

@@ -41,6 +41,7 @@ class ProductsAdapter(
 				nameTextView.text = item.name
 				priceTextView.text = binding.root.resources.getString(R.string.price, item.price)
 				ratingRatingBar.rating = item.rating
+				counterTextView.text = item.counter
 			}
 		}
 	}

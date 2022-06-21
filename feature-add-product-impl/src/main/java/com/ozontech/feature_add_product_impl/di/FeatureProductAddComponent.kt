@@ -17,6 +17,6 @@ abstract class FeatureProductAddComponent : DiComponent {
 	abstract fun getFabric(): MultiViewModelFactory
 
 	@PerFeature
-	@Component(dependencies = [NetworkApi::class, DatabaseApi::class])
+	@Component(dependencies = [DatabaseApi::class])
 	interface ProductFeatureAddDependenciesComponent : ProductAddFeatureDependencies
 }

@@ -6,7 +6,6 @@ import com.ozontech.core_network_api.ProductsApi
 
 interface PdpFeatureDependencies {
 
-    fun productsApi(): NetworkApi
     fun database(): ProductsDatabase
 
 }

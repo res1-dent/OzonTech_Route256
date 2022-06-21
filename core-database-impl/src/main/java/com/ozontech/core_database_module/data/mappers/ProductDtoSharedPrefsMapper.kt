@@ -12,4 +12,5 @@ fun ProductDtoSharedPrefs.toProductInListDroSharedPrefs(): ProductInListDtoShare
 		rating = rating,
 		isFavorite = isFavorite,
 		isInCart = isInCart,
+		counter = 0
 	)

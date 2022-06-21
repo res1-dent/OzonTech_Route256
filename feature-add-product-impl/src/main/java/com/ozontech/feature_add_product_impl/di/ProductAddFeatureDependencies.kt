@@ -5,6 +5,5 @@ import com.ozontech.core_network_api.ProductsApi
 import com.ozontech.core_network_api.WorkerApi
 
 interface ProductAddFeatureDependencies {
-    fun productsApi(): WorkerApi
     fun database(): ProductsDatabase
 }

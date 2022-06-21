@@ -68,7 +68,6 @@ class DIComponentStorageImpl(private val context: Context) {
 				DaggerFeaturePdpComponent.builder()
 					.pdpFeatureDependencies(
 						DaggerFeaturePdpComponent_PdpDependenciesComponent.builder()
-							.networkApi(initAndGet(CoreNetworkComponent::class))
 							.databaseApi(initAndGet(CoreDatabaseComponent::class))
 							.build()
 					).build()
@@ -77,7 +76,6 @@ class DIComponentStorageImpl(private val context: Context) {
 				DaggerFeatureProductAddComponent.builder()
 					.productAddFeatureDependencies(
 						DaggerFeatureProductAddComponent_ProductFeatureAddDependenciesComponent.builder()
-							.networkApi(initAndGet(CoreNetworkComponent::class))
 							.databaseApi(initAndGet(CoreDatabaseComponent::class))
 							.build()
 					).build()

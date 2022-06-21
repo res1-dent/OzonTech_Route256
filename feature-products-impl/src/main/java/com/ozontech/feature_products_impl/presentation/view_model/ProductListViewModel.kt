@@ -32,4 +32,8 @@ class ProductListViewModel @Inject constructor(
            }
        }
     }
+
+    fun incrementCounter(guid: String){
+        interactor.incrementCounter(guid)
+    }
 }

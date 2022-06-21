@@ -19,7 +19,7 @@ abstract class FeaturePdpComponent: DiComponent {
 	abstract fun getFabric(): MultiViewModelFactory
 
 	@PerFeature
-	@Component(dependencies = [NetworkApi::class, DatabaseApi::class])
+	@Component(dependencies = [DatabaseApi::class])
 	interface PdpDependenciesComponent : PdpFeatureDependencies
 
 }
