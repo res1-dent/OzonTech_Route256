@@ -1,5 +1,6 @@
 package com.ozontech.feature_products_impl.presentation.view
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -35,9 +36,10 @@ class ProductListFragment :
     @Inject
     lateinit var productNavigationApi: ProductNavigationApi
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+
+    override fun onAttach(context: Context) {
         currentComponent.inject(this)
+        super.onAttach(context)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,12 +47,8 @@ class ProductListFragment :
         initList()
         observeViewModelState()
         setListeners()
-        viewModel.getProducts()
     }
 
-    override fun onPause() {
-        super.onPause()
-    }
 
 
     private fun setListeners() {
