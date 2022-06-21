@@ -18,6 +18,7 @@ constructor(
     private val database: ProductsDatabase
 ) : ProductRepositoryNetwork {
 
+
     override fun fetchListOfProducts(): LiveData<List<ProductInListDO>> {
         return Transformations.map(productsApi.getProducts()) { remoteList ->
             Log.e("Database", "remoteList = $remoteList")

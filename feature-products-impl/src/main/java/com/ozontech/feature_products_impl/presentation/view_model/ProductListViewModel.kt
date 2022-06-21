@@ -14,8 +14,6 @@ class ProductListViewModel @Inject constructor(
     private val interactor: ProductListInteractor,
 ) : ViewModel() {
 
-
-
     private val isLoadingMutableLiveData = MutableLiveData<Boolean>()
     val isLoadingLiveData: LiveData<Boolean> = isLoadingMutableLiveData
 
