@@ -15,10 +15,15 @@ class WorkerRepositoryImpl @Inject constructor(
 ) : WorkerRepository {
 
 	override fun getProductsInList(): List<ProductInListDto>? {
-		return productsApi.getProductsInList().execute().body()?.also {
-			database.addProductsInList(it.map { it.toProductInListDtoSharedPrefs() })
-		}?.let { database.getProductsInList().map { it.toProductInListDto() } }
+		return try {
+			productsApi.getProductsInList().execute().body()?.also {
+				database.addProductsInList(it.map { it.toProductInListDtoSharedPrefs() })
+			}?.let { database.getProductsInList().map { it.toProductInListDto() } }
+		} catch (e: Exception) {
+			database.getProductsInList().map { it.toProductInListDto() }
+		}
 	}
+
 
 	override fun getProducts(): List<ProductDto>? {
 		return productsApi.getProducts().execute().body()?.also {

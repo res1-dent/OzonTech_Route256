@@ -9,7 +9,7 @@ class ProductListInteractorImpl @Inject constructor(
 	private val repository: ProductRepositoryNetwork
 ) : ProductListInteractor {
 
-	override fun getProducts(): LiveData<List<ProductInListDO>> =
+	override fun getProducts(): LiveData<List<ProductInListDO>?> =
 		repository.fetchListOfProducts()
 
 	override fun incrementCounter(guid: String) {

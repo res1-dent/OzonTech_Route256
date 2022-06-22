@@ -1,5 +1,6 @@
 package com.ozontech.core_network_impl.data.repositories
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.work.BackoffPolicy
@@ -13,6 +14,7 @@ import com.ozontech.core_network_api.models.ProductInListDto
 import com.ozontech.core_network_impl.data.workers.ProductInListWorker
 import com.ozontech.core_network_impl.data.workers.ProductsWorker
 import com.ozontech.core_network_impl.domain.key.Key
+import okhttp3.internal.wait
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -31,6 +33,7 @@ class WorkerApiImpl @Inject constructor(
 			getProductIntListRequest
 		).then(getProductsRequest).enqueue()
 		return Transformations.map(workManager.getWorkInfoByIdLiveData(getProductIntListRequest.id)) {
+			Log.e("!!!", "worker = ${it.state.isFinished}")
 			if (it != null && it.state.isFinished) {
 				it.outputData.getString(Key.KEY_OUTPUT_PRODUCTS_IN_LIST_WORKER)?.let { json ->
 					val listType = object : TypeToken<List<ProductInListDto>>() {}.type

@@ -2,6 +2,7 @@ package com.ozontech.feature_products_impl.presentation.view
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ import com.ozontech.feature_products_impl.di.FeatureProductComponent
 import com.ozontech.feature_products_impl.presentation.adapter.ProductsAdapter
 import com.ozontech.feature_products_impl.presentation.adapter.decorators.ProductItemDecorator
 import com.ozontech.feature_products_impl.presentation.view_model.ProductListViewModel
+import com.ozontech.feature_products_impl.presentation.view_objects.UiState
 import javax.inject.Inject
 
 
@@ -45,6 +47,7 @@ class ProductListFragment :
 		initList()
 		observeViewModelState()
 		setListeners()
+		viewModel.refreshState()
 	}
 
 
@@ -55,10 +58,7 @@ class ProductListFragment :
 	}
 
 	private fun observeViewModelState() {
-		viewModel.getProducts().observe(viewLifecycleOwner) {
-			adapter.submitList(it)
-		}
-		viewModel.isLoadingLiveData.observe(viewLifecycleOwner, ::toggleLoadingState)
+		viewModel.stateLiveData.observe(viewLifecycleOwner, ::updateUi)
 	}
 
 	private fun initList() {
@@ -72,6 +72,21 @@ class ProductListFragment :
 		}
 	}
 
+	private fun updateUi(state: UiState) {
+		when (state) {
+			is UiState.Error -> {
+				toggleLoadingState(false)
+			}
+			is UiState.Success -> {
+				toggleLoadingState(false)
+				adapter.submitList(state.listOfProducts)
+			}
+			is UiState.Loading -> {
+				toggleLoadingState(true)
+			}
+		}
+	}
+
 	private fun onProductClick(guid: String) {
 		viewModel.incrementCounter(guid)
 		productNavigationApi.navigateToPDP(this, guid)
@@ -79,10 +94,10 @@ class ProductListFragment :
 
 	private fun toggleLoadingState(isLoading: Boolean) {
 		with(binding) {
-			productListRecycler.isVisible = isLoading.not()
-			progress.isVisible = isLoading
+				progress.isVisible = isLoading
 		}
 	}
+
 
 
 	override fun onCreateView(

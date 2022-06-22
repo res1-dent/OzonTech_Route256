@@ -1,6 +1,7 @@
 package com.ozontech.core_network_impl.data.workers
 
 import android.content.Context
+import android.util.Log
 import androidx.work.Data
 import androidx.work.Worker
 import androidx.work.WorkerParameters
@@ -16,11 +17,17 @@ class ProductInListWorker(context: Context, params: WorkerParameters) : Worker(c
 		applicationContext.getComponent(CoreNetworkComponent::class).getRepository()
 
 	override fun doWork(): Result {
-		val data =
-			Data.Builder().putString(
-				Key.KEY_OUTPUT_PRODUCTS_IN_LIST_WORKER,
-				Gson().toJson(repository.getProductsInList())
-			).build()
-		return Result.success(data)
+		return try {
+			repository.getProductsInList()?.let {
+				Result.success(
+					Data.Builder().putString(
+						Key.KEY_OUTPUT_PRODUCTS_IN_LIST_WORKER,
+						Gson().toJson(repository.getProductsInList())
+					).build()
+				)
+			} ?: Result.failure()
+		} catch (e: Exception) {
+			Result.failure()
+		}
 	}
 }
