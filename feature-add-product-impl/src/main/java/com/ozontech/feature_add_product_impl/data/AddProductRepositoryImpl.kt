@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class AddProductRepositoryImpl @Inject constructor(
 	private val databaseApi: ProductsDatabase
-): AddProductRepository {
+) : AddProductRepository {
 
 	override fun addRandomProduct() {
 		databaseApi.addRandomProduct()

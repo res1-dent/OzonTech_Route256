@@ -1,15 +1,13 @@
 package com.ozontech.homework2
 
 import android.app.Application
-import android.util.Log
-import androidx.work.WorkManager
-import com.ozontech.homework2.di.DIComponentStorageImpl
 import com.ozontech.core_utils.di.DiComponent
 import com.ozontech.core_utils.di.DiStorage
+import com.ozontech.homework2.di.DIComponentStorageImpl
 import kotlin.reflect.KClass
 
 
-class App : Application(),  DiStorage<DiComponent>{
+class App : Application(), DiStorage<DiComponent> {
 
 
 	override fun onCreate() {

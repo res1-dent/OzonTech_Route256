@@ -12,7 +12,8 @@ import com.ozontech.feature_add_product_impl.databinding.FragmentProductAddBindi
 import com.ozontech.feature_add_product_impl.di.FeatureProductAddComponent
 import com.ozontech.feature_add_product_impl.presentation.viewModel.AddViewModel
 
-class ProductAddFragment: BaseFragment<FeatureProductAddComponent>(component = FeatureProductAddComponent::class) {
+class ProductAddFragment :
+	BaseFragment<FeatureProductAddComponent>(component = FeatureProductAddComponent::class) {
 
 	private val binding by viewBinding(FragmentProductAddBinding::bind)
 
@@ -26,7 +27,7 @@ class ProductAddFragment: BaseFragment<FeatureProductAddComponent>(component = F
 	}
 
 	private fun setListeners() {
-		binding.addRandomButton.setOnClickListener(){
+		binding.addRandomButton.setOnClickListener() {
 			viewModel.addRandomProduct()
 		}
 	}

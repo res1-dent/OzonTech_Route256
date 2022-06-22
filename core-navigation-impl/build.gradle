@@ -7,7 +7,6 @@ plugins {
 apply from: "../dependencies.gradle"
 
 
-
 android {
     compileSdk 32
 

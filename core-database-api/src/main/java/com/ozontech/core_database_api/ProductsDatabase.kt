@@ -8,7 +8,7 @@ interface ProductsDatabase {
 	fun getProductsInList(): List<ProductInListDtoSharedPrefs>
 	fun addProducts(list: List<ProductDtoSharedPrefs>)
 	fun getProducts(): List<ProductDtoSharedPrefs>
-	fun getProductByGuid(guid:String): ProductDtoSharedPrefs?
+	fun getProductByGuid(guid: String): ProductDtoSharedPrefs?
 	fun incrementCounter(guid: String)
 	fun addRandomProduct()
 }

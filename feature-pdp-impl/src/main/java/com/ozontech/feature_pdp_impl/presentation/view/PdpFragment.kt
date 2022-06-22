@@ -1,6 +1,5 @@
 package com.ozontech.feature_pdp_impl.presentation.view
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,12 +7,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
-import com.ozontech.core_utils.*
+import com.ozontech.core_utils.BaseFragment
+import com.ozontech.core_utils.R
+import com.ozontech.core_utils.inflate
+import com.ozontech.core_utils.stringArgs
 import com.ozontech.feature_pdp_impl.databinding.FragmentPdpBinding
 import com.ozontech.feature_pdp_impl.di.FeaturePdpComponent
 import com.ozontech.feature_pdp_impl.presentation.view_model.PdpViewModel
 import com.ozontech.feature_pdp_impl.presentation.view_objects.ProductVO
-import javax.inject.Inject
 
 class PdpFragment : BaseFragment<FeaturePdpComponent>(component = FeaturePdpComponent::class) {
 

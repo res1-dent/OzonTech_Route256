@@ -11,8 +11,10 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [RetrofitModule::class, WorkerModule::class],
-dependencies = [CoreNetworkDependencies::class])
+@Component(
+	modules = [RetrofitModule::class, WorkerModule::class],
+	dependencies = [CoreNetworkDependencies::class]
+)
 abstract class CoreNetworkComponent : NetworkApi, DiComponent {
 
 	abstract fun getRepository(): WorkerRepository

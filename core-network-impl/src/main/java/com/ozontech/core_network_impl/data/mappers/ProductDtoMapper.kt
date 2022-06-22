@@ -6,7 +6,6 @@ import com.ozontech.core_network_api.models.ProductDto
 import com.ozontech.core_network_api.models.ProductInListDto
 
 
-
 fun ProductDto.toProductDtoSharedPrefs(): ProductDtoSharedPrefs {
 	return ProductDtoSharedPrefs(
 		guid = guid,

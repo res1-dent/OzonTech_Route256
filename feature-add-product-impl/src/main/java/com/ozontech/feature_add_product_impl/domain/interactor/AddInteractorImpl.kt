@@ -4,10 +4,10 @@ import com.ozontech.feature_add_product_impl.domain.repository.AddProductReposit
 import javax.inject.Inject
 
 class AddInteractorImpl @Inject constructor(
-    private val repository: AddProductRepository
-): AddInteractor {
+	private val repository: AddProductRepository
+) : AddInteractor {
 
-    override  fun addRandomProduct() {
-        repository.addRandomProduct()
-    }
+	override fun addRandomProduct() {
+		repository.addRandomProduct()
+	}
 }

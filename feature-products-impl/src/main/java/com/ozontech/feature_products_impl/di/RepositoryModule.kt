@@ -8,8 +8,8 @@ import dagger.Module
 @Module
 interface RepositoryModule {
 
-    @Binds
-    fun bindProductsRepository(repository: ProductRepositoryNetworkImpl): ProductRepositoryNetwork
+	@Binds
+	fun bindProductsRepository(repository: ProductRepositoryNetworkImpl): ProductRepositoryNetwork
 
 
 }

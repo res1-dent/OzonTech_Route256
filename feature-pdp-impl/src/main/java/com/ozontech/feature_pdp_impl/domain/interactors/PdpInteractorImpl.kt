@@ -8,6 +8,6 @@ class PdpInteractorImpl @Inject constructor(
 	private val repository: ProductRepository
 ) : PdpInteractor {
 
-	override  fun getProductByGuid(guid: String): ProductDO? =
+	override fun getProductByGuid(guid: String): ProductDO? =
 		repository.fetchProductDetails(guid)
 }

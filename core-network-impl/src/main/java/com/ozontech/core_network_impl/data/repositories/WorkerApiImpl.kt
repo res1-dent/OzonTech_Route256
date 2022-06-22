@@ -25,8 +25,11 @@ class WorkerApiImpl @Inject constructor(
 			.setBackoffCriteria(BackoffPolicy.LINEAR, 10, TimeUnit.SECONDS)
 			.build()
 		val getProductsRequest = OneTimeWorkRequest.Builder(ProductsWorker::class.java).build()
-		workManager.beginUniqueWork(PRODUCT_IN_LIST_WORK, ExistingWorkPolicy.KEEP, getProductIntListRequest)
-			.then(getProductsRequest).enqueue()
+		workManager.beginUniqueWork(
+			PRODUCT_IN_LIST_WORK,
+			ExistingWorkPolicy.KEEP,
+			getProductIntListRequest
+		).then(getProductsRequest).enqueue()
 		return Transformations.map(workManager.getWorkInfoByIdLiveData(getProductIntListRequest.id)) {
 			if (it != null && it.state.isFinished) {
 				it.outputData.getString(Key.KEY_OUTPUT_PRODUCTS_IN_LIST_WORKER)?.let { json ->

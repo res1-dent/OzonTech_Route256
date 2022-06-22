@@ -47,9 +47,10 @@ class DIComponentStorageImpl(private val context: Context) {
 			}
 			CoreNetworkComponent::class -> {
 				DaggerCoreNetworkComponent.builder().workManager(WorkManager.getInstance(context))
-					.dependencies(DaggerCoreNetworkComponent_CoreNetworkDependenciesComponent.builder()
-						.databaseApi(initAndGet(CoreDatabaseComponent::class))
-						.build()
+					.dependencies(
+						DaggerCoreNetworkComponent_CoreNetworkDependenciesComponent.builder()
+							.databaseApi(initAndGet(CoreDatabaseComponent::class))
+							.build()
 					)
 					.build()
 			}

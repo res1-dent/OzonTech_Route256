@@ -2,7 +2,6 @@ package com.ozontech.feature_products_impl.presentation.view
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,76 +21,75 @@ import javax.inject.Inject
 
 
 class ProductListFragment :
-    BaseFragment<FeatureProductComponent>(component = FeatureProductComponent::class) {
+	BaseFragment<FeatureProductComponent>(component = FeatureProductComponent::class) {
 
-    private val binding by viewBinding(FragmentProductListBinding::bind)
+	private val binding by viewBinding(FragmentProductListBinding::bind)
 
-    private val viewModel: ProductListViewModel by viewModels {
-        currentComponent.getFabric()
-    }
-    private val adapter: ProductsAdapter by autoCleared {
-        ProductsAdapter(::onProductClick)
-    }
+	private val viewModel: ProductListViewModel by viewModels {
+		currentComponent.getFabric()
+	}
+	private val adapter: ProductsAdapter by autoCleared {
+		ProductsAdapter(::onProductClick)
+	}
 
-    @Inject
-    lateinit var productNavigationApi: ProductNavigationApi
+	@Inject
+	lateinit var productNavigationApi: ProductNavigationApi
 
-    override fun onAttach(context: Context) {
-        currentComponent.inject(this)
-        super.onAttach(context)
-    }
+	override fun onAttach(context: Context) {
+		currentComponent.inject(this)
+		super.onAttach(context)
+	}
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initList()
-        observeViewModelState()
-        setListeners()
-    }
-
-
-
-    private fun setListeners() {
-        binding.addFab.setOnClickListener() {
-            productNavigationApi.navigateToAdd(this)
-        }
-    }
-
-    private fun observeViewModelState() {
-        viewModel.getProducts().observe(viewLifecycleOwner){
-            adapter.submitList(it)
-        }
-        viewModel.isLoadingLiveData.observe(viewLifecycleOwner, ::toggleLoadingState)
-    }
-
-    private fun initList() {
-        with(binding) {
-            productListRecycler.adapter = this@ProductListFragment.adapter
-            productListRecycler.addItemDecoration(
-                ProductItemDecorator(
-                    20
-                )
-            )
-        }
-    }
-
-    private fun onProductClick(guid: String) {
-        viewModel.incrementCounter(guid)
-        productNavigationApi.navigateToPDP(this, guid)
-    }
-
-    private fun toggleLoadingState(isLoading: Boolean) {
-        with(binding) {
-            productListRecycler.isVisible = isLoading.not()
-            progress.isVisible = isLoading
-        }
-    }
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		super.onViewCreated(view, savedInstanceState)
+		initList()
+		observeViewModelState()
+		setListeners()
+	}
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return container?.inflate(FragmentProductListBinding::inflate)?.root
-    }
+	private fun setListeners() {
+		binding.addFab.setOnClickListener() {
+			productNavigationApi.navigateToAdd(this)
+		}
+	}
+
+	private fun observeViewModelState() {
+		viewModel.getProducts().observe(viewLifecycleOwner) {
+			adapter.submitList(it)
+		}
+		viewModel.isLoadingLiveData.observe(viewLifecycleOwner, ::toggleLoadingState)
+	}
+
+	private fun initList() {
+		with(binding) {
+			productListRecycler.adapter = this@ProductListFragment.adapter
+			productListRecycler.addItemDecoration(
+				ProductItemDecorator(
+					20
+				)
+			)
+		}
+	}
+
+	private fun onProductClick(guid: String) {
+		viewModel.incrementCounter(guid)
+		productNavigationApi.navigateToPDP(this, guid)
+	}
+
+	private fun toggleLoadingState(isLoading: Boolean) {
+		with(binding) {
+			productListRecycler.isVisible = isLoading.not()
+			progress.isVisible = isLoading
+		}
+	}
+
+
+	override fun onCreateView(
+		inflater: LayoutInflater,
+		container: ViewGroup?,
+		savedInstanceState: Bundle?
+	): View? {
+		return container?.inflate(FragmentProductListBinding::inflate)?.root
+	}
 }

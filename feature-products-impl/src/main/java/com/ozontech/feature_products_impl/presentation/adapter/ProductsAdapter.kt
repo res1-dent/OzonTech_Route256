@@ -46,22 +46,22 @@ class ProductsAdapter(
 		}
 	}
 
-    class ProductsDiffUtilCallback : DiffUtil.ItemCallback<ProductInListVO>() {
+	class ProductsDiffUtilCallback : DiffUtil.ItemCallback<ProductInListVO>() {
 
-	    override fun areItemsTheSame(oldItem: ProductInListVO, newItem: ProductInListVO): Boolean {
-		    return oldItem.guid == newItem.guid
-	    }
+		override fun areItemsTheSame(oldItem: ProductInListVO, newItem: ProductInListVO): Boolean {
+			return oldItem.guid == newItem.guid
+		}
 
-	    override fun areContentsTheSame(
-		    oldItem: ProductInListVO,
-		    newItem: ProductInListVO
-	    ): Boolean {
-		    if (oldItem.image != newItem.image) return false
-		    if (oldItem.name != newItem.name) return false
-		    if (oldItem.price != newItem.price) return false
-		    if (oldItem.rating != newItem.rating) return false
-		    if (oldItem.counter != newItem.counter) return false
-	        return true
-        }
-    }
+		override fun areContentsTheSame(
+			oldItem: ProductInListVO,
+			newItem: ProductInListVO
+		): Boolean {
+			if (oldItem.image != newItem.image) return false
+			if (oldItem.name != newItem.name) return false
+			if (oldItem.price != newItem.price) return false
+			if (oldItem.rating != newItem.rating) return false
+			if (oldItem.counter != newItem.counter) return false
+			return true
+		}
+	}
 }
