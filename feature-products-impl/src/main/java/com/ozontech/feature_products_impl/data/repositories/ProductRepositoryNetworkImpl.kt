@@ -21,9 +21,7 @@ constructor(
 
     override fun fetchListOfProducts(): LiveData<List<ProductInListDO>> {
         return Transformations.map(productsApi.getProducts()) { remoteList ->
-            Log.e("Database", "remoteList = $remoteList")
             remoteList?.let {
-                database.addProductsInList(it.map { Dto-> Dto.toProductInListSharedPrefs() })
                 it.map { Dto-> Dto.toDO() }
             } ?: database.getProductsInList().map { it.toProductInListDO() }
         }
