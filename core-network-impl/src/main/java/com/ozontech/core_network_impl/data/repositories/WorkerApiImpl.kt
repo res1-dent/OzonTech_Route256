@@ -1,6 +1,5 @@
 package com.ozontech.core_network_impl.data.repositories
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.work.BackoffPolicy
@@ -22,13 +21,13 @@ class WorkerApiImpl @Inject constructor(
 ) : WorkerApi {
 
 	override fun getProducts(): LiveData<List<ProductInListDto>?> {
-		val request = OneTimeWorkRequest.Builder(ProductInListWorker::class.java)
+		val getProductIntListRequest = OneTimeWorkRequest.Builder(ProductInListWorker::class.java)
 			.setBackoffCriteria(BackoffPolicy.LINEAR, 10, TimeUnit.SECONDS)
 			.build()
-		val request2 = OneTimeWorkRequest.Builder(ProductsWorker::class.java).build()
-		workManager.beginUniqueWork(PRODUCT_IN_LIST_WORK, ExistingWorkPolicy.KEEP, request)
-			.then(request2).enqueue()
-		return Transformations.map(workManager.getWorkInfoByIdLiveData(request.id)) {
+		val getProductsRequest = OneTimeWorkRequest.Builder(ProductsWorker::class.java).build()
+		workManager.beginUniqueWork(PRODUCT_IN_LIST_WORK, ExistingWorkPolicy.KEEP, getProductIntListRequest)
+			.then(getProductsRequest).enqueue()
+		return Transformations.map(workManager.getWorkInfoByIdLiveData(getProductIntListRequest.id)) {
 			if (it != null && it.state.isFinished) {
 				it.outputData.getString(Key.KEY_OUTPUT_PRODUCTS_IN_LIST_WORKER)?.let { json ->
 					val listType = object : TypeToken<List<ProductInListDto>>() {}.type
