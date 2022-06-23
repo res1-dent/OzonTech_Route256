@@ -9,11 +9,12 @@ import com.ozontech.core_database_api.ProductsDatabase
 import com.ozontech.core_database_api.models.ProductDtoSharedPrefs
 import com.ozontech.core_database_api.models.ProductInListDtoSharedPrefs
 import com.ozontech.core_database_module.data.mappers.toProductInListDroSharedPrefs
+import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 import javax.inject.Inject
 import kotlin.random.Random
 
-class ProductDatabaseImpl @Inject constructor(context: Context) : ProductsDatabase {
+class ProductDatabaseImpl @Inject constructor(context: Context, private val gson: Gson) : ProductsDatabase {
 
 	private val prefs = context.getSharedPreferences(PREFERENCES_PRODUCT_NAME, Context.MODE_PRIVATE)
 
@@ -31,7 +32,7 @@ class ProductDatabaseImpl @Inject constructor(context: Context) : ProductsDataba
 	override fun getProductsInList(): List<ProductInListDtoSharedPrefs> {
 		val type = object : TypeToken<List<ProductInListDtoSharedPrefs>>() {}.type
 		return prefs.getString(PRODUCT_IN_LIST, null)?.let { json ->
-			Gson().fromJson(json, type)
+			gson.fromJson(json, type)
 		} ?: emptyList()
 	}
 
@@ -42,7 +43,7 @@ class ProductDatabaseImpl @Inject constructor(context: Context) : ProductsDataba
 	override fun getProducts(): List<ProductDtoSharedPrefs> {
 		val type = object : TypeToken<List<ProductDtoSharedPrefs>>() {}.type
 		return prefs.getString(PRODUCT, null)?.let { json ->
-			Gson().fromJson(json, type)
+			gson.fromJson(json, type)
 		} ?: emptyList()
 	}
 
