@@ -25,7 +25,7 @@ class ProductDatabaseImpl @Inject constructor(context: Context, private val gson
 			list.filter { x -> currentList.find { it.guid == x.guid } == null }
 		)
 		prefs.edit()
-			.putString(PRODUCT_IN_LIST, Gson().toJson(currentList))
+			.putString(PRODUCT_IN_LIST, gson.toJson(currentList))
 			.apply()
 	}
 
@@ -37,7 +37,7 @@ class ProductDatabaseImpl @Inject constructor(context: Context, private val gson
 	}
 
 	override fun addProducts(list: List<ProductDtoSharedPrefs>) {
-		prefs.edit().putString(PRODUCT, Gson().toJson((getProducts() + list).toSet())).apply()
+		prefs.edit().putString(PRODUCT, gson.toJson((getProducts() + list).toSet())).apply()
 	}
 
 	override fun getProducts(): List<ProductDtoSharedPrefs> {
@@ -59,7 +59,7 @@ class ProductDatabaseImpl @Inject constructor(context: Context, private val gson
 			else it
 		}
 		prefs.edit()
-			.putString(PRODUCT_IN_LIST, Gson().toJson(newList))
+			.putString(PRODUCT_IN_LIST, gson.toJson(newList))
 			.apply()
 
 	}
