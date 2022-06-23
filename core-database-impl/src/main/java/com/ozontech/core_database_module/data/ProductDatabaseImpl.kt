@@ -11,6 +11,7 @@ import com.ozontech.core_database_api.models.ProductInListDtoSharedPrefs
 import com.ozontech.core_database_module.data.mappers.toProductInListDroSharedPrefs
 import java.util.*
 import javax.inject.Inject
+import kotlin.random.Random
 
 class ProductDatabaseImpl @Inject constructor(context: Context) : ProductsDatabase {
 
@@ -65,10 +66,30 @@ class ProductDatabaseImpl @Inject constructor(context: Context) : ProductsDataba
 	@RequiresApi(Build.VERSION_CODES.N)
 	override fun addRandomProduct() {
 		val currentList = getProducts().toMutableList()
-		val new = currentList.random().copy(guid = UUID.randomUUID().toString())
-		currentList.add(new)
-		addProducts(currentList)
-		addProductsInList(currentList.map { it.toProductInListDroSharedPrefs() })
+		if (currentList.isNotEmpty()){
+			val new = currentList.random().copy(guid = UUID.randomUUID().toString())
+			currentList.add(new)
+			addProducts(currentList)
+			addProductsInList(currentList.map { it.toProductInListDroSharedPrefs() })
+		} else {
+			val newProduct = ProductDtoSharedPrefs(
+				guid = UUID.randomUUID().toString(),
+				name = "RandomName " + System.currentTimeMillis(),
+				price = Random.nextInt(1, 5).toString(),
+				description = "Random product descr",
+				rating = Random.nextDouble(1.0, 5.0),
+				isFavorite = Random.nextBoolean(),
+				isInCart = Random.nextBoolean(),
+				images = listOf("https://cdn1.ozone.ru/s3/multimedia-9/6012020949.jpg"),
+				weight = null,
+				count = null,
+				availableCount = null,
+				additionalParams = emptyMap()
+			)
+			addProducts(listOf(newProduct))
+			addProductsInList(listOf(newProduct.toProductInListDroSharedPrefs()))
+		}
+
 	}
 
 	companion object {

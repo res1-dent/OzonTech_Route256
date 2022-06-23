@@ -9,22 +9,22 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.ozontech.core_network_api.WorkerApi
+import com.ozontech.core_network_api.WorkerManager
 import com.ozontech.core_network_api.models.ProductInListDto
 import com.ozontech.core_network_impl.data.workers.ProductInListWorker
 import com.ozontech.core_network_impl.data.workers.ProductsWorker
 import com.ozontech.core_network_impl.domain.key.Key
-import okhttp3.internal.wait
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class WorkerApiImpl @Inject constructor(
+class WorkerManagerImpl @Inject constructor(
 	private val workManager: WorkManager,
-) : WorkerApi {
+) : WorkerManager {
 
-	override fun getProducts(): LiveData<List<ProductInListDto>?> {
+	override fun startWorkers() {
 		val getProductIntListRequest = OneTimeWorkRequest.Builder(ProductInListWorker::class.java)
 			.setBackoffCriteria(BackoffPolicy.LINEAR, 10, TimeUnit.SECONDS)
+			.addTag(Key.TAG_PRODUCT_IN_LIST_REQUEST)
 			.build()
 		val getProductsRequest = OneTimeWorkRequest.Builder(ProductsWorker::class.java).build()
 		workManager.beginUniqueWork(
@@ -32,15 +32,6 @@ class WorkerApiImpl @Inject constructor(
 			ExistingWorkPolicy.KEEP,
 			getProductIntListRequest
 		).then(getProductsRequest).enqueue()
-		return Transformations.map(workManager.getWorkInfoByIdLiveData(getProductIntListRequest.id)) {
-			Log.e("!!!", "worker = ${it.state.isFinished}")
-			if (it != null && it.state.isFinished) {
-				it.outputData.getString(Key.KEY_OUTPUT_PRODUCTS_IN_LIST_WORKER)?.let { json ->
-					val listType = object : TypeToken<List<ProductInListDto>>() {}.type
-					Gson().fromJson<List<ProductInListDto>>(json, listType)
-				}
-			} else null
-		}
 	}
 
 	companion object {
