@@ -20,7 +20,7 @@ abstract class FeatureProductComponent : DiComponent {
 	abstract fun inject(fragment: ProductListFragment)
 
 	@PerFeature
-	@Component(dependencies = [NetworkApi::class, ProductNavigationApi::class, DatabaseApi::class])
+	@Component(dependencies = [ProductNavigationApi::class, DatabaseApi::class])
 	interface ProductFeatureDependenciesComponent : ProductFeatureDependencies
 
 }

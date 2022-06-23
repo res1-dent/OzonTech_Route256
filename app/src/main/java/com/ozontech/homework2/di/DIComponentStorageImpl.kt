@@ -58,7 +58,6 @@ class DIComponentStorageImpl(private val context: Context) {
 				DaggerFeatureProductComponent.builder()
 					.productFeatureDependencies(
 						DaggerFeatureProductComponent_ProductFeatureDependenciesComponent.builder()
-							.networkApi(initAndGet(CoreNetworkComponent::class))
 							.productNavigationApi(initAndGet(CoreNavigationComponent::class).getProductNavigation())
 							.databaseApi(initAndGet(CoreDatabaseComponent::class))
 							.build()

@@ -9,12 +9,10 @@ import javax.inject.Inject
 
 class ProductRepositoryNetworkImpl @Inject
 constructor(
-	private val workerManager: WorkerManager,
 	private val database: ProductsDatabase
 ) : ProductRepositoryNetwork {
 
 	override fun fetchListOfProducts(): List<ProductInListDO> {
-		workerManager.startWorkers()
 		return database.getProductsInList().map { it.toProductInListDO() }
 	}
 
