@@ -66,7 +66,7 @@ class ProductDatabaseImpl @Inject constructor(context: Context) : ProductsDataba
 	@RequiresApi(Build.VERSION_CODES.N)
 	override fun addRandomProduct() {
 		val currentList = getProducts().toMutableList()
-		if (currentList.isNotEmpty()){
+		if (currentList.isNotEmpty() && currentList.size > 5){
 			val new = currentList.random().copy(guid = UUID.randomUUID().toString())
 			currentList.add(new)
 			addProducts(currentList)
@@ -75,7 +75,7 @@ class ProductDatabaseImpl @Inject constructor(context: Context) : ProductsDataba
 			val newProduct = ProductDtoSharedPrefs(
 				guid = UUID.randomUUID().toString(),
 				name = "RandomName " + System.currentTimeMillis(),
-				price = Random.nextInt(1, 5).toString(),
+				price = Random.nextInt(1, 100_0000).toString(),
 				description = "Random product descr",
 				rating = Random.nextDouble(1.0, 5.0),
 				isFavorite = Random.nextBoolean(),
