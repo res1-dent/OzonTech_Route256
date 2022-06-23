@@ -5,7 +5,7 @@ import com.ozontech.feature_products_impl.domain.domain_objects.ProductInListDO
 
 interface ProductRepositoryNetwork {
 
-	fun fetchListOfProducts(): LiveData<List<ProductInListDO>?>
+	fun fetchListOfProducts(): List<ProductInListDO>
 
 	fun incrementCounter(guid: String)
 }

@@ -5,7 +5,7 @@ import com.ozontech.feature_products_impl.domain.domain_objects.ProductInListDO
 
 interface ProductListInteractor {
 
-	fun getProducts(): LiveData<List<ProductInListDO>?>
+	fun getProducts(): List<ProductInListDO>
 
 	fun incrementCounter(guid: String)
 }

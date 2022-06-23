@@ -14,25 +14,23 @@ class WorkerRepositoryImpl @Inject constructor(
 	private val database: ProductsDatabase
 ) : WorkerRepository {
 
-	override fun getProductsInList(): List<ProductInListDto>? {
-		return try {
+	override fun getProductsInList() {
 			productsApi.getProductsInList().execute().body()?.also {
 				database.addProductsInList(it.map { it.toProductInListDtoSharedPrefs() })
-			}?.let { database.getProductsInList().map { it.toProductInListDto() } }
-		} catch (e: Exception) {
-			database.getProductsInList().map { it.toProductInListDto() }
-		}
+			}
+
 	}
 
 
-	override fun getProducts(): List<ProductDto>? {
-		return productsApi.getProducts().execute().body()?.also {
+	override fun getProducts() {
+		 productsApi.getProducts().execute().body()?.also {
 			database.addProducts(it.map { it.toProductDtoSharedPrefs() })
 		}
 	}
 }
 
 interface WorkerRepository {
-	fun getProductsInList(): List<ProductInListDto>?
-	fun getProducts(): List<ProductDto>?
+	fun getProductsInList()
+	fun getProducts()
 }
+

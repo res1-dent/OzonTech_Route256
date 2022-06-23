@@ -1,4 +1,4 @@
-package com.ozontech.core_network_impl.domain.key
+package com.ozontech.core_network_api
 
 object Key {
 

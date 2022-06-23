@@ -13,6 +13,11 @@ class ProductsWorker(context: Context, params: WorkerParameters) : Worker(contex
 		applicationContext.getComponent(CoreNetworkComponent::class).getRepository()
 
 	override fun doWork(): Result {
-		return if (repository.getProducts() != null) Result.success() else Result.failure()
+		return try {
+			repository.getProducts()
+			Result.success()
+		} catch (e: Exception) {
+			Result.failure()
+		}
 	}
 }

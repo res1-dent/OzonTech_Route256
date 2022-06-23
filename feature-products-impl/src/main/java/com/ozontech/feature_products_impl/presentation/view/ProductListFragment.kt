@@ -8,7 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.work.WorkManager
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.ozontech.core_network_api.Key
 import com.ozontech.core_utils.BaseFragment
 import com.ozontech.core_utils.autoCleared
 import com.ozontech.core_utils.inflate
@@ -47,7 +49,18 @@ class ProductListFragment :
 		initList()
 		observeViewModelState()
 		setListeners()
-		viewModel.refreshState()
+		observeWorkerState()
+	}
+
+	private fun observeWorkerState() {
+		WorkManager.getInstance(requireContext())
+			.getWorkInfosByTagLiveData(Key.TAG_PRODUCT_IN_LIST_REQUEST)
+			.observe(viewLifecycleOwner) {
+				if (it != null && it.isNotEmpty() && it.first().state.isFinished) {
+					viewModel.getProducts()
+				}
+			}
+
 	}
 
 
@@ -58,7 +71,7 @@ class ProductListFragment :
 	}
 
 	private fun observeViewModelState() {
-		viewModel.stateLiveData.observe(viewLifecycleOwner, ::updateUi)
+		viewModel.uiStateLiveData.observe(viewLifecycleOwner, ::updateUi)
 	}
 
 	private fun initList() {
@@ -73,6 +86,7 @@ class ProductListFragment :
 	}
 
 	private fun updateUi(state: UiState) {
+		Log.e("!!!", "state = $state")
 		when (state) {
 			is UiState.Error -> {
 				toggleLoadingState(false)
