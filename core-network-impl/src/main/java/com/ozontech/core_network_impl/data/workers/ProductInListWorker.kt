@@ -18,7 +18,9 @@ class ProductInListWorker(context: Context, params: WorkerParameters) : Worker(c
 			repository.getProductsInList()
 			Result.success()
 		} catch (e: Exception) {
-			Result.failure()
+			if (runAttemptCount < 5)
+			Result.retry()
+			else Result.failure()
 		}
 	}
 }
