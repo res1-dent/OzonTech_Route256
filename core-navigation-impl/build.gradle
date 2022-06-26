@@ -31,6 +31,9 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
@@ -47,10 +50,12 @@ dependencies {
 
     implementation coreKtx
     implementation appCompat
+    implementation viewBinding
 
     implementation dagger
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation project(path: ':feature-add-product-impl')
+    implementation 'com.google.android.material:material:1.6.1'
 
     kapt daggerCompiler
 

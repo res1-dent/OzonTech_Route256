@@ -10,7 +10,6 @@ abstract class BaseFragment<T : DiComponent>(private val component: KClass<T>) :
 		getComp(component)
 	}
 
-
 	override fun onDestroy() {
 		super.onDestroy()
 		if (isRemoving)

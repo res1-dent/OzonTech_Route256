@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
 import com.ozontech.core_utils.BaseFragment
@@ -14,7 +15,9 @@ import com.ozontech.core_utils.stringArgs
 import com.ozontech.feature_pdp_impl.databinding.FragmentPdpBinding
 import com.ozontech.feature_pdp_impl.di.FeaturePdpComponent
 import com.ozontech.feature_pdp_impl.presentation.view_model.PdpViewModel
-import com.ozontech.feature_pdp_impl.presentation.view_objects.ProductVO
+import com.ozontech.feature_pdp_impl.presentation.view_objects.PdpUiState
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 class PdpFragment : BaseFragment<FeaturePdpComponent>(component = FeaturePdpComponent::class) {
 
@@ -34,21 +37,34 @@ class PdpFragment : BaseFragment<FeaturePdpComponent>(component = FeaturePdpComp
 	}
 
 	private fun observeViewModelState() {
-		viewModel.productLiveData.observe(viewLifecycleOwner, ::updateProduct)
+		viewModel.productStateFlow.onEach(::handleUiState)
+			.launchIn(viewLifecycleOwner.lifecycleScope)
 	}
 
-	private fun updateProduct(product: ProductVO) {
-		with(binding) {
-			Glide.with(requireView()).load(product.images.first()).into(productImageView)
-			nameTextView.text = product.name
-			priceTextView.text = getString(R.string.price, product.price)
-			ratingRatingBar.rating = product.rating
-			descriptionTextView.text = product.description
-			availableCountTextView.text =
-				getString(R.string.available_count, product.availableCount)
-			countTextView.text =
-				getString(R.string.count_string, product.count)
+	private fun handleUiState(state: PdpUiState) {
+		when (state) {
+			is PdpUiState.Success -> {
+				val product = state.product
+				with(binding) {
+					Glide.with(requireView()).load(product.images.first()).into(productImageView)
+					nameTextView.text = product.name
+					priceTextView.text = getString(R.string.price, product.price)
+					ratingRatingBar.rating = product.rating
+					descriptionTextView.text = product.description
+					availableCountTextView.text =
+						getString(R.string.available_count, product.availableCount)
+					countTextView.text =
+						getString(R.string.count_string, product.count)
+				}
+			}
+			is PdpUiState.Error -> {
+
+			}
+			is PdpUiState.Loading -> {
+
+			}
 		}
+
 	}
 
 	override fun onCreateView(

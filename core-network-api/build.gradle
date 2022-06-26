@@ -36,4 +36,5 @@ dependencies {
     implementation retrofit.values()
     implementation lifecycle
     implementation liveData
+    implementation coroutines.values()
 }

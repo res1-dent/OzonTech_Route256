@@ -10,4 +10,6 @@ interface ProductFeatureDependencies {
 
 	fun database(): ProductsDatabase
 
+	fun getWorkerManager(): WorkerManager
+
 }

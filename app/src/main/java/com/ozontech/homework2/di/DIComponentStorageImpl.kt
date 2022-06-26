@@ -1,6 +1,6 @@
 package com.ozontech.homework2.di
 
-import android.content.Context
+import android.app.Application
 import androidx.work.WorkManager
 import com.ozontech.core_database_module.di.CoreDatabaseComponent
 import com.ozontech.core_database_module.di.DaggerCoreDatabaseComponent
@@ -21,7 +21,7 @@ import com.ozontech.feature_products_impl.di.DaggerFeatureProductComponent_Produ
 import com.ozontech.feature_products_impl.di.FeatureProductComponent
 import kotlin.reflect.KClass
 
-class DIComponentStorageImpl(private val context: Context) {
+class DIComponentStorageImpl(private val context: Application) {
 
 	private val map: MutableMap<KClass<*>, Any> = mutableMapOf()
 
@@ -56,10 +56,12 @@ class DIComponentStorageImpl(private val context: Context) {
 			}
 			FeatureProductComponent::class -> {
 				DaggerFeatureProductComponent.builder()
-					.productFeatureDependencies(
+					.context(context)
+					.dependencies(
 						DaggerFeatureProductComponent_ProductFeatureDependenciesComponent.builder()
 							.productNavigationApi(initAndGet(CoreNavigationComponent::class).getProductNavigation())
 							.databaseApi(initAndGet(CoreDatabaseComponent::class))
+							.networkApi(initAndGet(CoreNetworkComponent::class))
 							.build()
 					)
 					.build()

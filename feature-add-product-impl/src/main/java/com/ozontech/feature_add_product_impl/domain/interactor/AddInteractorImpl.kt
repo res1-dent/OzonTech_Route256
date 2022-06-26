@@ -7,7 +7,7 @@ class AddInteractorImpl @Inject constructor(
 	private val repository: AddProductRepository
 ) : AddInteractor {
 
-	override fun addRandomProduct() {
+	override suspend fun addRandomProduct() {
 		repository.addRandomProduct()
 	}
 }

@@ -8,7 +8,7 @@ class AddProductRepositoryImpl @Inject constructor(
 	private val databaseApi: ProductsDatabase
 ) : AddProductRepository {
 
-	override fun addRandomProduct() {
+	override suspend fun addRandomProduct() {
 		databaseApi.addRandomProduct()
 	}
 }

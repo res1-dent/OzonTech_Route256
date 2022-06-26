@@ -40,6 +40,7 @@ dependencies {
     implementation project(path: ':core-utils')
     implementation project(path: ':core-network-api')
     implementation project(path: ':feature-products-api')
+    implementation project(path: ':core-database-api')
 
     implementation coreKtx
     implementation navigation.values()
@@ -51,7 +52,6 @@ dependencies {
     implementation liveData
     implementation glide
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation project(path: ':core-database-api')
 
     testImplementation junit
     androidTestImplementation androidTestJunit
@@ -63,4 +63,6 @@ dependencies {
     implementation retrofit.values()
     implementation moshi
     implementation gson
+    implementation flowBinding.values()
+
 }

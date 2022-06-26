@@ -45,4 +45,6 @@ dependencies {
     implementation gson
     implementation liveData
     implementation lifecycle
+    implementation coroutines.values()
+    implementation preferences
 }

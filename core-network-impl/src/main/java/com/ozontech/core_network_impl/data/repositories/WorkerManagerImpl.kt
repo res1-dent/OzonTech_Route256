@@ -4,10 +4,10 @@ import androidx.work.BackoffPolicy
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
+import com.ozontech.core_network_api.Key
 import com.ozontech.core_network_api.WorkerManager
 import com.ozontech.core_network_impl.data.workers.ProductInListWorker
 import com.ozontech.core_network_impl.data.workers.ProductsWorker
-import com.ozontech.core_network_api.Key
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 

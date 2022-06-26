@@ -5,6 +5,7 @@ sealed class UiState {
 	data class Success(
 		val listOfProducts: List<ProductInListVO>
 	) : UiState()
+
 	object Loading : UiState()
 	object Error : UiState()
 }

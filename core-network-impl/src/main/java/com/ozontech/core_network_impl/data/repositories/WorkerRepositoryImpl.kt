@@ -4,6 +4,8 @@ import com.ozontech.core_database_api.ProductsDatabase
 import com.ozontech.core_network_api.ProductsApi
 import com.ozontech.core_network_impl.data.mappers.toProductDtoSharedPrefs
 import com.ozontech.core_network_impl.data.mappers.toProductInListDtoSharedPrefs
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class WorkerRepositoryImpl @Inject constructor(
@@ -11,22 +13,22 @@ class WorkerRepositoryImpl @Inject constructor(
 	private val database: ProductsDatabase
 ) : WorkerRepository {
 
-	override fun getProductsInList() {
-		productsApi.getProductsInList().execute().body()?.also {
-			database.addProductsInList(it.map { it.toProductInListDtoSharedPrefs() })
-		}
-
+	override suspend fun getProductsInList() = withContext(Dispatchers.IO) {
+		val productInList =
+			productsApi.getProductsInList()
+				.map { it.toProductInListDtoSharedPrefs() }
+		database.addProductsInList(productInList)
 	}
 
-	override fun getProducts() {
-		productsApi.getProducts().execute().body()?.also {
-			database.addProducts(it.map { it.toProductDtoSharedPrefs() })
-		}
+	override suspend fun getProducts() = withContext(Dispatchers.IO) {
+		val products = productsApi.getProducts()
+			.map { it.toProductDtoSharedPrefs() }
+		database.addProducts(products)
 	}
 }
 
 interface WorkerRepository {
-	fun getProductsInList()
-	fun getProducts()
+	suspend fun getProductsInList()
+	suspend fun getProducts()
 }
 

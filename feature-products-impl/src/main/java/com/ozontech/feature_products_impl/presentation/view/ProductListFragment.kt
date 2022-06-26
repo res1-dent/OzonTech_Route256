@@ -2,15 +2,13 @@ package com.ozontech.feature_products_impl.presentation.view
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.work.WorkManager
+import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.ozontech.core_network_api.Key
 import com.ozontech.core_utils.BaseFragment
 import com.ozontech.core_utils.autoCleared
 import com.ozontech.core_utils.inflate
@@ -21,8 +19,14 @@ import com.ozontech.feature_products_impl.presentation.adapter.ProductsAdapter
 import com.ozontech.feature_products_impl.presentation.adapter.decorators.ProductItemDecorator
 import com.ozontech.feature_products_impl.presentation.view_model.ProductListViewModel
 import com.ozontech.feature_products_impl.presentation.view_objects.UiState
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
+import reactivecircus.flowbinding.android.view.clicks
 import javax.inject.Inject
-
 
 class ProductListFragment :
 	BaseFragment<FeatureProductComponent>(component = FeatureProductComponent::class) {
@@ -49,29 +53,21 @@ class ProductListFragment :
 		initList()
 		observeViewModelState()
 		setListeners()
-		observeWorkerState()
+		updateInfo()
 	}
-
-	private fun observeWorkerState() {
-		WorkManager.getInstance(requireContext())
-			.getWorkInfosByTagLiveData(Key.TAG_PRODUCT_IN_LIST_REQUEST)
-			.observe(viewLifecycleOwner) {
-				if (it != null && it.isNotEmpty() && it.first().state.isFinished) {
-					viewModel.getProducts()
-				}
-			}
-
-	}
-
 
 	private fun setListeners() {
-		binding.addFab.setOnClickListener() {
+		binding.addFab.clicks().onEach {
 			productNavigationApi.navigateToAdd(this)
-		}
+		}.launchIn(lifecycleScope)
 	}
 
 	private fun observeViewModelState() {
-		viewModel.uiStateLiveData.observe(viewLifecycleOwner, ::updateUi)
+		viewModel.uiStateStateFlow.onEach(::handleUiState)
+			.launchIn(viewLifecycleOwner.lifecycleScope)
+		viewModel.workManager.distinctUntilChanged().onEach { workInfo ->
+			workInfo.firstOrNull()?.let(viewModel::handleWorkInfo)
+		}.launchIn(lifecycleScope)
 	}
 
 	private fun initList() {
@@ -85,8 +81,7 @@ class ProductListFragment :
 		}
 	}
 
-	private fun updateUi(state: UiState) {
-		Log.e("!!!", "state = $state")
+	private fun handleUiState(state: UiState) {
 		when (state) {
 			is UiState.Error -> {
 				toggleLoadingState(false)
@@ -108,11 +103,18 @@ class ProductListFragment :
 
 	private fun toggleLoadingState(isLoading: Boolean) {
 		with(binding) {
-				progress.isVisible = isLoading
+			progress.isVisible = isLoading
 		}
 	}
 
-
+	private fun updateInfo() {
+		viewLifecycleOwner.lifecycleScope.launch {
+			while (isActive) {
+				delay(300_000)
+				viewModel.updateInfo()
+			}
+		}
+	}
 
 	override fun onCreateView(
 		inflater: LayoutInflater,
@@ -122,3 +124,6 @@ class ProductListFragment :
 		return container?.inflate(FragmentProductListBinding::inflate)?.root
 	}
 }
+
+
+

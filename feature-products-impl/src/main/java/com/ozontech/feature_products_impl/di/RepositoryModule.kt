@@ -1,7 +1,7 @@
 package com.ozontech.feature_products_impl.di
 
-import com.ozontech.feature_products_impl.data.repositories.ProductRepositoryNetworkImpl
-import com.ozontech.feature_products_impl.domain.repositories.ProductRepositoryNetwork
+import com.ozontech.feature_products_impl.data.repositories.ProductRepositoryImpl
+import com.ozontech.feature_products_impl.domain.repositories.ProductRepository
 import dagger.Binds
 import dagger.Module
 
@@ -9,7 +9,7 @@ import dagger.Module
 interface RepositoryModule {
 
 	@Binds
-	fun bindProductsRepository(repository: ProductRepositoryNetworkImpl): ProductRepositoryNetwork
+	fun bindProductsRepository(repository: ProductRepositoryImpl): ProductRepository
 
 
 }
