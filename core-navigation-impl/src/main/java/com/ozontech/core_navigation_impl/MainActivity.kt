@@ -2,9 +2,7 @@ package com.ozontech.core_navigation_impl
 
 import android.net.ConnectivityManager
 import android.net.ConnectivityManager.NetworkCallback
-import android.net.LinkProperties
 import android.net.Network
-import android.net.NetworkCapabilities
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -66,9 +64,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
 	private fun toggleSnackbar(isNetworkAvailable: Boolean) {
 		runOnUiThread {
-			if (isNetworkAvailable) {
+			if (isNetworkAvailable)
 				snackBar.dismiss()
-			} else snackBar.show()
+			else snackBar.show()
 		}
 	}
 }
