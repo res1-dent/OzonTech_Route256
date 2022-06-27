@@ -5,52 +5,66 @@ import android.net.ConnectivityManager.NetworkCallback
 import android.net.LinkProperties
 import android.net.Network
 import android.net.NetworkCapabilities
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import com.ozontech.core_navigation_impl.databinding.ActivityMainBinding
+import kotlinx.coroutines.ObsoleteCoroutinesApi
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
+@ObsoleteCoroutinesApi
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
 	private val binding: ActivityMainBinding by viewBinding(ActivityMainBinding::bind)
 
 	private val snackBar: Snackbar by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
-		Snackbar.make(this, binding.root, getString(R.string.lost_connection_string), Snackbar.LENGTH_INDEFINITE)
+		Snackbar.make(
+			this,
+			binding.root,
+			getString(R.string.lost_connection_string),
+			Snackbar.LENGTH_INDEFINITE
+		)
 	}
 
-	@RequiresApi(Build.VERSION_CODES.N)
+	private val netWorkStatusMutableSharedFlow = MutableSharedFlow<Boolean>(
+		extraBufferCapacity = 1,
+		onBufferOverflow = BufferOverflow.DROP_OLDEST
+	)
+	private val networkStatusSharedFlow = netWorkStatusMutableSharedFlow.asSharedFlow()
+
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
+		observeChannel()
+		setConnectivityManager()
+	}
+
+	private fun setConnectivityManager() {
 		val connectivityManager: ConnectivityManager =
 			getSystemService(ConnectivityManager::class.java)
-		toggleSnackbar(connectivityManager.isDefaultNetworkActive)
+		netWorkStatusMutableSharedFlow.tryEmit(connectivityManager.activeNetwork != null)
 		connectivityManager.registerDefaultNetworkCallback(object : NetworkCallback() {
 			override fun onAvailable(network: Network) {
-				toggleSnackbar(true)
+				netWorkStatusMutableSharedFlow.tryEmit(true)
 			}
-
 			override fun onLost(network: Network) {
-				toggleSnackbar(false)
-			}
-
-			override fun onCapabilitiesChanged(
-				network: Network,
-				networkCapabilities: NetworkCapabilities
-			) {
-				Log.e("!!!!", "The default network changed capabilities: $networkCapabilities")
-			}
-
-			override fun onLinkPropertiesChanged(network: Network, linkProperties: LinkProperties) {
-				Log.e("!!!!", "The default network changed link properties: $linkProperties")
+				netWorkStatusMutableSharedFlow.tryEmit(false)
 			}
 		})
 	}
 
-	internal fun toggleSnackbar(isNetworkAvailable: Boolean) {
+	private fun observeChannel() {
+		networkStatusSharedFlow.onEach {
+			toggleSnackbar(it)
+		}.launchIn(lifecycleScope)
+	}
+
+	private fun toggleSnackbar(isNetworkAvailable: Boolean) {
 		runOnUiThread {
 			if (isNetworkAvailable) {
 				snackBar.dismiss()
