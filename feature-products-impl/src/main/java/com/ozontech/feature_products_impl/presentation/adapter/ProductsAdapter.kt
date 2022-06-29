@@ -9,9 +9,14 @@ import com.ozontech.core_utils.R
 import com.ozontech.core_utils.inflate
 import com.ozontech.feature_products_impl.databinding.ProductListItemBinding
 import com.ozontech.feature_products_impl.presentation.view_objects.ProductInListVO
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.*
+import reactivecircus.flowbinding.android.view.clicks
+import reactivecircus.flowbinding.recyclerview.FlingEvent
 
 class ProductsAdapter(
-	private val onProductClick: (String) -> Unit
+	private val onProductClick: (String) -> Unit,
+	private val lifecycleScope: CoroutineScope
 ) : ListAdapter<ProductInListVO, ProductsAdapter.Holder>(
 	ProductsDiffUtilCallback()
 ) {
@@ -30,9 +35,9 @@ class ProductsAdapter(
 	) : RecyclerView.ViewHolder(binding.root) {
 
 		init {
-			binding.root.setOnClickListener {
+			binding.root.clicks().onEach {
 				currentList[absoluteAdapterPosition].guid.let(onProductClick)
-			}
+			}.launchIn(lifecycleScope)
 		}
 
 		fun bind(item: ProductInListVO) {

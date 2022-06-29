@@ -10,7 +10,7 @@ class AddViewModel @Inject constructor(
 	private val interactor: AddInteractor
 ) : ViewModel() {
 
-	fun addRandomProduct() {
+	suspend fun addRandomProduct(u : Unit) {
 		viewModelScope.launch {
 			interactor.addRandomProduct()
 		}

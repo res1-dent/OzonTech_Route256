@@ -26,6 +26,8 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import reactivecircus.flowbinding.android.view.clicks
+import reactivecircus.flowbinding.recyclerview.FlingEvent
+import reactivecircus.flowbinding.recyclerview.flingEvents
 import javax.inject.Inject
 
 class ProductListFragment :
@@ -37,7 +39,7 @@ class ProductListFragment :
 		currentComponent.getFabric()
 	}
 	private val adapter: ProductsAdapter by autoCleared {
-		ProductsAdapter(::onProductClick)
+		ProductsAdapter(::onProductClick, lifecycleScope)
 	}
 
 	@Inject

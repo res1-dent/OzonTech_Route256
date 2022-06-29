@@ -5,12 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.ozontech.core_utils.BaseFragment
 import com.ozontech.core_utils.inflate
 import com.ozontech.feature_add_product_impl.databinding.FragmentProductAddBinding
 import com.ozontech.feature_add_product_impl.di.FeatureProductAddComponent
 import com.ozontech.feature_add_product_impl.presentation.viewModel.AddViewModel
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import reactivecircus.flowbinding.android.view.clicks
 
 class ProductAddFragment :
 	BaseFragment<FeatureProductAddComponent>(component = FeatureProductAddComponent::class) {
@@ -27,10 +31,11 @@ class ProductAddFragment :
 	}
 
 	private fun setListeners() {
-		binding.addRandomButton.setOnClickListener() {
-			viewModel.addRandomProduct()
-		}
+		binding.addRandomButton.clicks()
+			.onEach(viewModel::addRandomProduct)
+			.launchIn(viewLifecycleOwner.lifecycleScope)
 	}
+
 
 	override fun onCreateView(
 		inflater: LayoutInflater,
