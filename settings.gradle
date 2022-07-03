@@ -1,0 +1,27 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+rootProject.name = "Homework2"
+include ':app'
+include ':core-network-api'
+include ':core-network-impl'
+include ':core-utils'
+include ':feature-pdp-impl'
+include ':feature-products-impl'
+include ':feature-products-api'
+include ':core-navigation-api'
+include ':core-navigation-impl'
+include ':core-database-impl'
+include ':core-database-api'
+include ':feature-add-product-impl'

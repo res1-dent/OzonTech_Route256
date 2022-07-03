@@ -1,0 +1,9 @@
+apply from: "$rootProject.projectDir/android-library.gradle"
+apply plugin: 'kotlin-kapt'
+
+dependencies {
+    implementation retrofit.values()
+    implementation lifecycle
+    implementation liveData
+    implementation coroutines.values()
+}

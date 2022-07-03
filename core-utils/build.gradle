@@ -1,0 +1,24 @@
+apply from: "$rootProject.projectDir/android-library.gradle"
+apply plugin: 'kotlin-kapt'
+
+dependencies {
+
+    implementation coreKtx
+    implementation navigation.values()
+    implementation appCompat
+    implementation material
+    implementation constraintLayout
+    implementation viewModel
+    implementation lifecycle
+    implementation liveData
+    implementation glide
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    testImplementation junit
+    androidTestImplementation androidTestJunit
+    androidTestImplementation espresso
+
+    implementation viewBinding
+
+    implementation dagger
+    kapt daggerCompiler
+}

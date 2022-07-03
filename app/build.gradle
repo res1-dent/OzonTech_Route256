@@ -1,0 +1,82 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'kotlin-android'
+    id "androidx.navigation.safeargs.kotlin"
+}
+
+apply from: "../dependencies.gradle"
+
+android {
+    compileSdk 32
+
+    defaultConfig {
+        applicationId "com.ozontech.homework2"
+        minSdk 24
+        targetSdk 32
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+
+    implementation project(path: ':core-network-api')
+    implementation project(path: ':core-network-impl')
+    implementation project(path: ':core-utils')
+    implementation project(path: ':feature-pdp-impl')
+    implementation project(path: ':feature-products-impl')
+    implementation project(path: ':feature-products-api')
+//    implementation project(path: ':feature-add-product-impl')
+    implementation project(path: ':core-navigation-impl')
+    implementation project(path: ':core-navigation-api')
+    implementation project(path: ':core-database-impl')
+    implementation project(path: ':core-database-api')
+
+
+    implementation coreKtx
+    implementation navigation.values()
+    implementation appCompat
+    implementation material
+    implementation constraintLayout
+    implementation viewModel
+    implementation lifecycle
+    implementation liveData
+    implementation glide
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation project(path: ':feature-add-product-impl')
+
+    testImplementation junit
+    androidTestImplementation androidTestJunit
+    androidTestImplementation espresso
+
+    implementation viewBinding
+
+    implementation dagger
+    kapt daggerCompiler
+
+    implementation worker
+
+
+}

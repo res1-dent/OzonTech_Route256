@@ -1,0 +1,25 @@
+apply from: "$rootProject.projectDir/android-library.gradle"
+apply plugin: 'kotlin-kapt'
+dependencies {
+
+    implementation project(":core-navigation-api")
+    implementation project(":core-network-api")
+    implementation project(":core-network-impl")
+    implementation project(":feature-products-api")
+    implementation project(":feature-products-impl")
+    implementation project(path: ':core-navigation-api')
+    implementation project(path: ':feature-pdp-impl')
+    implementation project(path: ':feature-add-product-impl')
+    implementation project(path: ':core-utils')
+    implementation coreKtx
+    implementation appCompat
+    implementation viewBinding
+    implementation dagger
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'com.google.android.material:material:1.6.1'
+    implementation coroutines.values()
+    implementation lifecycle
+
+    kapt daggerCompiler
+
+}
