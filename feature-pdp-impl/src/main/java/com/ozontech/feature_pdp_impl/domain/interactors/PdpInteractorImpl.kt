@@ -11,4 +11,8 @@ class PdpInteractorImpl @Inject constructor(
 
 	override suspend fun getProductByGuid(guid: String): Flow<ProductDO?> =
 		repository.fetchProductDetails(guid)
+
+	override suspend fun updateCart(guid: String, count: Int) {
+		repository.updateCart(guid, count)
+	}
 }

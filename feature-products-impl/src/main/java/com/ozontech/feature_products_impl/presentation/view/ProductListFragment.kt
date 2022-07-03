@@ -2,12 +2,14 @@ package com.ozontech.feature_products_impl.presentation.view
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.ozontech.core_utils.BaseFragment
 import com.ozontech.core_utils.autoCleared
@@ -15,10 +17,11 @@ import com.ozontech.core_utils.inflate
 import com.ozontech.feature_products_api.ProductNavigationApi
 import com.ozontech.feature_products_impl.databinding.FragmentProductListBinding
 import com.ozontech.feature_products_impl.di.FeatureProductComponent
+import com.ozontech.feature_products_impl.domain.view_objects.ProductInListRecyclerViewModel
+import com.ozontech.feature_products_impl.domain.view_objects.UiState
 import com.ozontech.feature_products_impl.presentation.adapter.ProductsAdapter
 import com.ozontech.feature_products_impl.presentation.adapter.decorators.ProductItemDecorator
 import com.ozontech.feature_products_impl.presentation.view_model.ProductListViewModel
-import com.ozontech.feature_products_impl.presentation.view_objects.UiState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
@@ -26,8 +29,6 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import reactivecircus.flowbinding.android.view.clicks
-import reactivecircus.flowbinding.recyclerview.FlingEvent
-import reactivecircus.flowbinding.recyclerview.flingEvents
 import javax.inject.Inject
 
 class ProductListFragment :
@@ -38,8 +39,8 @@ class ProductListFragment :
 	private val viewModel: ProductListViewModel by viewModels {
 		currentComponent.getFabric()
 	}
-	private val adapter: ProductsAdapter by autoCleared {
-		ProductsAdapter(::onProductClick, lifecycleScope)
+	internal val adapter: ProductsAdapter by autoCleared {
+		ProductsAdapter(::onProductClick, ::onCartAddClick, lifecycleScope)
 	}
 
 	@Inject
@@ -73,13 +74,25 @@ class ProductListFragment :
 	}
 
 	private fun initList() {
-		with(binding) {
-			productListRecycler.adapter = this@ProductListFragment.adapter
-			productListRecycler.addItemDecoration(
+		val gridLayoutManager = GridLayoutManager(requireContext(), 2).apply {
+			spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+				override fun getSpanSize(position: Int): Int {
+					return when (adapter.currentList.getOrNull(position)) {
+						is ProductInListRecyclerViewModel.ProductInListVO -> 1
+						is ProductInListRecyclerViewModel.Header -> 2
+						else -> -1
+					}
+				}
+			}
+		}
+		with(binding.productListRecycler) {
+			adapter = this@ProductListFragment.adapter
+			addItemDecoration(
 				ProductItemDecorator(
 					20
 				)
 			)
+			layoutManager = gridLayoutManager
 		}
 	}
 
@@ -101,6 +114,10 @@ class ProductListFragment :
 	private fun onProductClick(guid: String) {
 		viewModel.incrementCounter(guid)
 		productNavigationApi.navigateToPDP(this, guid)
+	}
+
+	private fun onCartAddClick(guid: String, isInCart: Boolean) {
+		viewModel.toggleCart(guid, isInCart)
 	}
 
 	private fun toggleLoadingState(isLoading: Boolean) {

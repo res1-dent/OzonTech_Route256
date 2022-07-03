@@ -27,5 +27,11 @@ class PdpViewModel @Inject constructor(
 		}
 	}
 
+	fun updateCart(guid: String, count: Int) {
+		viewModelScope.launch {
+			interactor.updateCart(guid, count)
+		}
+	}
+
 }
 

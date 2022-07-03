@@ -8,8 +8,8 @@ import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import com.ozontech.core_network_api.Key
 import com.ozontech.feature_products_impl.domain.interactors.ProductListInteractor
-import com.ozontech.feature_products_impl.presentation.mappers.toVO
-import com.ozontech.feature_products_impl.presentation.view_objects.UiState
+import com.ozontech.feature_products_impl.domain.view_objects.UiState
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -36,9 +36,7 @@ class ProductListViewModel @Inject constructor(
 		viewModelScope.launch {
 			uiStateMutableStateFlow.emit(UiState.Loading)
 			interactor.getProducts().distinctUntilChanged().collect {
-				if (it.isEmpty())
-					uiStateMutableStateFlow.emit(UiState.Error)
-				else uiStateMutableStateFlow.emit(UiState.Success(it.map { it.toVO() }))
+				uiStateMutableStateFlow.emit(it)
 			}
 		}
 	}
@@ -65,6 +63,13 @@ class ProductListViewModel @Inject constructor(
 	fun incrementCounter(guid: String) {
 		viewModelScope.launch {
 			interactor.incrementCounter(guid)
+		}
+	}
+
+	fun toggleCart(guid:String, isInCart: Boolean){
+		viewModelScope.launch {
+			delay(500)
+			interactor.toggleCart(guid, isInCart)
 		}
 	}
 

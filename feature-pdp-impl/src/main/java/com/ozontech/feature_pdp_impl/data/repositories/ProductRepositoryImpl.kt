@@ -13,4 +13,8 @@ class ProductRepositoryImpl @Inject constructor(
 ) : ProductRepository {
 	override suspend fun fetchProductDetails(guid: String): Flow<ProductDO?> =
 		database.products.map { it.firstOrNull { it.guid == guid } }.map { it?.toDO() }
+
+	override suspend fun updateCart(guid: String, count: Int) {
+		database.addProductToCart(guid, count)
+	}
 }

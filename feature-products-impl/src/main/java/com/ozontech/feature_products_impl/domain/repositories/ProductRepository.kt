@@ -10,4 +10,6 @@ interface ProductRepository {
 	suspend fun incrementCounter(guid: String)
 
 	suspend fun updateInfo()
+
+	suspend fun toggleCart(guid: String,isInCart: Boolean)
 }

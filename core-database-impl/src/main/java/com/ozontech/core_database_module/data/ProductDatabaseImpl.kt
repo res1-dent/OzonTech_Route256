@@ -26,14 +26,14 @@ class ProductDatabaseImpl @Inject constructor(context: Context, private val gson
 
 	override val products: Flow<List<ProductDtoSharedPrefs>>
 		get() = dataStore.data.map {
-			it[PRODUCT]?.let { json ->
+			it[KEY_PRODUCT]?.let { json ->
 				gson.fromJson(json, TYPE_PRODUCT)
 			} ?: emptyList()
 		}
 
 	override val productsInList: Flow<List<ProductInListDtoSharedPrefs>>
 		get() = dataStore.data.map {
-			it[PRODUCT_IN_LIST]?.let { json ->
+			it[KEY_PRODUCT_IN_LIST]?.let { json ->
 				gson.fromJson(json, TYPE_PRODUCT_IN_LIST)
 			} ?: emptyList()
 		}
@@ -44,13 +44,13 @@ class ProductDatabaseImpl @Inject constructor(context: Context, private val gson
 			list.filter { x -> currentList.find { it.guid == x.guid } == null }
 		)
 		dataStore.edit {
-			it[PRODUCT_IN_LIST] = gson.toJson(currentList)
+			it[KEY_PRODUCT_IN_LIST] = gson.toJson(currentList)
 		}
 	}
 
 	override suspend fun getProductsInList(): List<ProductInListDtoSharedPrefs> {
 		return dataStore.data.map {
-			it[PRODUCT_IN_LIST]?.let { json ->
+			it[KEY_PRODUCT_IN_LIST]?.let { json ->
 				gson.fromJson(json, TYPE_PRODUCT_IN_LIST)
 			} ?: emptyList<ProductInListDtoSharedPrefs>()
 		}.first()
@@ -58,13 +58,13 @@ class ProductDatabaseImpl @Inject constructor(context: Context, private val gson
 
 	override suspend fun addProducts(list: List<ProductDtoSharedPrefs>) {
 		dataStore.edit() {
-			it[PRODUCT] = gson.toJson((list + getProducts()).toSet())
+			it[KEY_PRODUCT] = gson.toJson((list + getProducts()).toSet())
 		}
 	}
 
 	override suspend fun getProducts(): List<ProductDtoSharedPrefs> {
 		return dataStore.data.map {
-			it[PRODUCT]?.let { json ->
+			it[KEY_PRODUCT]?.let { json ->
 				gson.fromJson(json, TYPE_PRODUCT)
 			} ?: emptyList<ProductDtoSharedPrefs>()
 		}.first()
@@ -78,7 +78,7 @@ class ProductDatabaseImpl @Inject constructor(context: Context, private val gson
 			else it
 		}
 		dataStore.edit {
-			it[PRODUCT_IN_LIST] = gson.toJson(newList)
+			it[KEY_PRODUCT_IN_LIST] = gson.toJson(newList)
 		}
 	}
 
@@ -110,13 +110,68 @@ class ProductDatabaseImpl @Inject constructor(context: Context, private val gson
 
 	}
 
+	override suspend fun toggleCart(guid: String, shouldInCart: Boolean) {
+		val pdpProducts = getProducts().map {
+			if (it.guid == guid)
+				it.copy(isInCart = shouldInCart)
+			else it
+		}
+		val listOfProducts = getProductsInList().map {
+			if (it.guid == guid)
+				it.copy(isInCart = shouldInCart)
+			else it
+		}
+		dataStore.edit {
+			it[KEY_PRODUCT_IN_LIST] = gson.toJson(listOfProducts)
+			it[KEY_PRODUCT] = gson.toJson(pdpProducts)
+		}
+	}
+
+	override suspend fun addProductToCart(guid: String, count: Int) {
+		when {
+			count > 0 -> {
+				toggleCart(guid, true)
+				decrementCount(guid)
+			}
+			count < 0 -> {
+				incrementCount(guid)
+			}
+			count == 0 -> {
+				toggleCart(guid, false)
+				incrementCount(guid)
+			}
+		}
+	}
+
+	private suspend fun decrementCount(guid: String) {
+		val pdpProducts = getProducts().map {
+			if (it.guid == guid)
+				it.copy(availableCount = it.availableCount?.dec())
+			else it
+		}
+		dataStore.edit {
+			it[KEY_PRODUCT] = gson.toJson(pdpProducts)
+		}
+	}
+
+	private suspend fun incrementCount(guid: String) {
+		val pdpProducts = getProducts().map {
+			if (it.guid == guid)
+				it.copy(availableCount = it.availableCount?.inc())
+			else it
+		}
+		dataStore.edit {
+			it[KEY_PRODUCT] = gson.toJson(pdpProducts)
+		}
+	}
+
 	companion object {
 		private const val PREFERENCES_PRODUCT_NAME = "Products_database"
 		internal val Context.DATASTORE: DataStore<Preferences> by preferencesDataStore(
 			PREFERENCES_PRODUCT_NAME
 		)
-		private val PRODUCT_IN_LIST = stringPreferencesKey("ProductInList")
-		private val PRODUCT = stringPreferencesKey("Products")
+		private val KEY_PRODUCT_IN_LIST = stringPreferencesKey("ProductInList")
+		private val KEY_PRODUCT = stringPreferencesKey("Products")
 
 		private val TYPE_PRODUCT = object : TypeToken<List<ProductDtoSharedPrefs>>() {}.type
 		private val TYPE_PRODUCT_IN_LIST =
