@@ -20,7 +20,7 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(
-	modules = [RetrofitModule::class, WorkerModule::class, TestModule::class],
+	modules = [RetrofitModule::class, WorkerModule::class, WorkerManagerModule::class],
 	dependencies = [CoreNetworkDependencies::class]
 )
 abstract class CoreNetworkComponent : NetworkApi, DiComponent {
@@ -46,21 +46,4 @@ interface CoreNetworkDependencies {
 	fun getDatabase(): ProductsDatabase
 }
 
-@Module
-class TestModule {
-	@Singleton
-	@Provides
-	fun provideWorkManagerConfiguration(
-		delegateWorkerFactory: DelegateWorkerFactory
-	): Configuration {
-		return Configuration.Builder()
-			.setMinimumLoggingLevel(android.util.Log.DEBUG)
-			.setWorkerFactory(delegateWorkerFactory)
-			.build()
-	}
-	@Singleton
-	@Provides
-	fun providesWorkManager(context: Context): WorkManager{
-		return WorkManager.getInstance(context)
-	}
-}
+
