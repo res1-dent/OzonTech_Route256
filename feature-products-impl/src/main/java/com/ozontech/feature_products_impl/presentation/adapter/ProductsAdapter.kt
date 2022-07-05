@@ -1,5 +1,6 @@
 package com.ozontech.feature_products_impl.presentation.adapter
 
+import android.util.Log
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -46,6 +47,24 @@ class ProductsAdapter(
 		holder.bind(currentList[position])
 	}
 
+	override fun onBindViewHolder(
+		holder: BaseHolder<*>,
+		position: Int,
+		payloads: MutableList<Any>
+	) {
+		if (payloads.isEmpty()) super.onBindViewHolder(holder, position, payloads)
+		(holder as? ProductsHolder)?.let { currentHolder->
+			val item = (currentList[position] as? ProductInListRecyclerViewModel.ProductInListVO) ?: return
+			payloads.forEach { payload->
+				when (payload){
+					PAYLOAD_COUNTER -> currentHolder.bindCounter(item.counter)
+					PAYLOAD_IS_IN_CART -> currentHolder.bindCart(item.isInCart)
+					else -> super.onBindViewHolder(holder, position, payloads)
+				}
+			}
+		}
+	}
+
 	override fun getItemViewType(position: Int): Int {
 		return when (currentList[position]) {
 			is ProductInListRecyclerViewModel.ProductInListVO -> R.layout.product_list_item
@@ -85,13 +104,22 @@ class ProductsAdapter(
 		override fun bindModel(item: ProductInListRecyclerViewModel.ProductInListVO) {
 			with(binding) {
 				imagesAdapter.submitList(item.image)
-				binding.addToCartButton.isInCart = item.isInCart
+				addToCartButton.isInCart = item.isInCart
 				nameTextView.text = item.name
 				priceTextView.text = binding.root.resources.getString(R.string.price, item.price)
 				ratingRatingBar.rating = item.rating
 				counterTextView.text = item.counter
 			}
 		}
+
+		fun bindCounter(counter: String) {
+			binding.counterTextView.text = counter
+		}
+
+		fun bindCart(inCart: Boolean) {
+			binding.addToCartButton.isInCart = inCart
+		}
+
 	}
 
 	class ProductsDiffUtilCallback : DiffUtil.ItemCallback<ProductInListRecyclerViewModel>() {
@@ -136,12 +164,19 @@ class ProductsAdapter(
 		override fun getChangePayload(
 			oldItem: ProductInListRecyclerViewModel,
 			newItem: ProductInListRecyclerViewModel
-		): Any? {
+		): String? {
 			return if (oldItem is ProductInListRecyclerViewModel.ProductInListVO
-				&& newItem is ProductInListRecyclerViewModel.ProductInListVO
-			) {
-				oldItem == newItem
-			} else false
+				&& newItem is ProductInListRecyclerViewModel.ProductInListVO) {
+				if (oldItem.counter != newItem.counter) return PAYLOAD_COUNTER
+				if (oldItem.isInCart != newItem.isInCart) return PAYLOAD_IS_IN_CART
+				null
+			} else null
 		}
+	}
+
+
+	private companion object {
+		const val PAYLOAD_IS_IN_CART = "IS_IN_CART"
+		const val PAYLOAD_COUNTER = "COUNTER"
 	}
 }
