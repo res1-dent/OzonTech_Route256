@@ -164,7 +164,7 @@ class ProductsAdapter(
 		override fun getChangePayload(
 			oldItem: ProductInListRecyclerViewModel,
 			newItem: ProductInListRecyclerViewModel
-		): String? {
+		): Any? {
 			return if (oldItem is ProductInListRecyclerViewModel.ProductInListVO
 				&& newItem is ProductInListRecyclerViewModel.ProductInListVO) {
 				if (oldItem.counter != newItem.counter) return PAYLOAD_COUNTER
@@ -176,7 +176,7 @@ class ProductsAdapter(
 
 
 	private companion object {
-		const val PAYLOAD_IS_IN_CART = "IS_IN_CART"
-		const val PAYLOAD_COUNTER = "COUNTER"
+		const val PAYLOAD_IS_IN_CART = 0
+		const val PAYLOAD_COUNTER = 1
 	}
 }
