@@ -26,8 +26,6 @@ class App : Application(), DiStorage<DiComponent>, Configuration.Provider {
 		networkComponent.getWorkManager().startWorkers()
 	}
 
-
-
 	override fun initAndGet(className: KClass<DiComponent>): DiComponent {
 		return diStorage.initAndGet(className)
 	}
