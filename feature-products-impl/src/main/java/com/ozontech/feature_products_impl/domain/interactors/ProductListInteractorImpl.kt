@@ -1,5 +1,6 @@
 package com.ozontech.feature_products_impl.domain.interactors
 
+import com.ozontech.feature_products_impl.R
 import com.ozontech.feature_products_impl.domain.mappers.toVO
 import com.ozontech.feature_products_impl.domain.repositories.ProductRepository
 import com.ozontech.feature_products_impl.domain.view_objects.ProductInListRecyclerViewModel
@@ -40,8 +41,8 @@ class ProductListInteractorImpl @Inject constructor(
 			.toMutableList().apply {
 			val tmp =
 				indexOf(find { (it as ProductInListRecyclerViewModel.ProductInListVO).price > 100 })
-			add(0, ProductInListRecyclerViewModel.Header("Low price"))
-			add(tmp + 1, ProductInListRecyclerViewModel.Header("Big price"))
+			add(0, ProductInListRecyclerViewModel.Header(R.string.low_price_header))
+			add(tmp + 1, ProductInListRecyclerViewModel.Header(R.string.high_price_header))
 		}
 	}
 

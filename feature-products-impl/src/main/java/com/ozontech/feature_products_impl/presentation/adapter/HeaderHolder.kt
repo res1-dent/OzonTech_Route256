@@ -8,6 +8,6 @@ class HeaderHolder(
 ) : BaseHolder<ProductInListRecyclerViewModel.Header>(binding.root) {
 
 	override fun bindModel(item: ProductInListRecyclerViewModel.Header) {
-		binding.root.text = item.text
+		binding.root.text = binding.root.context.getString(item.text)
 	}
 }
