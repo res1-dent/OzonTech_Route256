@@ -134,7 +134,7 @@ class ProductsAdapter(
 					oldItem.guid == newItem.guid
 				oldItem is ProductInListRecyclerViewModel.Header
 						&& newItem is ProductInListRecyclerViewModel.Header ->
-					oldItem::class.java == newItem::class.java
+					oldItem == newItem
 				else -> false
 			}
 		}

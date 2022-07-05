@@ -35,7 +35,7 @@ class ImagesAdapter(
 
 	class ImagesDiffUtilCallback : DiffUtil.ItemCallback<String>() {
 		override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
-			return oldItem::class.java == newItem::class.java
+			return oldItem == newItem
 		}
 
 		override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
