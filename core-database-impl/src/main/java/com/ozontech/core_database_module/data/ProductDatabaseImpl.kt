@@ -49,11 +49,9 @@ class ProductDatabaseImpl @Inject constructor(context: Context, private val gson
 	}
 
 	override suspend fun getProductsInList(): List<ProductInListDtoSharedPrefs> {
-		return dataStore.data.map {
-			it[KEY_PRODUCT_IN_LIST]?.let { json ->
-				gson.fromJson(json, TYPE_PRODUCT_IN_LIST)
-			} ?: emptyList<ProductInListDtoSharedPrefs>()
-		}.first()
+		return dataStore.data.first()[KEY_PRODUCT_IN_LIST]?.let { json ->
+			gson.fromJson(json, TYPE_PRODUCT_IN_LIST)
+		} ?: emptyList()
 	}
 
 	override suspend fun addProducts(list: List<ProductDtoSharedPrefs>) {
@@ -63,11 +61,9 @@ class ProductDatabaseImpl @Inject constructor(context: Context, private val gson
 	}
 
 	override suspend fun getProducts(): List<ProductDtoSharedPrefs> {
-		return dataStore.data.map {
-			it[KEY_PRODUCT]?.let { json ->
-				gson.fromJson(json, TYPE_PRODUCT)
-			} ?: emptyList<ProductDtoSharedPrefs>()
-		}.first()
+		return dataStore.data.first()[KEY_PRODUCT]?.let { json ->
+			gson.fromJson(json, TYPE_PRODUCT)
+		} ?: emptyList()
 	}
 
 
