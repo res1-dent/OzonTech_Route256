@@ -140,8 +140,8 @@ class ProductsAdapter(
 			return if (oldItem is ProductInListRecyclerViewModel.ProductInListVO
 				&& newItem is ProductInListRecyclerViewModel.ProductInListVO
 			) {
-				oldItem.counter == newItem.counter
-			} else true
+				oldItem == newItem
+			} else false
 		}
 	}
 }
