@@ -1,7 +1,6 @@
 package com.ozontech.homework2.di
 
 import android.app.Application
-import androidx.work.WorkManager
 import com.ozontech.core_database_module.di.CoreDatabaseComponent
 import com.ozontech.core_database_module.di.DaggerCoreDatabaseComponent
 import com.ozontech.core_navigation_impl.di.CoreNavigationComponent
@@ -46,7 +45,7 @@ class DIComponentStorageImpl(private val context: Application) {
 				DaggerCoreDatabaseComponent.builder().context(context).build()
 			}
 			CoreNetworkComponent::class -> {
-				DaggerCoreNetworkComponent.builder().workManager(WorkManager.getInstance(context))
+				DaggerCoreNetworkComponent.builder().context(context)
 					.dependencies(
 						DaggerCoreNetworkComponent_CoreNetworkDependenciesComponent.builder()
 							.databaseApi(initAndGet(CoreDatabaseComponent::class))
