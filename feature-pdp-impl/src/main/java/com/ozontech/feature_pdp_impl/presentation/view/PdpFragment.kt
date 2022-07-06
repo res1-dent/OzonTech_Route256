@@ -66,6 +66,7 @@ class PdpFragment : BaseFragment<FeaturePdpComponent>(component = FeaturePdpComp
 	}
 
 	private fun initTabLayout(size: Int) {
+		if (binding.tabLayout.tabCount == size) return
 		binding.tabLayout.removeAllTabs()
 		(1..size).map {
 			binding.tabLayout.apply {
