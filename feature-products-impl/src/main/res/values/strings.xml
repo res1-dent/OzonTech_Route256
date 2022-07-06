@@ -5,5 +5,7 @@
     <string name="count_string">Доступно в ближайших магазинах: %1$d</string>
     <string name="low_price_header">Low price</string>
     <string name="high_price_header">High price</string>
+    <string name="worker_sucess">Sucessefully updated list of products</string>
+    <string name="worker_failed">Error while loading products</string>
 
 </resources>

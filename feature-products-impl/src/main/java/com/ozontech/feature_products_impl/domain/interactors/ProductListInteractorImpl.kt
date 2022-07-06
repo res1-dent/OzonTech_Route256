@@ -1,10 +1,12 @@
 package com.ozontech.feature_products_impl.domain.interactors
 
+import android.util.Log
 import com.ozontech.feature_products_impl.R
 import com.ozontech.feature_products_impl.domain.mappers.toVO
 import com.ozontech.feature_products_impl.domain.repositories.ProductRepository
 import com.ozontech.feature_products_impl.domain.view_objects.ProductInListRecyclerViewModel
 import com.ozontech.feature_products_impl.domain.view_objects.UiState
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -15,12 +17,10 @@ class ProductListInteractorImpl @Inject constructor(
 
 	override suspend fun getProducts(): Flow<UiState> =
 		repository.fetchListOfProducts().map {
-			if (it.isEmpty())
-				UiState.Error
-			else {
+			if (it.isNotEmpty()){
 				val newList = it.map { it.toVO() }.let { addHeadersToProductsList(it) }
 				UiState.Success(newList)
-			}
+			} else UiState.Error
 		}
 
 	override suspend fun incrementCounter(guid: String) {

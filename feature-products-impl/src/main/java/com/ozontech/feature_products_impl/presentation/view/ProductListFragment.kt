@@ -6,11 +6,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.google.android.material.snackbar.Snackbar
 import com.ozontech.core_utils.BaseFragment
 import com.ozontech.core_utils.autoCleared
 import com.ozontech.core_utils.inflate
@@ -29,6 +31,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import reactivecircus.flowbinding.android.view.clicks
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class ProductListFragment :
@@ -71,6 +74,14 @@ class ProductListFragment :
 		viewModel.workManager.distinctUntilChanged().onEach { workInfo ->
 			workInfo.firstOrNull()?.let(viewModel::handleWorkInfo)
 		}.launchIn(lifecycleScope)
+		viewModel.showUpdateMessageSharedFlow.onEach {
+
+			showSnackbar(it.stringId)
+		}.launchIn(viewLifecycleOwner.lifecycleScope)
+	}
+
+	private fun showSnackbar(@StringRes message: Int) {
+		Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
 	}
 
 	private fun initList() {
@@ -95,6 +106,8 @@ class ProductListFragment :
 			layoutManager = gridLayoutManager
 		}
 	}
+
+	private object SpanSizeLookup
 
 	private fun handleUiState(state: UiState) {
 		when (state) {
@@ -122,6 +135,7 @@ class ProductListFragment :
 
 	private fun toggleLoadingState(isLoading: Boolean) {
 		with(binding) {
+			productListRecycler.isVisible = isLoading.not()
 			progress.isVisible = isLoading
 		}
 	}
@@ -129,7 +143,7 @@ class ProductListFragment :
 	private fun updateInfo() {
 		viewLifecycleOwner.lifecycleScope.launch {
 			while (isActive) {
-				delay(300_000)
+				delay(TimeUnit.MINUTES.toMillis(5))
 				viewModel.updateInfo()
 			}
 		}

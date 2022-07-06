@@ -1,6 +1,5 @@
 package com.ozontech.feature_products_impl.presentation.adapter
 
-import android.util.Log
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -21,9 +20,7 @@ class ProductsAdapter(
 	private val onProductClick: (String) -> Unit,
 	private val addToCart: (String, Boolean) -> Unit,
 	private val lifecycleScope: CoroutineScope
-) : ListAdapter<ProductInListRecyclerViewModel, BaseHolder<*>>(
-	ProductsDiffUtilCallback()
-) {
+) : ListAdapter<ProductInListRecyclerViewModel, BaseHolder<*>>(ProductsDiffUtilCallback()) {
 
 	private val nestedRecyclerViewPool = RecyclerView.RecycledViewPool().apply {
 		this.setMaxRecycledViews(R.layout.product_list_item, 25)
@@ -173,7 +170,6 @@ class ProductsAdapter(
 			} else null
 		}
 	}
-
 
 	private companion object {
 		const val PAYLOAD_IS_IN_CART = 0

@@ -43,7 +43,6 @@ class PdpFragment : BaseFragment<FeaturePdpComponent>(component = FeaturePdpComp
 
 	private fun setListeners() {
 		binding.cartView.productsSharedFlow.onEach {
-			Log.e("!!!", "it = $it")
 			viewModel.updateCart(guid, it)
 		}.launchIn(viewLifecycleOwner.lifecycleScope)
 	}
