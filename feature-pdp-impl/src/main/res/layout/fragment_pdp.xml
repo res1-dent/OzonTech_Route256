@@ -19,11 +19,18 @@
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/imagesRecycler"
+        android:background="@android:color/transparent"
+        android:layout_width="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/imagesRecycler"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:tabGravity="fill"
         app:tabIndicatorAnimationMode="elastic"
-        app:tabMode="fixed" />
+        app:tabIndicatorHeight="0dp"
+        android:layout_height="wrap_content"
+        app:tabMode="fixed"
+        app:tabPaddingEnd="0dp"
+        app:tabPaddingStart="0dp" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/nameTextView"

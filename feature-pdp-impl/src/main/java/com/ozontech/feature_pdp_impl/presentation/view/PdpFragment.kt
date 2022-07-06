@@ -5,10 +5,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.core.view.size
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
+import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.ozontech.core_utils.*
 import com.ozontech.core_utils.adapters.ImagesAdapter
@@ -19,6 +22,7 @@ import com.ozontech.feature_pdp_impl.presentation.view_objects.PdpUiState
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import reactivecircus.flowbinding.recyclerview.scrollEvents
+import reactivecircus.flowbinding.recyclerview.scrollStateChanges
 
 class PdpFragment : BaseFragment<FeaturePdpComponent>(component = FeaturePdpComponent::class) {
 
@@ -51,12 +55,14 @@ class PdpFragment : BaseFragment<FeaturePdpComponent>(component = FeaturePdpComp
 		with(binding.imagesRecycler) {
 			adapter = this@PdpFragment.adapter
 			PagerSnapHelper().attachToRecyclerView(this)
+			scrollStateChanges().onEach {
+				if (it == RecyclerView.SCROLL_STATE_IDLE){
+					val itemPosition =
+						(this.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+					binding.tabLayout.getTabAt(itemPosition)?.select()
+				}
+			}.launchIn(viewLifecycleOwner.lifecycleScope)
 		}
-		binding.imagesRecycler.scrollEvents().onEach { it ->
-			val itemPosition =
-				(it.view.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
-			binding.tabLayout.getTabAt(itemPosition)?.select()
-		}.launchIn(viewLifecycleOwner.lifecycleScope)
 	}
 
 	private fun initTabLayout(size: Int) {
@@ -64,8 +70,8 @@ class PdpFragment : BaseFragment<FeaturePdpComponent>(component = FeaturePdpComp
 		(1..size).map {
 			binding.tabLayout.apply {
 				addTab(newTab().apply {
+					icon = ContextCompat.getDrawable(requireContext(), com.ozontech.feature_pdp_impl.R.drawable.circle)
 					view.isClickable = false
-					text = it.toString()
 				})
 			}
 		}
