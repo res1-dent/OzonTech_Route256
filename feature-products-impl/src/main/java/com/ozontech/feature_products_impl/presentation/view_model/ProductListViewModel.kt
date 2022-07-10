@@ -1,8 +1,6 @@
 package com.ozontech.feature_products_impl.presentation.view_model
 
 import android.app.Application
-import android.util.Log
-import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
@@ -10,6 +8,7 @@ import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import com.ozontech.core_network_api.Key
 import com.ozontech.core_utils.StringResWrapper
+import com.ozontech.feature_products_api.ProductNavigationApi
 import com.ozontech.feature_products_impl.R
 import com.ozontech.feature_products_impl.domain.interactors.ProductListInteractor
 import com.ozontech.feature_products_impl.domain.view_objects.UiState
@@ -21,6 +20,7 @@ import javax.inject.Inject
 class ProductListViewModel @Inject constructor(
 	context: Application,
 	private val interactor: ProductListInteractor,
+	private val navigationApi: ProductNavigationApi
 ) : ViewModel() {
 
 	val workManager: Flow<MutableList<WorkInfo>> = WorkManager.getInstance(context)
@@ -62,11 +62,20 @@ class ProductListViewModel @Inject constructor(
 		}
 	}
 
-	fun toggleCart(guid:String, isInCart: Boolean){
+	fun toggleCart(guid: String, isInCart: Boolean) {
 		viewModelScope.launch {
 			delay(500)
 			interactor.toggleCart(guid, isInCart)
 		}
+	}
+
+	fun onProductClick(guid: String) {
+		incrementCounter(guid)
+		navigationApi.navigateToPDP(guid)
+	}
+
+	fun onAddFabClick() {
+		navigationApi.navigateToAdd()
 	}
 
 	suspend fun updateInfo() {

@@ -2,7 +2,6 @@ package com.ozontech.feature_products_impl.presentation.view
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.ozontech.core_utils.BaseFragment
 import com.ozontech.core_utils.autoCleared
 import com.ozontech.core_utils.inflate
-import com.ozontech.feature_products_api.ProductNavigationApi
 import com.ozontech.feature_products_impl.databinding.FragmentProductListBinding
 import com.ozontech.feature_products_impl.di.FeatureProductComponent
 import com.ozontech.feature_products_impl.domain.view_objects.ProductInListRecyclerViewModel
@@ -32,7 +30,6 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import reactivecircus.flowbinding.android.view.clicks
 import java.util.concurrent.TimeUnit
-import javax.inject.Inject
 
 class ProductListFragment :
 	BaseFragment<FeatureProductComponent>(component = FeatureProductComponent::class) {
@@ -42,12 +39,12 @@ class ProductListFragment :
 	private val viewModel: ProductListViewModel by viewModels {
 		currentComponent.getFabric()
 	}
-	internal val adapter: ProductsAdapter by autoCleared {
+	private val adapter: ProductsAdapter by autoCleared {
 		ProductsAdapter(::onProductClick, ::onCartAddClick, lifecycleScope)
 	}
 
-	@Inject
-	lateinit var productNavigationApi: ProductNavigationApi
+	private fun onProductClick(guid: String) = viewModel.onProductClick(guid)
+
 
 	override fun onAttach(context: Context) {
 		currentComponent.inject(this)
@@ -64,7 +61,7 @@ class ProductListFragment :
 
 	private fun setListeners() {
 		binding.addFab.clicks().onEach {
-			productNavigationApi.navigateToAdd(this)
+			viewModel.onAddFabClick()
 		}.launchIn(lifecycleScope)
 	}
 
@@ -75,7 +72,6 @@ class ProductListFragment :
 			workInfo.firstOrNull()?.let(viewModel::handleWorkInfo)
 		}.launchIn(lifecycleScope)
 		viewModel.showUpdateMessageSharedFlow.onEach {
-
 			showSnackbar(it.stringId)
 		}.launchIn(viewLifecycleOwner.lifecycleScope)
 	}
@@ -106,9 +102,6 @@ class ProductListFragment :
 			layoutManager = gridLayoutManager
 		}
 	}
-
-	private object SpanSizeLookup
-
 	private fun handleUiState(state: UiState) {
 		when (state) {
 			is UiState.Error -> {
@@ -122,11 +115,6 @@ class ProductListFragment :
 				toggleLoadingState(true)
 			}
 		}
-	}
-
-	private fun onProductClick(guid: String) {
-		viewModel.incrementCounter(guid)
-		productNavigationApi.navigateToPDP(this, guid)
 	}
 
 	private fun onCartAddClick(guid: String, isInCart: Boolean) {

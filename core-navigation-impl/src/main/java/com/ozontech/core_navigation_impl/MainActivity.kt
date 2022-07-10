@@ -9,6 +9,8 @@ import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import com.ozontech.core_navigation_impl.databinding.ActivityMainBinding
+import com.ozontech.core_navigation_impl.di.CoreNavigationComponent
+import com.ozontech.core_utils.getComponent
 import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -35,6 +37,13 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 		onBufferOverflow = BufferOverflow.DROP_OLDEST
 	)
 	private val networkStatusSharedFlow = netWorkStatusMutableSharedFlow.asSharedFlow()
+
+
+	override fun onStart() {
+		super.onStart()
+		getComponent(CoreNavigationComponent::class).getFMHost()
+			.initOrUpdateFragmentManager(supportFragmentManager)
+	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
