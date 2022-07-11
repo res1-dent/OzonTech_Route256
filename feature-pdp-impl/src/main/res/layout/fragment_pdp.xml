@@ -5,14 +5,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/productImageView"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/imagesRecycler"
+        android:orientation="horizontal"
+        android:overScrollMode="never"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/image_layout"
         android:layout_width="match_parent"
         android:layout_height="280dp"
-        android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@tools:sample/avatars" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:background="@android:color/transparent"
+        android:layout_width="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/imagesRecycler"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:tabGravity="fill"
+        app:tabIndicatorAnimationMode="elastic"
+        app:tabIndicatorHeight="0dp"
+        android:layout_height="wrap_content"
+        app:tabMode="fixed"
+        app:tabPaddingEnd="0dp"
+        app:tabPaddingStart="0dp" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/nameTextView"
@@ -25,7 +43,7 @@
         android:textSize="@dimen/base_text_size"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/productImageView"
+        app:layout_constraintTop_toBottomOf="@id/tabLayout"
         tools:text="Яблоки" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -81,5 +99,15 @@
         app:layout_constraintStart_toStartOf="@id/priceTextView"
         app:layout_constraintTop_toBottomOf="@id/availableCountTextView"
         tools:text="@string/count_string" />
+
+
+    <com.ozontech.core_utils.custom_views.CartView
+        android:id="@+id/cartView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/countTextView" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

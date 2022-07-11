@@ -1,19 +1,20 @@
 package com.ozontech.feature_products_impl.presentation.view_model
 
 import android.app.Application
+import android.util.Log
+import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import com.ozontech.core_network_api.Key
+import com.ozontech.core_utils.StringResWrapper
+import com.ozontech.feature_products_impl.R
 import com.ozontech.feature_products_impl.domain.interactors.ProductListInteractor
-import com.ozontech.feature_products_impl.presentation.mappers.toVO
-import com.ozontech.feature_products_impl.presentation.view_objects.UiState
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.distinctUntilChanged
+import com.ozontech.feature_products_impl.domain.view_objects.UiState
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,35 +29,28 @@ class ProductListViewModel @Inject constructor(
 	private val uiStateMutableStateFlow = MutableStateFlow<UiState>(UiState.Loading)
 	val uiStateStateFlow = uiStateMutableStateFlow.asStateFlow()
 
-	init {
-		getProducts()
-	}
+	private val showUpdateMessageMutableSharedFlow = MutableSharedFlow<StringResWrapper>()
+
+	val showUpdateMessageSharedFlow = showUpdateMessageMutableSharedFlow.asSharedFlow()
 
 	private fun getProducts() {
 		viewModelScope.launch {
 			uiStateMutableStateFlow.emit(UiState.Loading)
 			interactor.getProducts().distinctUntilChanged().collect {
-				if (it.isEmpty())
-					uiStateMutableStateFlow.emit(UiState.Error)
-				else uiStateMutableStateFlow.emit(UiState.Success(it.map { it.toVO() }))
+				uiStateMutableStateFlow.emit(it)
 			}
 		}
 	}
 
 	fun handleWorkInfo(workInfo: WorkInfo) {
 		viewModelScope.launch {
+			if (workInfo.state.isFinished) getProducts()
 			when (workInfo.state) {
 				WorkInfo.State.SUCCEEDED -> {
-
+					showUpdateMessageMutableSharedFlow.emit(StringResWrapper(R.string.worker_sucess))
 				}
 				WorkInfo.State.FAILED -> {
-
-				}
-				WorkInfo.State.ENQUEUED -> {
-					uiStateMutableStateFlow.emit(UiState.Loading)
-				}
-				else -> {
-					uiStateMutableStateFlow.emit(UiState.Error)
+					showUpdateMessageMutableSharedFlow.emit(StringResWrapper(R.string.worker_failed))
 				}
 			}
 		}
@@ -65,6 +59,13 @@ class ProductListViewModel @Inject constructor(
 	fun incrementCounter(guid: String) {
 		viewModelScope.launch {
 			interactor.incrementCounter(guid)
+		}
+	}
+
+	fun toggleCart(guid:String, isInCart: Boolean){
+		viewModelScope.launch {
+			delay(500)
+			interactor.toggleCart(guid, isInCart)
 		}
 	}
 

@@ -13,4 +13,6 @@ interface ProductsDatabase {
 	suspend fun getProducts(): List<ProductDtoSharedPrefs>
 	suspend fun incrementCounter(guid: String)
 	suspend fun addRandomProduct()
+	suspend fun toggleCart(guid: String, shouldInCart: Boolean)
+	suspend fun addProductToCart(guid: String, count: Int)
 }

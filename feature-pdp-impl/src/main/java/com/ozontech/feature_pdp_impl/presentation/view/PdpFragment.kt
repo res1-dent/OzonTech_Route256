@@ -1,23 +1,28 @@
 package com.ozontech.feature_pdp_impl.presentation.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.core.view.size
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
+import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.bumptech.glide.Glide
-import com.ozontech.core_utils.BaseFragment
-import com.ozontech.core_utils.R
-import com.ozontech.core_utils.inflate
-import com.ozontech.core_utils.stringArgs
+import com.ozontech.core_utils.*
+import com.ozontech.core_utils.adapters.ImagesAdapter
 import com.ozontech.feature_pdp_impl.databinding.FragmentPdpBinding
 import com.ozontech.feature_pdp_impl.di.FeaturePdpComponent
 import com.ozontech.feature_pdp_impl.presentation.view_model.PdpViewModel
 import com.ozontech.feature_pdp_impl.presentation.view_objects.PdpUiState
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import reactivecircus.flowbinding.recyclerview.scrollEvents
+import reactivecircus.flowbinding.recyclerview.scrollStateChanges
 
 class PdpFragment : BaseFragment<FeaturePdpComponent>(component = FeaturePdpComponent::class) {
 
@@ -28,12 +33,49 @@ class PdpFragment : BaseFragment<FeaturePdpComponent>(component = FeaturePdpComp
 
 	private val binding by viewBinding(FragmentPdpBinding::bind)
 	private val guid: String by stringArgs(KEY_GUID)
+	private val adapter: ImagesAdapter by autoCleared { ImagesAdapter() }
+
 
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		observeViewModelState()
+		initList()
 		viewModel.getProductByGuid(guid)
+		setListeners()
+	}
+
+	private fun setListeners() {
+		binding.cartView.productsSharedFlow.onEach {
+			viewModel.updateCart(guid, it)
+		}.launchIn(viewLifecycleOwner.lifecycleScope)
+	}
+
+	private fun initList() {
+		with(binding.imagesRecycler) {
+			adapter = this@PdpFragment.adapter
+			PagerSnapHelper().attachToRecyclerView(this)
+			scrollStateChanges().onEach {
+				if (it == RecyclerView.SCROLL_STATE_IDLE){
+					val itemPosition =
+						(this.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+					binding.tabLayout.getTabAt(itemPosition)?.select()
+				}
+			}.launchIn(viewLifecycleOwner.lifecycleScope)
+		}
+	}
+
+	private fun initTabLayout(size: Int) {
+		if (binding.tabLayout.tabCount == size) return
+		binding.tabLayout.removeAllTabs()
+		(1..size).map {
+			binding.tabLayout.apply {
+				addTab(newTab().apply {
+					icon = ContextCompat.getDrawable(requireContext(), com.ozontech.feature_pdp_impl.R.drawable.circle)
+					view.isClickable = false
+				})
+			}
+		}
 	}
 
 	private fun observeViewModelState() {
@@ -46,7 +88,9 @@ class PdpFragment : BaseFragment<FeaturePdpComponent>(component = FeaturePdpComp
 			is PdpUiState.Success -> {
 				val product = state.product
 				with(binding) {
-					Glide.with(requireView()).load(product.images.first()).into(productImageView)
+					initTabLayout(product.images.size)
+					binding.cartView.updateRestOfProducts(state.product.availableCount)
+					adapter.submitList(state.product.images)
 					nameTextView.text = product.name
 					priceTextView.text = getString(R.string.price, product.price)
 					ratingRatingBar.rating = product.rating
@@ -64,7 +108,6 @@ class PdpFragment : BaseFragment<FeaturePdpComponent>(component = FeaturePdpComp
 
 			}
 		}
-
 	}
 
 	override fun onCreateView(

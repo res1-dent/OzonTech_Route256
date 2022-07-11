@@ -25,4 +25,5 @@ dependencies {
     implementation viewBinding
     implementation dagger
     kapt daggerCompiler
+    implementation flowBinding.values()
 }

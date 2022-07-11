@@ -6,4 +6,6 @@ import kotlinx.coroutines.flow.Flow
 interface PdpInteractor {
 
 	suspend fun getProductByGuid(guid: String): Flow<ProductDO?>
+
+	suspend fun updateCart(guid: String, count: Int)
 }
