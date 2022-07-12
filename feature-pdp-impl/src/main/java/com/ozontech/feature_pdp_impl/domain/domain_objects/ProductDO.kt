@@ -7,7 +7,7 @@ data class ProductDO(
 	val description: String,
 	val rating: Double,
 	val isFavorite: Boolean,
-	val isInCart: Boolean,
+	val isInCart: Boolean?,
 	val images: List<String>,
 	val weight: Double?,
 	val count: Int?,

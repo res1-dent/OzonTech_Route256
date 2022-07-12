@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="price">%1$d ₽</string>
+    <string name="price">Цена: %1$d ₽</string>
     <string name="available_count">Доступно на складе: %1$d</string>
     <string name="count_string">Доступно в ближайших магазинах: %1$d</string>
     <string name="low_price_header">Low price</string>

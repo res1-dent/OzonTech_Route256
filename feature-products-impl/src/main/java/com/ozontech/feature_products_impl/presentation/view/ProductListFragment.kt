@@ -2,9 +2,11 @@ package com.ozontech.feature_products_impl.presentation.view
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -63,6 +65,9 @@ class ProductListFragment :
 		binding.addFab.clicks().onEach {
 			viewModel.onAddFabClick()
 		}.launchIn(lifecycleScope)
+		binding.cartFab.clicks().onEach {
+			viewModel.goToCart()
+		}.launchIn(lifecycleScope)
 	}
 
 	private fun observeViewModelState() {
@@ -81,7 +86,7 @@ class ProductListFragment :
 	}
 
 	private fun initList() {
-		val gridLayoutManager = GridLayoutManager(requireContext(), 2).apply {
+		/*val gridLayoutManager = GridLayoutManager(requireContext(), 2).apply {
 			spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
 				override fun getSpanSize(position: Int): Int {
 					return when (adapter.currentList.getOrNull(position)) {
@@ -91,7 +96,7 @@ class ProductListFragment :
 					}
 				}
 			}
-		}
+		}*/
 		with(binding.productListRecycler) {
 			adapter = this@ProductListFragment.adapter
 			addItemDecoration(
@@ -99,7 +104,6 @@ class ProductListFragment :
 					20
 				)
 			)
-			layoutManager = gridLayoutManager
 		}
 	}
 	private fun handleUiState(state: UiState) {
@@ -110,6 +114,8 @@ class ProductListFragment :
 			is UiState.Success -> {
 				toggleLoadingState(false)
 				adapter.submitList(state.listOfProducts)
+				binding.cartFab.isVisible = state.inCartCount > 0
+
 			}
 			is UiState.Loading -> {
 				toggleLoadingState(true)
@@ -117,8 +123,8 @@ class ProductListFragment :
 		}
 	}
 
-	private fun onCartAddClick(guid: String, isInCart: Boolean) {
-		viewModel.toggleCart(guid, isInCart)
+	private fun onCartAddClick(guid: String) {
+		viewModel.toggleCart(guid)
 	}
 
 	private fun toggleLoadingState(isLoading: Boolean) {

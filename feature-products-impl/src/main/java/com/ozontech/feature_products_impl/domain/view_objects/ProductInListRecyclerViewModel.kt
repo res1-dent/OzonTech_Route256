@@ -1,9 +1,10 @@
 package com.ozontech.feature_products_impl.domain.view_objects
 
 import androidx.annotation.StringRes
+import com.ozontech.core_utils.custom_views.CartButtonSimple
+import kotlin.random.Random
 
 sealed class ProductInListRecyclerViewModel {
-
 	data class ProductInListVO(
 		val guid: String,
 		val image: List<String>,
@@ -11,8 +12,9 @@ sealed class ProductInListRecyclerViewModel {
 		val price: Int,
 		val rating: Float,
 		val counter: String,
-		val isInCart: Boolean
+		val cartButtonState: Boolean?,
 	) : ProductInListRecyclerViewModel()
 
-	data class Header(@StringRes val text: Int) : ProductInListRecyclerViewModel()
+	data class Header(@StringRes val text: Int) :
+		ProductInListRecyclerViewModel()
 }

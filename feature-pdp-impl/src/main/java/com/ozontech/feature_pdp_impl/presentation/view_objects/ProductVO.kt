@@ -7,7 +7,7 @@ data class ProductVO(
 	val description: String,
 	val rating: Float,
 	val isFavorite: Boolean,
-	val isInCart: Boolean,
+	val isInCart: Boolean?,
 	val images: List<String>,
 	val weight: Double,
 	val count: Int,

@@ -12,5 +12,6 @@ interface ProductListInteractor {
 
 	suspend fun updateInfo()
 
-	suspend fun toggleCart(guid: String, isInCart: Boolean)
+	suspend fun toggleCart(guid: String)
+
 }

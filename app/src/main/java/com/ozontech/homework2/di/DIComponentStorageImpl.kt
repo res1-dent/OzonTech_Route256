@@ -1,6 +1,7 @@
 package com.ozontech.homework2.di
 
 import android.app.Application
+import android.util.Log
 import com.ozontech.core_database_module.di.CoreDatabaseComponent
 import com.ozontech.core_database_module.di.DaggerCoreDatabaseComponent
 import com.ozontech.core_navigation_impl.di.CoreNavigationComponent
@@ -12,6 +13,9 @@ import com.ozontech.core_utils.di.DiComponent
 import com.ozontech.feature_add_product_impl.di.DaggerFeatureProductAddComponent
 import com.ozontech.feature_add_product_impl.di.DaggerFeatureProductAddComponent_ProductFeatureAddDependenciesComponent
 import com.ozontech.feature_add_product_impl.di.FeatureProductAddComponent
+import com.ozontech.feature_cart_impl.di.DaggerFeatureCartComponent
+import com.ozontech.feature_cart_impl.di.DaggerFeatureCartComponent_CartFeatureDependenciesComponent
+import com.ozontech.feature_cart_impl.di.FeatureCartComponent
 import com.ozontech.feature_pdp_impl.di.DaggerFeaturePdpComponent
 import com.ozontech.feature_pdp_impl.di.DaggerFeaturePdpComponent_PdpDependenciesComponent
 import com.ozontech.feature_pdp_impl.di.FeaturePdpComponent
@@ -83,6 +87,12 @@ class DIComponentStorageImpl(private val context: Application) {
 			}
 			CoreNavigationComponent::class -> {
 				DaggerCoreNavigationComponent.create()
+			}
+			FeatureCartComponent::class -> {
+				DaggerFeatureCartComponent.builder().cartFeatureDependenciesComponent(
+					DaggerFeatureCartComponent_CartFeatureDependenciesComponent.builder()
+						.databaseApi(initAndGet(CoreDatabaseComponent::class)).build()
+				).build()
 			}
 			else -> throw Exception("cannot find component ${component::class}")
 		} as T

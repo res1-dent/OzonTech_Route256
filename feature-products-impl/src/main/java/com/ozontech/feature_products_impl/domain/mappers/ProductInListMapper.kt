@@ -11,5 +11,5 @@ fun ProductInListDO.toVO() =
 		price = price.toInt(),
 		rating = rating.toFloat(),
 		counter = counter.toString(),
-		isInCart = isInCart
+		cartButtonState = isInCart
 	)

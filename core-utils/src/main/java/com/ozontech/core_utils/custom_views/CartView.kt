@@ -12,7 +12,6 @@ import com.ozontech.core_utils.R
 import com.ozontech.core_utils.databinding.CartLayoutBinding
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.callbackFlow
 import kotlin.properties.Delegates
 
 class CartView @JvmOverloads constructor(
@@ -32,9 +31,20 @@ class CartView @JvmOverloads constructor(
 
 	val productsSharedFlow = productsMutableSharedFlow.asSharedFlow()
 
+
 	init {
 		setListeners()
 		setupViewWithAttrs()
+	}
+
+	fun setProductAmount(amount: Int) {
+		if (amount != 0) {
+			currentCount = amount
+			toggleViewState(true)
+			binding.counterTextView.text = currentCount.toString()
+		} else {
+			toggleViewState(false)
+		}
 	}
 
 	private fun setListeners() {
@@ -50,35 +60,35 @@ class CartView @JvmOverloads constructor(
 	}
 
 	private fun incrementCount(v: View? = null) {
-		if (restOfProducts > 0) {
-			productsMutableSharedFlow.tryEmit(1)
-			currentCount++
-			binding.counterTextView.text = currentCount.toString()
-		}
+		//if (restOfProducts > 0) {
+		productsMutableSharedFlow.tryEmit(1)
+		//	currentCount++
+		//	binding.counterTextView.text = currentCount.toString()
+		//}
 	}
 
 	private fun decreaseCount(v: View? = null) {
-		if (--currentCount > 0) {
-			productsMutableSharedFlow.tryEmit(-1)
-			binding.counterTextView.text = currentCount.toString()
-		} else {
-			productsMutableSharedFlow.tryEmit(currentCount)
-			toggleViewState()
-		}
+		//if (--currentCount > 0) {
+		productsMutableSharedFlow.tryEmit(-1)
+		//	binding.counterTextView.text = currentCount.toString()
+		//} else {
+		//	productsMutableSharedFlow.tryEmit(currentCount)
+		//	toggleViewState(false)
+		//}
 
 	}
 
-	private fun onCardButtonClick(v: View){
-		toggleViewState()
-		if (binding.cartButton.isVisible.not()){
-			currentCount = 0
+	private fun onCardButtonClick(v: View) {
+		//toggleViewState(true)
+		//if (binding.cartButton.isVisible.not()) {
+		//	currentCount = 0
 			incrementCount()
-		}
+		//}
 	}
 
-	private fun toggleViewState() {
-		binding.expandedView.isVisible = !binding.expandedView.isVisible
-		binding.cartButton.isVisible = binding.cartButton.isVisible.not()
+	private fun toggleViewState(expanded: Boolean) {
+		binding.expandedView.isVisible = expanded
+		binding.cartButton.isVisible = expanded.not()
 	}
 
 	fun updateRestOfProducts(value: Int) {

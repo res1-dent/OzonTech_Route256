@@ -36,7 +36,7 @@ class ProductListViewModel @Inject constructor(
 	private fun getProducts() {
 		viewModelScope.launch {
 			uiStateMutableStateFlow.emit(UiState.Loading)
-			interactor.getProducts().distinctUntilChanged().collect {
+			interactor.getProducts().collect {
 				uiStateMutableStateFlow.emit(it)
 			}
 		}
@@ -52,20 +52,21 @@ class ProductListViewModel @Inject constructor(
 				WorkInfo.State.FAILED -> {
 					showUpdateMessageMutableSharedFlow.emit(StringResWrapper(R.string.worker_failed))
 				}
+				else -> {}
 			}
 		}
 	}
 
-	fun incrementCounter(guid: String) {
+	private fun incrementCounter(guid: String) {
 		viewModelScope.launch {
 			interactor.incrementCounter(guid)
 		}
 	}
 
-	fun toggleCart(guid: String, isInCart: Boolean) {
+	fun toggleCart(guid: String) {
 		viewModelScope.launch {
 			delay(500)
-			interactor.toggleCart(guid, isInCart)
+			interactor.toggleCart(guid)
 		}
 	}
 
@@ -76,6 +77,10 @@ class ProductListViewModel @Inject constructor(
 
 	fun onAddFabClick() {
 		navigationApi.navigateToAdd()
+	}
+
+	fun goToCart() {
+		navigationApi.navigateToCart()
 	}
 
 	suspend fun updateInfo() {

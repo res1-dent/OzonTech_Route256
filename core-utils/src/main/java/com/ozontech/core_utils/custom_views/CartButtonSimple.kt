@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
@@ -23,7 +24,7 @@ class CartButtonSimple @JvmOverloads constructor(
 	private val changeStateMutableSharedFlow = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
 	val changeStateSharedFlow = changeStateMutableSharedFlow.asSharedFlow()
 
-	var isInCart: Boolean = false
+	var cartButtonState: Boolean? = false
 		set(value) {
 			field = value
 			renderState()
@@ -36,12 +37,20 @@ class CartButtonSimple @JvmOverloads constructor(
 
 	private fun renderState() {
 		toggleLoading(false)
-		if (isInCart) {
-			binding.addToCartButton.text = "В корзине"
-			binding.addToCartButton.backgroundTintList = ColorStateList.valueOf(Color.GRAY)
-		} else {
-			binding.addToCartButton.text = "Добавить в корзину"
-			binding.addToCartButton.backgroundTintList = ColorStateList.valueOf(Color.BLUE)
+		Log.e("cart", "cartState = $cartButtonState")
+		when (cartButtonState){
+			null -> {
+				binding.addToCartButton.text = "Закончился"
+				binding.addToCartButton.backgroundTintList = ColorStateList.valueOf(Color.RED)
+			}
+			true -> {
+				binding.addToCartButton.text = "В корзине"
+				binding.addToCartButton.backgroundTintList = ColorStateList.valueOf(Color.GRAY)
+			}
+			false -> {
+				binding.addToCartButton.text = "В корзину"
+				binding.addToCartButton.backgroundTintList = ColorStateList.valueOf(Color.BLUE)
+			}
 		}
 	}
 
@@ -54,8 +63,10 @@ class CartButtonSimple @JvmOverloads constructor(
 
 	private fun setListeners() {
 		binding.addToCartButton.setOnClickListener {
-			changeStateMutableSharedFlow.tryEmit(Unit)
-			toggleLoading(true)
+			if (cartButtonState!=null){
+				changeStateMutableSharedFlow.tryEmit(Unit)
+				toggleLoading(true)
+			}
 		}
 	}
 
