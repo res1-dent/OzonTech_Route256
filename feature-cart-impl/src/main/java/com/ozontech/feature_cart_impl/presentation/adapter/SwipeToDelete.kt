@@ -68,7 +68,6 @@ class SwipeToDelete(
         )
 
         val iconMarginRight = (dX * -0.1f).coerceAtMost(70f).coerceAtLeast(0f)
-        Log.e("swipe", "dx= $dX")
         if (dX < 0f)
         c.drawBitmap(
             icon,

@@ -8,9 +8,9 @@ import javax.inject.Singleton
 class FragmentManagerHost @Inject constructor() {
 
 	lateinit var fragmentManager: FragmentManager
+	private set
 
 	fun initOrUpdateFragmentManager(fm: FragmentManager) {
 		fragmentManager = fm
 	}
-
 }

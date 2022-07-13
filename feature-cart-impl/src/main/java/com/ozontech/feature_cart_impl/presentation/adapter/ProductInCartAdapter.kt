@@ -74,6 +74,7 @@ class ProductInCartAdapter(
 
 		init {
 			binding.addToCartButton.productsSharedFlow.onEach {
+				if (absoluteAdapterPosition>=0)
 				onClick(currentList[absoluteAdapterPosition].id, it)
 			}.launchIn(lifecycleScope)
 		}

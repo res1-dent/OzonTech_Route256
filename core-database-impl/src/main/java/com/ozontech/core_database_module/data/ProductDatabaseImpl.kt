@@ -118,7 +118,6 @@ class ProductDatabaseImpl @Inject constructor(context: Context, private val gson
 		var isRunOut: Boolean = false
 		val newProductList = products.first().map {
 			if (it.guid == guid) {
-				Log.e("cart", "count = ${it.availableCount}")
 				if (it.availableCount == 0) {
 					isRunOut = true
 					it.copy(isInCart = null)
@@ -138,7 +137,6 @@ class ProductDatabaseImpl @Inject constructor(context: Context, private val gson
 				} else it
 			}
 		productsInCart.first().find { it.id == guid }?.let {
-			Log.e("cart", "incCount")
 			incrementCount(guid)
 		} ?: kotlin.run {
 			if (isRunOut.not()){
@@ -191,7 +189,6 @@ class ProductDatabaseImpl @Inject constructor(context: Context, private val gson
 		setProductsByKey(newProductList, KEY_PRODUCT)
 		setProductsByKey(newCartList, KEY_PRODUCTS_IN_CART)
 	}
-
 
 	private suspend fun deleteProductFromCart(guid: String) {
 		productsInCart.first().find { it.id == guid }?.let { deletingProduct ->

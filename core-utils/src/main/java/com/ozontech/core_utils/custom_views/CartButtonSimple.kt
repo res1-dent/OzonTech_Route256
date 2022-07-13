@@ -37,7 +37,6 @@ class CartButtonSimple @JvmOverloads constructor(
 
 	private fun renderState() {
 		toggleLoading(false)
-		Log.e("cart", "cartState = $cartButtonState")
 		when (cartButtonState){
 			null -> {
 				binding.addToCartButton.text = "Закончился"
