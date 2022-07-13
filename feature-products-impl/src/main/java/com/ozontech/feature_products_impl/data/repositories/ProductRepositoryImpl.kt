@@ -21,7 +21,7 @@ constructor(
 		}
 
 	override suspend fun getProductsInCartCount(): Flow<Int> =
-		database.productsInCart.map { it.size }
+		database.productsInCart.map { it.sumOf { product -> product.price.toInt() * product.amount } }
 
 	override suspend fun incrementCounter(guid: String) {
 		database.incrementCounter(guid)

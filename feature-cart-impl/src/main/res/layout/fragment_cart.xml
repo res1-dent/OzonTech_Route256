@@ -10,6 +10,8 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
+        android:clipToPadding="false"
+        android:paddingBottom="100dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -17,13 +19,23 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/list_item_cart" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontalGuideLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent=".93" />
+
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/footerCardView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_margin="2dp"
         android:background="@color/cardview_light_background"
         android:elevation="@dimen/cardview_default_elevation"
+        app:cardCornerRadius="@dimen/card_corner_radius"
+        app:layout_constraintTop_toTopOf="@id/horizontalGuideLine"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -37,11 +49,13 @@
             tools:text="Итого: 500 рублей " />
 
         <Button
-            tools:text = "Купить"
+            android:text="Купить"
+            tools:text="Купить"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end" />
 
     </com.google.android.material.card.MaterialCardView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

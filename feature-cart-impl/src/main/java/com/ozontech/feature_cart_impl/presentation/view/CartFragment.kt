@@ -54,10 +54,11 @@ class CartFragment : BaseFragment<FeatureCartComponent>(component = FeatureCartC
 
 	private fun showRestoreSnackBar(guid: String) {
 		restoreSnackbar = Snackbar.make(
-			requireView(),
+			binding.root,
 			R.string.restore_product_to_cart,
 			Snackbar.LENGTH_SHORT
-		).setAction(R.string.yes) { updateCart(guid, 1) }
+		).setAnchorView(binding.horizontalGuideLine)
+			.setAction(R.string.yes) { updateCart(guid, 1) }
 		restoreSnackbar?.show()
 	}
 
