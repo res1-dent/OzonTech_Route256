@@ -19,6 +19,7 @@ import com.ozontech.feature_pdp_impl.databinding.FragmentPdpBinding
 import com.ozontech.feature_pdp_impl.di.FeaturePdpComponent
 import com.ozontech.feature_pdp_impl.presentation.view_model.PdpViewModel
 import com.ozontech.feature_pdp_impl.presentation.view_objects.PdpUiState
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import reactivecircus.flowbinding.recyclerview.scrollEvents
@@ -89,7 +90,7 @@ class PdpFragment : BaseFragment<FeaturePdpComponent>(component = FeaturePdpComp
 				val product = state.product
 				with(binding) {
 					initTabLayout(product.images.size)
-					binding.cartView.updateRestOfProducts(state.product.availableCount)
+					cartView.setProductAmount(amount = state.amount)
 					adapter.submitList(state.product.images)
 					nameTextView.text = product.name
 					priceTextView.text = getString(R.string.price, product.price)
@@ -99,6 +100,7 @@ class PdpFragment : BaseFragment<FeaturePdpComponent>(component = FeaturePdpComp
 						getString(R.string.available_count, product.availableCount)
 					countTextView.text =
 						getString(R.string.count_string, product.count)
+
 				}
 			}
 			is PdpUiState.Error -> {

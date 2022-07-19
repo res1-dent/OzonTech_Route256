@@ -15,13 +15,12 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/productImage"
-            android:layout_width="0dp"
+            android:layout_width="100dp"
             android:orientation="horizontal"
             android:overScrollMode="never"
-            android:layout_height="200dp"
+            android:layout_height="100dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/image_layout"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@tools:sample/avatars" />
@@ -39,11 +38,11 @@
         <TextView
             android:id="@+id/nameTextView"
             android:layout_width="0dp"
+            tools:text = "Молоко"
             android:layout_height="wrap_content"
             android:paddingHorizontal="@dimen/base_padding_horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/productImage" />
+            app:layout_constraintTop_toTopOf="@id/productImage"
+            app:layout_constraintStart_toEndOf="@id/productImage"/>
 
 
         <androidx.appcompat.widget.AppCompatRatingBar
@@ -54,7 +53,7 @@
             android:layout_marginHorizontal="@dimen/base_padding_horizontal"
             android:isIndicator="true"
             android:rating="3"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/productImage"
             app:layout_constraintTop_toBottomOf="@id/nameTextView" />
 
         <TextView
@@ -62,9 +61,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingHorizontal="@dimen/base_padding_horizontal"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/productImage"
             app:layout_constraintTop_toBottomOf="@id/ratingRatingBar"
-            app:layout_constraintBottom_toTopOf="@id/addToCartButton"
             tools:text="169 P" />
 
         <com.ozontech.core_utils.custom_views.CartButtonSimple
@@ -73,7 +71,8 @@
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/priceTextView"
+            app:layout_constraintStart_toEndOf="@id/productImage"
             app:layout_constraintVertical_bias="1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

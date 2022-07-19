@@ -19,6 +19,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.6.1'
     implementation coroutines.values()
     implementation lifecycle
+    implementation project(path: ':feature-cart-impl')
 
     kapt daggerCompiler
 

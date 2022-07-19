@@ -15,4 +15,8 @@ class PdpInteractorImpl @Inject constructor(
 	override suspend fun updateCart(guid: String, count: Int) {
 		repository.updateCart(guid, count)
 	}
+
+	override suspend fun getAmountIfIsInCart(guid: String): Flow<Int> {
+		return repository.getAmountIfIsInCart(guid)
+	}
 }

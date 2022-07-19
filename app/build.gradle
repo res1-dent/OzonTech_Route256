@@ -53,7 +53,7 @@ dependencies {
     implementation project(path: ':core-navigation-api')
     implementation project(path: ':core-database-impl')
     implementation project(path: ':core-database-api')
-
+    implementation project(path: ':feature-add-product-impl')
 
     implementation coreKtx
     implementation navigation.values()
@@ -65,7 +65,8 @@ dependencies {
     implementation liveData
     implementation glide
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation project(path: ':feature-add-product-impl')
+    implementation project(path: ':feature-cart-impl')
+
 
     testImplementation junit
     androidTestImplementation androidTestJunit

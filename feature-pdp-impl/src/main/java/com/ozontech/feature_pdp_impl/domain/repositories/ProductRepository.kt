@@ -6,4 +6,5 @@ import kotlinx.coroutines.flow.Flow
 interface ProductRepository {
 	suspend fun fetchProductDetails(guid: String): Flow<ProductDO?>
 	suspend fun updateCart(guid: String, count: Int)
+	suspend fun getAmountIfIsInCart(guid: String): Flow<Int>
 }

@@ -4,58 +4,77 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
+    android:theme="@style/Theme.Homework2"
     android:layout_height="wrap_content">
 
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/selectableItemBackground"
+        app:cardBackgroundColor="@color/ozon_blue"
+        app:cardCornerRadius="40dp">
 
-    <Button
-        android:id="@+id/cartButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="In cart"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-
-    <Button
-        android:id="@+id/minusButton"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:text="-"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/counterTextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/counterTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/plusButton"
-        app:layout_constraintStart_toEndOf="@id/minusButton"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="2" />
+            <TextView
+                android:id="@+id/cartButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="В корзину"
+                android:padding="15dp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
-    <Button
-        android:id="@+id/plusButton"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:text="+"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/counterTextView"
-        app:layout_constraintTop_toTopOf="parent" />
+            <ImageButton
+                android:id="@+id/minusButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:backgroundTint="@android:color/transparent"
+                android:src="@drawable/ic_minus"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/counterTextView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/expandedView"
-        android:visibility="invisible"
-        app:constraint_referenced_ids="plusButton, minusButton, counterTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/counterTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/plusButton"
+                app:layout_constraintStart_toEndOf="@id/minusButton"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="2" />
 
+
+            <ImageButton
+                android:id="@+id/plusButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:backgroundTint="@android:color/transparent"
+                android:src="@drawable/ic_plus"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/counterTextView"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/expandedView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                app:constraint_referenced_ids="plusButton, minusButton, counterTextView" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
 
 </merge>
