@@ -3,10 +3,10 @@ package com.ozontech.feature_cart_impl.presentation.view
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ozontech.feature_cart_impl.domain.interactors.CartInteractor
-import com.ozontech.feature_cart_impl.domain.view_object.Product
+import com.ozontech.feature_cart_impl.presentation.view_objects.CartState
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -16,16 +16,21 @@ class CartViewModel @Inject constructor(
 	private val interactor: CartInteractor
 ) : ViewModel() {
 
-	private val listOfProductsMutableStateFlow = MutableStateFlow<List<Product>>(emptyList())
-	val listOfProductsStateFlow = listOfProductsMutableStateFlow.asStateFlow()
+	private val cartStateMutableSharedFlow = MutableStateFlow<CartState>(CartState.Init)
+	val cartStateSharedFlow = cartStateMutableSharedFlow.asStateFlow()
 
-	val totalPriceSharedFlow = interactor.footerSharedFlow
+	private val totalPriceSharedFlow = interactor.footerSharedFlow
 
 	init {
 		viewModelScope.launch {
-			interactor.getListOfProductsInCart().collect {
-				listOfProductsMutableStateFlow.emit(it)
-			}
+			interactor.getListOfProductsInCart()
+				.zip(totalPriceSharedFlow) { products, totalPrice ->
+					if (products.isEmpty())
+						CartState.Empty
+					else CartState.Success(products, totalPrice)
+				}.collectLatest {
+					cartStateMutableSharedFlow.emit(it)
+				}
 		}
 	}
 

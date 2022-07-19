@@ -60,40 +60,20 @@ class CartView @JvmOverloads constructor(
 	}
 
 	private fun incrementCount(v: View? = null) {
-		//if (restOfProducts > 0) {
 		productsMutableSharedFlow.tryEmit(1)
-		//	currentCount++
-		//	binding.counterTextView.text = currentCount.toString()
-		//}
 	}
 
 	private fun decreaseCount(v: View? = null) {
-		//if (--currentCount > 0) {
 		productsMutableSharedFlow.tryEmit(-1)
-		//	binding.counterTextView.text = currentCount.toString()
-		//} else {
-		//	productsMutableSharedFlow.tryEmit(currentCount)
-		//	toggleViewState(false)
-		//}
-
 	}
 
 	private fun onCardButtonClick(v: View) {
-		//toggleViewState(true)
-		//if (binding.cartButton.isVisible.not()) {
-		//	currentCount = 0
 			incrementCount()
-		//}
 	}
 
 	private fun toggleViewState(expanded: Boolean) {
 		binding.expandedView.isVisible = expanded
 		binding.cartButton.isVisible = expanded.not()
 	}
-
-	fun updateRestOfProducts(value: Int) {
-		restOfProducts = value
-	}
-
 
 }

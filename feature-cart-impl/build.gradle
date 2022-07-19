@@ -28,6 +28,7 @@ dependencies {
     implementation moshi
     implementation gson
     implementation flowBinding.values()
+    implementation lottie
 
 }
 

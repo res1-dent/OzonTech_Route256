@@ -24,7 +24,8 @@ ext {
             gson              : '2.9.0',
             coroutines        : '1.6.1',
             flowBinding       : '1.2.0',
-            preferences       : '1.0.0'
+            preferences       : '1.0.0',
+            lottie            : '3.4.0'
     ]
 
     navigation = ['navigarion-fragment': "androidx.navigation:navigation-fragment-ktx:${versions.navigation}",
@@ -78,4 +79,6 @@ ext {
     ]
 
     preferences = "androidx.datastore:datastore-preferences:${versions.preferences}"
+
+    lottie = "com.airbnb.android:lottie:${versions.lottie}"
 }

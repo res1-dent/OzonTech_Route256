@@ -3,4 +3,5 @@
     <string name="restore_product_to_cart" tools:ignore="ExtraTranslation">Товар был удалён из корзины </string>
     <string name="yes" tools:ignore="ExtraTranslation">Восстановить</string>
     <string name="total_price" tools:ignore="ExtraTranslation">Итого: %d ₽</string>
+    <string name="go_to_products_string">Перейти к покупкам</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.ozontech.feature_cart_impl.presentation.adapter
 
+import android.util.Log
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DiffUtil
