@@ -1,6 +1,5 @@
 package com.ozontech.feature_products_impl.data.repositories
 
-import android.util.Log
 import com.ozontech.core_database_api.ProductsDatabase
 import com.ozontech.core_network_api.WorkerManager
 import com.ozontech.feature_products_impl.data.mappers.toProductInListDO
@@ -21,6 +20,9 @@ constructor(
 			it.map { it.toProductInListDO() }
 		}
 
+	override suspend fun getProductsInCartCount(): Flow<Int> =
+		database.productsInCart.map { it.sumOf { product -> product.price.toInt() * product.amount } }
+
 	override suspend fun incrementCounter(guid: String) {
 		database.incrementCounter(guid)
 	}
@@ -29,8 +31,8 @@ constructor(
 		workerManager.startWorkers()
 	}
 
-	override suspend fun toggleCart(guid: String, isInCart: Boolean) {
-		database.toggleCart(guid, isInCart)
+	override suspend fun toggleCart(guid: String) {
+		database.toggleCart(guid)
 	}
 
 }

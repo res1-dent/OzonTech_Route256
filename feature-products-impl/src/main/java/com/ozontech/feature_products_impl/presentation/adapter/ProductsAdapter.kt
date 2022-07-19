@@ -1,11 +1,13 @@
 package com.ozontech.feature_products_impl.presentation.adapter
 
+import android.util.Log
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.ozontech.core_utils.adapters.ImagesAdapter
+import com.ozontech.core_utils.custom_views.CartButtonSimple
 import com.ozontech.core_utils.inflate
 import com.ozontech.feature_products_impl.R
 import com.ozontech.feature_products_impl.databinding.HeaderListItemBinding
@@ -18,7 +20,7 @@ import reactivecircus.flowbinding.android.view.clicks
 
 class ProductsAdapter(
 	private val onProductClick: (String) -> Unit,
-	private val addToCart: (String, Boolean) -> Unit,
+	private val addToCart: (String) -> Unit,
 	private val lifecycleScope: CoroutineScope
 ) : ListAdapter<ProductInListRecyclerViewModel, BaseHolder<*>>(ProductsDiffUtilCallback()) {
 
@@ -50,16 +52,16 @@ class ProductsAdapter(
 		payloads: MutableList<Any>
 	) {
 		if (payloads.isEmpty()) super.onBindViewHolder(holder, position, payloads)
-		(holder as? ProductsHolder)?.let { currentHolder->
-			val item = (currentList[position] as? ProductInListRecyclerViewModel.ProductInListVO) ?: return
-			payloads.forEach { payload->
-				when (payload){
-					PAYLOAD_COUNTER -> currentHolder.bindCounter(item.counter)
-					PAYLOAD_IS_IN_CART -> currentHolder.bindCart(item.isInCart)
-					else -> super.onBindViewHolder(holder, position, payloads)
-				}
+		(holder as? ProductsHolder)?.let { currentHolder ->
+			val item =
+				(currentList[position] as? ProductInListRecyclerViewModel.ProductInListVO) ?: return
+			payloads.forEach { payload ->
+				(payload as? Payload)?.let {
+					if (it.counter != null) currentHolder.bindCounter(item.counter)
+					if (it.isInCart != null) currentHolder.bindCart(item.cartButtonState)
+				} ?: super.onBindViewHolder(holder, position, payloads)
 			}
-		}
+		} ?: super.onBindViewHolder(holder, position, payloads)
 	}
 
 	override fun getItemViewType(position: Int): Int {
@@ -72,7 +74,7 @@ class ProductsAdapter(
 	inner class ProductsHolder(
 		private val binding: ProductListItemBinding,
 		private val onProductClick: (String) -> Unit,
-		private val addToCart: (String, Boolean) -> Unit,
+		private val addToCart: (String) -> Unit,
 	) : BaseHolder<ProductInListRecyclerViewModel.ProductInListVO>(binding.root) {
 
 		private val currentItem
@@ -92,16 +94,14 @@ class ProductsAdapter(
 			}.launchIn(lifecycleScope)
 
 			binding.addToCartButton.changeStateSharedFlow.onEach {
-				currentItem.let {
-					addToCart(it.guid, it.isInCart.not())
-				}
+				addToCart(currentItem.guid)
 			}.launchIn(lifecycleScope)
 		}
 
 		override fun bindModel(item: ProductInListRecyclerViewModel.ProductInListVO) {
 			with(binding) {
 				imagesAdapter.submitList(item.image)
-				addToCartButton.isInCart = item.isInCart
+				addToCartButton.cartButtonState = item.cartButtonState
 				nameTextView.text = item.name
 				priceTextView.text = binding.root.resources.getString(R.string.price, item.price)
 				ratingRatingBar.rating = item.rating
@@ -113,22 +113,22 @@ class ProductsAdapter(
 			binding.counterTextView.text = counter
 		}
 
-		fun bindCart(inCart: Boolean) {
-			binding.addToCartButton.isInCart = inCart
+		fun bindCart(inCart: Boolean?) {
+			binding.addToCartButton.cartButtonState = inCart
 		}
 
 	}
 
 	class ProductsDiffUtilCallback : DiffUtil.ItemCallback<ProductInListRecyclerViewModel>() {
-
 		override fun areItemsTheSame(
 			oldItem: ProductInListRecyclerViewModel,
 			newItem: ProductInListRecyclerViewModel
 		): Boolean {
 			return when {
 				oldItem is ProductInListRecyclerViewModel.ProductInListVO
-						&& newItem is ProductInListRecyclerViewModel.ProductInListVO ->
+						&& newItem is ProductInListRecyclerViewModel.ProductInListVO -> {
 					oldItem.guid == newItem.guid
+				}
 				oldItem is ProductInListRecyclerViewModel.Header
 						&& newItem is ProductInListRecyclerViewModel.Header ->
 					oldItem == newItem
@@ -148,7 +148,7 @@ class ProductsAdapter(
 					if (oldItem.price != newItem.price) return false
 					if (oldItem.rating != newItem.rating) return false
 					if (oldItem.counter != newItem.counter) return false
-					if (oldItem.isInCart != newItem.isInCart) return false
+					if (oldItem.cartButtonState != newItem.cartButtonState) return false
 					true
 				}
 				oldItem is ProductInListRecyclerViewModel.Header
@@ -163,16 +163,20 @@ class ProductsAdapter(
 			newItem: ProductInListRecyclerViewModel
 		): Any? {
 			return if (oldItem is ProductInListRecyclerViewModel.ProductInListVO
-				&& newItem is ProductInListRecyclerViewModel.ProductInListVO) {
-				if (oldItem.counter != newItem.counter) return PAYLOAD_COUNTER
-				if (oldItem.isInCart != newItem.isInCart) return PAYLOAD_IS_IN_CART
-				null
-			} else null
+				&& newItem is ProductInListRecyclerViewModel.ProductInListVO
+			) {
+				var payload = Payload()
+				if (oldItem.cartButtonState != newItem.cartButtonState) payload = payload.copy(isInCart = Unit)
+				if (oldItem.counter != newItem.counter) payload = payload.copy(counter = Unit)
+				payload
+			} else super.getChangePayload(oldItem, newItem)
 		}
 	}
 
 	private companion object {
-		const val PAYLOAD_IS_IN_CART = 0
-		const val PAYLOAD_COUNTER = 1
+		data class Payload(
+			val isInCart: Unit? = null,
+			val counter: Unit? = null
+		)
 	}
 }
