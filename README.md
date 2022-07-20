@@ -16,4 +16,8 @@
 
 В качестве БД использовался DataStore
 
+ ![image](https://github.com/res1-dent/OzonTech_Route256/blob/master/cart.gif)
+
+
+
 
